@@ -1,11 +1,11 @@
 {
-  "name": "retrospective_tool",
+  "name": "retrospective_front_end",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:ssr": "ng run retrospective_tool:server:dev",
+    "build:ssr": "ng run Retrospective_Front_End:server:dev",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
