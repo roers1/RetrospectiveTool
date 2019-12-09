@@ -1,0 +1,50 @@
+/* .bg {
+    background-image: url(../../../assets/images/forest.jpg);
+    width: fit-content;
+    height: fit-content;
+    opacity: 0.80;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-width: 1920px;
+    min-height: 1080px;
+} */
+
+
+.content {
+    position: absolute;
+    left: 0;
+    top: calc(50% - 70px);
+    width: 100%;
+    text-align: center;
+    opacity: 70%;
+}
+.textbg {
+    background-color: white;
+    padding: 5%;
+    width: fit-content;
+    margin: auto;
+    border-radius: 10px;
+    transition-duration: 2s;
+    transition-property: background-color;
+}
+
+.textbg:hover {
+    background-color: lime;
+}
+
+
+#bg {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    z-index: -99; /*Push to lowest z index*/      
+    /* Preserve aspect ratio */
+    min-width: 100%;
+    min-height: 100%;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    margin-top: -10%;
+  }

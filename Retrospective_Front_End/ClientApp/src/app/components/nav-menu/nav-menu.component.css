@@ -17,7 +17,16 @@ html {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 } */
 
+
+#logo {
+  padding: 0px;
+
+}
+
 header {
+  padding: 0px;
+  margin-top: 0px;
+  
   background: #595959;
-  height: 50px;
+  height: 70px;
 }
