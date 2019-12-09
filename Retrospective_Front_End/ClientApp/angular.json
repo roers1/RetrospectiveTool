@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "retrospective_tool": {
+    "Retrospective_Front_End": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -50,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "retrospective_tool:build"
+            "browserTarget": "Retrospective_Front_End:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "retrospective_tool:build:production"
+              "browserTarget": "Retrospective_Front_End:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "retrospective_tool:build"
+            "browserTarget": "Retrospective_Front_End:build"
           }
         },
         "test": {
@@ -111,7 +111,7 @@
         }
       }
     },
-    "retrospective_tool-e2e": {
+    "Retrospective_Front_End-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -119,7 +119,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "retrospective_tool:serve"
+            "devServerTarget": "Retrospective_Front_End:serve"
           }
         },
         "lint": {
@@ -132,5 +132,5 @@
       }
     }
   },
-  "defaultProject": "retrospective_tool"
+  "defaultProject": "Retrospective_Front_End"
 }

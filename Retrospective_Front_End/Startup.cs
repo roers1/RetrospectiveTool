@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace retrospective_tool
+namespace Retrospective_Front_End
 {
 	public class Startup
 	{
