@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace retrospective_tool
+namespace Retrospective_Front_End
 {
 	public class Program
 	{
