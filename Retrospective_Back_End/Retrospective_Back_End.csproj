@@ -22,4 +22,8 @@
     <ProjectReference Include="..\RetroSpective.Core\RetroSpective.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RetroSpective.Core\Retrospective.Core.csproj" />
+  </ItemGroup>
+
 </Project>

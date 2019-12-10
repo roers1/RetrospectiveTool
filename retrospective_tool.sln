@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroSpective.Core", "Retro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Retrospective_Back_End", "Retrospective_Back_End\Retrospective_Back_End.csproj", "{D0C51421-1B5B-4C97-AC35-677DE6768F28}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Retrospective.EFSQLRetroSpectiveDbImpl", "RetroSpective.EFSQLRetroSpectiveDbImpl\Retrospective.EFSQLRetroSpectiveDbImpl.csproj", "{469F7B63-2F48-4E23-B557-AA5A63BAA01D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
