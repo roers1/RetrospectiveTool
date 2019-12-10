@@ -2,7 +2,7 @@ h1 {
     color: white
 }
 .bg {
-    height: calc(100% - 470);
+    height: 661px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -10,7 +10,7 @@ h1 {
     background-attachment: scroll;
 }
 .foreground {
-    height: 631px;
+    height: 661px;
     background-color: rgba(139, 211, 0, 0.4);
   object-fit: fill;
 }
