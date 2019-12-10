@@ -8,6 +8,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
@@ -24,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RetroSpective.Core\Retrospective.Core.csproj" />
+    <ProjectReference Include="..\RetroSpective.EFSQLRetroSpectiveDbImpl\Retrospective.EFSQLRetroSpectiveDbImpl.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,9 +13,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using RetroSpective.Core.Services;
 using RetroSpective.Core.TempData;
-
-
-
+using RetroSpective.EFSQLRetroSpectiveDbImpl;
+using Retrospective.EFSQLRetroSpectiveDbImpl;
 
 namespace Retrospective_Back_End
 {
@@ -33,12 +32,14 @@ namespace Retrospective_Back_End
         {
             _ = services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddDbContext<RetroSpectiveDbContext>(opt => opt.UseSqlServer("Server=tcp:truelime.database.windows.net,1433;Initial Catalog=TrueLime;Persist Security Info=False;User ID=roers1;Password=ATlime2019;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
             services.AddScoped<IRetroCardRepository, FakeRetroCardRepo>();
+
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider service)
         {
             if (env.IsDevelopment())
             {
@@ -52,6 +53,7 @@ namespace Retrospective_Back_End
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            SeedData.Initialize(service);
         }
     }
 }

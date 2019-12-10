@@ -13,7 +13,7 @@ namespace RetroSpective.Core.Models {
 
         public string Name { get; set; }
 
-        [ForeignKey("RetroSpective")]
+        [ForeignKey("Retrospective")]
         public virtual RetroSpective RetroSpective { get; set; }
 
         [ForeignKey("Participants")]
