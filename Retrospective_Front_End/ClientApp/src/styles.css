@@ -10,9 +10,18 @@
   font-family: dinb;
   src: url(/assets/fonts/DIN-bold) format("opentype");
 }
-
+h1 {
+  font-family: "din";
+  font-size: 5em;
+}
+body {
+  height: 100%;
+}
 .center-content{
   text-align: center;
+}
+.center-self {
+  margin: auto;
 }
 
 /* backgrounds */
@@ -64,7 +73,7 @@
   background-color: #F47A00;
 }
 
-/* input velden */
+/* input fields */
 input {
   height: 60px;
   color: #b0b0b0;
