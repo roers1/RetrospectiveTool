@@ -8,8 +8,4 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\RetroSpective.Core\Retrospective.Core.csproj" />
-  </ItemGroup>
-
 </Project>
