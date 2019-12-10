@@ -1,4 +1,6 @@
-RetrospectiveTool
+#RetrospectiveTool
+=================
+
 In opdracht voor TrueLime
 Uitgevoerd door:
 -Ruben van Oers
@@ -7,5 +9,6 @@ Uitgevoerd door:
 -Stijn van Loon
 -Bryan Kho
 -Robin Egberts
+
 --------------------
 [![Build Status](https://dev.azure.com/rvanoers1/rvanoers1/_apis/build/status/roers1.RetrospectiveTool?branchName=master)](https://dev.azure.com/rvanoers1/rvanoers1/_build/latest?definitionId=3&branchName=master)
