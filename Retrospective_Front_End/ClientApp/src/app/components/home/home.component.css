@@ -1,0 +1,19 @@
+h1 {
+    color: white
+}
+.bg {
+    height: 661px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../../../assets/images/forest2.jpg");
+    background-attachment: scroll;
+}
+.foreground {
+    height: 661px;
+    background-color: rgba(139, 211, 0, 0.4);
+  object-fit: fill;
+}
+.buttonholder {
+    margin-top: 15%;
+}
