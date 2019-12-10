@@ -1,5 +1,6 @@
 h1 {
-    color: white
+    color: white;
+    font-family: "din";
 }
 .foreground {
     background-color: rgba(139, 211, 0, 0.4);
@@ -9,7 +10,7 @@ body {
     background-image: url('../../../assets/images/forest2.jpg');
     background-position: center;
     background-repeat: no-repeat;
-    overflow: hidden;
+    /* -60px for header */
     height: calc(100vh - 60px);
 }
 .buttonholder {
