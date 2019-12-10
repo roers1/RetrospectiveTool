@@ -1,8 +1,8 @@
-import { RetroCard } from "./retroCard";
+import {RetroColumn} from './RetroColumn';
 
 export class Retrospective {
-  id: Number;
-  title: String;
-  description: String;
-  retroCards: RetroCard[];
+  id: number;
+  title: string;
+  description: string;
+  retroColumns: RetroColumn[];
 }

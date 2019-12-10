@@ -1,4 +1,4 @@
 export class RetroCard {
-  id: Number;
-  content: String;
+  id: number;
+  content: string;
 }

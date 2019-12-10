@@ -1,9 +1,9 @@
-import { Retrospective } from "./retrospective";
-import { Participant } from "./participant";
+import { Retrospective } from './retrospective';
+import { Participant } from './Participant';
 
 export class Facilitator {
-  id: Number;
-  name: String;
+  id: number;
+  name: string;
   retrospective: Retrospective;
   participants: Participant[];
 }
