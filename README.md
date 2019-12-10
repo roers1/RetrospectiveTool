@@ -11,7 +11,7 @@ Uitgevoerd door:
 -Robin Egberts
 
 --------------------
-[![Build Status](https://dev.azure.com/rvanoers1/TrueLime/_apis/build/status/truelime.RetrospectiveTool?branchName=master)](https://dev.azure.com/rvanoers1/TrueLime/_build/latest?definitionId=3&branchName=master)
+[![Build Status](https://dev.azure.com/rvanoers1/TrueLime/_apis/build/status/roers1.RetrospectiveTool?branchName=master)](https://dev.azure.com/rvanoers1/TrueLime/_build/latest?definitionId=3&branchName=master)
 
 Webpagina: https://truelime.azurewebsites.net/
 WebAPI: https://truelimeapi.azurewebsites.net/
