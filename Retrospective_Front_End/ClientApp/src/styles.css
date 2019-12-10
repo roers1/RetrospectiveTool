@@ -3,19 +3,16 @@
 /* Provide sufficient contrast against white background */
 
 @font-face {
-  font-family: din;
-  src: url(/assets/fonts/DIN-light) format("opentype");
+  font-family: "din";
+  src: url(assets/fonts/DIN-light.otf) format("opentype");
 }
 @font-face {
-  font-family: dinb;
-  src: url(/assets/fonts/DIN-bold) format("opentype");
+  font-family: "dinb";
+  src: url(assets/fonts/DIN-bold.otf) format("opentype");
 }
 h1 {
   font-family: "din";
   font-size: 5em;
-}
-body {
-  height: 100%;
 }
 .center-content{
   text-align: center;
