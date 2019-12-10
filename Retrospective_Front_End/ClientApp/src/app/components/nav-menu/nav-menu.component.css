@@ -30,11 +30,14 @@ html {
 header {
   padding: 0px;
   margin-top: 0px;
-
-  background: #595959;
-  height: 70px;
+  /*background: #595959;*/
+  height: 60px;
 }
 
+#navbar {
+  overflow: hidden;
+  background-color: #595959;
+}
 .navbar {
   position: fixed;
   top: 0;
