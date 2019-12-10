@@ -34,3 +34,9 @@ header {
   background: #595959;
   height: 70px;
 }
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
