@@ -19,6 +19,10 @@ html {
 
 
 #logo {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
   padding: 0px;
 
 }
@@ -26,7 +30,7 @@ html {
 header {
   padding: 0px;
   margin-top: 0px;
-  
+
   background: #595959;
   height: 70px;
 }
