@@ -16,7 +16,7 @@ Peter Vos\
 \
 TrueLime:\
 Hans van der Linden\
-Merel van de Wiel\
+Merel van de Wiel
 
 --------------------
 
