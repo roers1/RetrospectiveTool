@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using RetroSpective.Core.Models;
-using RetroSpective.Core.Services;
-using RetroSpective.Core.TempData;
+using Retrospective_Core.Models;
+using Retrospective_Core.Services;
 
 namespace Retrospective_Back_End.Controllers
 {

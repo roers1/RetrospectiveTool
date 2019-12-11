@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
-using RetroSpective.Core.Services;
-using RetroSpective.Core.TempData;
-using RetroSpective.EFSQLRetroSpectiveDbImpl;
-using Retrospective.EFSQLRetroSpectiveDbImpl;
+using Retrospective_Core.Services;
+using RetroSpective_Core.TempData;
+using Retrospective_EFSQLRetrospectiveDbImpl;
+using Retrospective_EFSQLRetrospectiveDbImpl.Seeds;
 
 namespace Retrospective_Back_End
 {
@@ -32,7 +26,7 @@ namespace Retrospective_Back_End
         {
             _ = services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMvc(option => option.EnableEndpointRouting = false);
-            services.AddDbContext<RetroSpectiveDbContext>(opt => opt.UseSqlServer("Server=tcp:truelime.database.windows.net,1433;Initial Catalog=TrueLime;Persist Security Info=False;User ID=roers1;Password=ATlime2019;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+            services.AddDbContext<RetroSpectiveDbContext>(opt => opt.UseSqlServer("Server=tcp:truelime.database.windows.net,1433;Initial Catalog=truelime;Persist Security Info=False;User ID=roers1;Password=ATlime2019;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
             services.AddScoped<IRetroCardRepository, FakeRetroCardRepo>();
 
 

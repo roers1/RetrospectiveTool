@@ -1,10 +1,9 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace RetroSpective.Core.Models {
+namespace Retrospective_Core.Models {
 
     public class Facilitator {
 
@@ -13,10 +12,9 @@ namespace RetroSpective.Core.Models {
 
         public string Name { get; set; }
 
-        [ForeignKey("Retrospective")]
-        public virtual RetroSpective RetroSpective { get; set; }
+        public Retrospective Retrospective { get; set; }
 
-        [ForeignKey("Participants")]
-        public virtual Participant[] Participants { get; set; }
+        public ICollection<Participant> Participants { get; set; }
+
     }
 }

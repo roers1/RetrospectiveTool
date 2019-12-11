@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RetroSpective.Core.Models;
-using RetroSpective.Core.Services;
+using Retrospective_Core.Services;
 
 namespace Retrospective_Back_End.Controllers
 {

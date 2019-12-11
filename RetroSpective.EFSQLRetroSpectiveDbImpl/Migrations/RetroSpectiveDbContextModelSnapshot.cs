@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RetroSpective.EFSQLRetroSpectiveDbImpl;
+using Retrospective_EFSQLRetrospectiveDbImpl;
 
-namespace Retrospective.EFSQLRetroSpectiveDbImpl.Migrations
+namespace Retrospective_EFSQLRetroSpectiveDbImpl.Migrations
 {
     [DbContext(typeof(RetroSpectiveDbContext))]
     partial class RetroSpectiveDbContextModelSnapshot : ModelSnapshot
@@ -19,7 +19,7 @@ namespace Retrospective.EFSQLRetroSpectiveDbImpl.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("RetroSpective.Core.Models.Facilitator", b =>
+            modelBuilder.Entity("Retrospective_Core.Models.Facilitator", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,37 +29,37 @@ namespace Retrospective.EFSQLRetroSpectiveDbImpl.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Retrospective")
+                    b.Property<int?>("RetrospectiveId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Retrospective");
+                    b.HasIndex("RetrospectiveId");
 
                     b.ToTable("Facilitators");
                 });
 
-            modelBuilder.Entity("RetroSpective.Core.Models.Participant", b =>
+            modelBuilder.Entity("Retrospective_Core.Models.Participant", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("FacilitatorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Participants")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("Participants");
+                    b.HasIndex("FacilitatorId");
 
                     b.ToTable("Participants");
                 });
 
-            modelBuilder.Entity("RetroSpective.Core.Models.RetroCard", b =>
+            modelBuilder.Entity("Retrospective_Core.Models.RetroCard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,7 +79,7 @@ namespace Retrospective.EFSQLRetroSpectiveDbImpl.Migrations
                     b.ToTable("RetroCards");
                 });
 
-            modelBuilder.Entity("RetroSpective.Core.Models.RetroColumn", b =>
+            modelBuilder.Entity("Retrospective_Core.Models.RetroColumn", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,7 +99,7 @@ namespace Retrospective.EFSQLRetroSpectiveDbImpl.Migrations
                     b.ToTable("RetroColumns");
                 });
 
-            modelBuilder.Entity("RetroSpective.Core.Models.RetroSpective", b =>
+            modelBuilder.Entity("Retrospective_Core.Models.Retrospective", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -120,30 +120,30 @@ namespace Retrospective.EFSQLRetroSpectiveDbImpl.Migrations
                     b.ToTable("RetroSpectives");
                 });
 
-            modelBuilder.Entity("RetroSpective.Core.Models.Facilitator", b =>
+            modelBuilder.Entity("Retrospective_Core.Models.Facilitator", b =>
                 {
-                    b.HasOne("RetroSpective.Core.Models.RetroSpective", "RetroSpective")
+                    b.HasOne("Retrospective_Core.Models.Retrospective", "Retrospective")
                         .WithMany()
-                        .HasForeignKey("Retrospective");
+                        .HasForeignKey("RetrospectiveId");
                 });
 
-            modelBuilder.Entity("RetroSpective.Core.Models.Participant", b =>
+            modelBuilder.Entity("Retrospective_Core.Models.Participant", b =>
                 {
-                    b.HasOne("RetroSpective.Core.Models.Facilitator", null)
+                    b.HasOne("Retrospective_Core.Models.Facilitator", null)
                         .WithMany("Participants")
-                        .HasForeignKey("Participants");
+                        .HasForeignKey("FacilitatorId");
                 });
 
-            modelBuilder.Entity("RetroSpective.Core.Models.RetroCard", b =>
+            modelBuilder.Entity("Retrospective_Core.Models.RetroCard", b =>
                 {
-                    b.HasOne("RetroSpective.Core.Models.RetroColumn", null)
+                    b.HasOne("Retrospective_Core.Models.RetroColumn", null)
                         .WithMany("RetroCards")
                         .HasForeignKey("RetroCards");
                 });
 
-            modelBuilder.Entity("RetroSpective.Core.Models.RetroColumn", b =>
+            modelBuilder.Entity("Retrospective_Core.Models.RetroColumn", b =>
                 {
-                    b.HasOne("RetroSpective.Core.Models.RetroSpective", null)
+                    b.HasOne("Retrospective_Core.Models.Retrospective", null)
                         .WithMany("RetroColumns")
                         .HasForeignKey("RetroColumns");
                 });

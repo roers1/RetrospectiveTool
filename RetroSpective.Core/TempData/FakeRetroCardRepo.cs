@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using RetroSpective.Core.Services;
+﻿using System.Collections.Generic;
 using System.Linq;
-using RetroSpective.Core.Models;
+using Retrospective_Core.Models;
+using Retrospective_Core.Services;
 
-
-namespace RetroSpective.Core.TempData
+namespace RetroSpective_Core.TempData
 {
     public class FakeRetroCardRepo : IRetroCardRepository
     {

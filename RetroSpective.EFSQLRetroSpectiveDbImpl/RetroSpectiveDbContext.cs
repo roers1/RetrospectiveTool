@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RetroSpective.Core.Models;
-using System;
+using Retrospective_Core.Models;
 
-namespace RetroSpective.EFSQLRetroSpectiveDbImpl {
+namespace Retrospective_EFSQLRetrospectiveDbImpl {
     public class RetroSpectiveDbContext : DbContext {
 
         public RetroSpectiveDbContext(DbContextOptions<RetroSpectiveDbContext> options) : base(options) { }
@@ -11,7 +10,7 @@ namespace RetroSpective.EFSQLRetroSpectiveDbImpl {
 
         public DbSet<Facilitator> Facilitators { get; set; }
 
-        public DbSet<Core.Models.RetroSpective> RetroSpectives { get; set; }
+        public DbSet<Retrospective> RetroSpectives { get; set; }
 
         public DbSet<RetroColumn> RetroColumns { get; set; }
 

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace RetroSpective.Core.Models {
+namespace Retrospective_Core.Models {
     public class RetroCard {
 
         [Key]

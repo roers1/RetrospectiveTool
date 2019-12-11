@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace RetroSpective.Core.Models {
-    public class RetroSpective {
+namespace Retrospective_Core.Models {
+    public class Retrospective {
 
         [Key]
         public int Id { get; set; }

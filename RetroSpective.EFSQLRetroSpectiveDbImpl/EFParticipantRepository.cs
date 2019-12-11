@@ -1,20 +1,16 @@
-﻿using RetroSpective.Core.Models;
-using RetroSpective.Core.Services;
-using RetroSpective.EFSQLRetroSpectiveDbImpl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
+using Retrospective_Core.Models;
+using Retrospective_Core.Services;
 
-namespace Retrospective.EFSQLRetroSpectiveDbImpl {
+namespace Retrospective_EFSQLRetrospectiveDbImpl {
     public class EFParticipantRepository : IParticipantRepository {
 
-        private readonly RetroSpectiveDbContext Context;
+        private readonly RetroSpectiveDbContext _context;
 
         public EFParticipantRepository(RetroSpectiveDbContext context) {
-            this.Context = context;
+            this._context = context;
         }
 
-        public IQueryable<Participant> Participants => Context.Participants;
+        public IQueryable<Participant> Participants => _context.Participants;
     }
 }

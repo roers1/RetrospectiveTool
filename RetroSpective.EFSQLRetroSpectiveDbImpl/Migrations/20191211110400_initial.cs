@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Retrospective.EFSQLRetroSpectiveDbImpl.Migrations
+namespace Retrospective_EFSQLRetroSpectiveDbImpl.Migrations
 {
-    public partial class Retro : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,14 +29,14 @@ namespace Retrospective.EFSQLRetroSpectiveDbImpl.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    Retrospective = table.Column<int>(nullable: true)
+                    RetrospectiveId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Facilitators", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Facilitators_RetroSpectives_Retrospective",
-                        column: x => x.Retrospective,
+                        name: "FK_Facilitators_RetroSpectives_RetrospectiveId",
+                        column: x => x.RetrospectiveId,
                         principalTable: "RetroSpectives",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -69,14 +69,14 @@ namespace Retrospective.EFSQLRetroSpectiveDbImpl.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    Participants = table.Column<int>(nullable: true)
+                    FacilitatorId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Participants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Participants_Facilitators_Participants",
-                        column: x => x.Participants,
+                        name: "FK_Participants_Facilitators_FacilitatorId",
+                        column: x => x.FacilitatorId,
                         principalTable: "Facilitators",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -103,14 +103,14 @@ namespace Retrospective.EFSQLRetroSpectiveDbImpl.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Facilitators_Retrospective",
+                name: "IX_Facilitators_RetrospectiveId",
                 table: "Facilitators",
-                column: "Retrospective");
+                column: "RetrospectiveId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participants_Participants",
+                name: "IX_Participants_FacilitatorId",
                 table: "Participants",
-                column: "Participants");
+                column: "FacilitatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RetroCards_RetroCards",

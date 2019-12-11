@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RetroSpective.Core.Models;
-using RetroSpective.EFSQLRetroSpectiveDbImpl;
+using Retrospective_Core.Models;
+using Retrospective_EFSQLRetrospectiveDbImpl;
 
 namespace Retrospective_Back_End.Controllers
 {

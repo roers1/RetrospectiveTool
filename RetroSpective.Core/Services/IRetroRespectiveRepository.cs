@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
+using Retrospective_Core.Models;
 
-namespace RetroSpective.Core.Services {
+namespace Retrospective_Core.Services {
     public interface IRetroRespectiveRepository {
 
-        IQueryable<Models.RetroSpective> RetroSpectives { get; }
+        IQueryable<Retrospective> Retrospectives { get; }
 
     }
 }

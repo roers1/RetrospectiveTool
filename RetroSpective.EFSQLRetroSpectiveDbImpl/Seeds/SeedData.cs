@@ -2,12 +2,9 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
-using System.Diagnostics;
-using RetroSpective.Core.Models;
-using RetroSpective.EFSQLRetroSpectiveDbImpl;
+using Retrospective_Core.Models;
 
-namespace Retrospective.EFSQLRetroSpectiveDbImpl
+namespace Retrospective_EFSQLRetrospectiveDbImpl.Seeds
 {
     public static class SeedData
     {

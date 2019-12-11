@@ -1,19 +1,17 @@
-﻿using RetroSpective.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
+using Retrospective_Core.Models;
+using Retrospective_Core.Services;
 
-namespace RetroSpective.EFSQLRetroSpectiveDbImpl {
+namespace Retrospective_EFSQLRetrospectiveDbImpl {
     public class EFRetrospectiveRepository : IRetroRespectiveRepository {
 
-        private readonly RetroSpectiveDbContext Context;
+        private readonly RetroSpectiveDbContext _context;
 
         public EFRetrospectiveRepository(RetroSpectiveDbContext context) {
-            this.Context = context;
+            this._context = context;
         }
 
 
-        public IQueryable<Core.Models.RetroSpective> RetroSpectives => Context.RetroSpectives;
+        public IQueryable<Retrospective> Retrospectives => _context.RetroSpectives;
     }
 }
