@@ -20,6 +20,21 @@
           class="example-list"
           (cdkDropListDropped)="drop($event)">
           <div class="example-box" *ngFor="let item of column.cards" cdkDrag>{{item.content}}</div>
+
+
+          <div class="example-container-toaddcard">
+            <h6  (click)="enable=true">+ Voeg een lijst toe</h6 >
+            <div *ngIf="enable">
+              <br>
+              <input #card placeholder="Voer een beschrijving in."/>
+              <br>
+              <button (click)="enable=false; addCard(column, card.value)" class="btn btn-color-primary">Add</button>
+              <button (click)="enable=false" class="btn btn-color-secondary">cancel</button>
+
+            </div>
+          </div>
+
+
         </div>
       </div>
 

@@ -108,8 +108,24 @@ h4 {
   font-size: 20px;
   color: #ED5603;
 }
+h6 {
+  font-size: 16px;
+  color: #ED5603;
+}
 
 
+.example-container-toaddcard {
+  width: 400px;
+  max-width: 100%;
+  margin: 0 25px 25px 0;
+  display: inline-block;
+  vertical-align: top;
+  background-color: rgba(248, 255, 249, 0.4);
+  padding: 8px;
+  border-radius: 4px;
+  cursor: grab;
+  font-size: 12px;
+}
 
 
 .example-container-toadd {
