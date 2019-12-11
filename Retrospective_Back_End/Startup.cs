@@ -28,6 +28,7 @@ namespace Retrospective_Back_End
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddDbContext<RetroSpectiveDbContext>(opt => opt.UseSqlServer("Server=tcp:truelime.database.windows.net,1433;Initial Catalog=truelime;Persist Security Info=False;User ID=roers1;Password=ATlime2019;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
             services.AddScoped<IRetroCardRepository, FakeRetroCardRepo>();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 
         }
