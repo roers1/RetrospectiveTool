@@ -9,13 +9,15 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 
 import { StylesComponent } from './components/styles/styles.component';
+import { RetroBoardComponent } from './components/retro-board/retro-board.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    StylesComponent
+    StylesComponent,
+    RetroBoardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

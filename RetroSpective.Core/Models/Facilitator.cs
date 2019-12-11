@@ -12,6 +12,6 @@ namespace RetroSpective.Core.Models {
 
         public virtual RetroSpective RetroSpective { get; set; }
 
-        public virtual Participant[] Participants { get; set; }
+        public virtual ICollection<Participant> Participants { get; set; }
     }
 }
