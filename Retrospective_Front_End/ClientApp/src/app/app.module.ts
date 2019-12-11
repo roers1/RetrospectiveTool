@@ -10,23 +10,23 @@ import { HomeComponent } from './components/home/home.component';
 
 import { StylesComponent } from './components/styles/styles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
+import {RetroBoardComponent} from './components/retro-board/retro-board.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    StylesComponent,
-    RetroBoardComponent
+    StylesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    MatSliderModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'styles', component: StylesComponent}
+      { path: 'styles', component: StylesComponent},
+      { path: 'board/:id', component: RetroBoardComponent}
     ]),
     BrowserAnimationsModule
   ],
