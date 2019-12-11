@@ -16,6 +16,7 @@
   background-color: rgba(248, 255, 249, 0.6);
   padding: 8px;
   border-radius: 4px;
+  overflow: initial !important;
 }
 
 .example-list {
@@ -23,7 +24,7 @@
   min-height: 60px;
   background: white;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: initial;
   display: block;
 }
 
@@ -113,6 +114,10 @@ h6 {
   color: #ED5603;
 }
 
+.inputfield {
+  width: 300px;
+}
+
 
 .example-container-toaddcard {
   width: 400px;
@@ -144,3 +149,32 @@ h6 {
   color: #ffffff;
   margin-left: 20px;
 }
+
+
+/*.animated-item-fadeout {*/
+/*  animation: fadeInAnimation ease 1s;*/
+/*  animation-iteration-count: 1;*/
+/*  animation-fill-mode: forwards;*/
+/*}*/
+/*@keyframes fadeInAnimation {*/
+/*  0% {*/
+/*    opacity: 1;*/
+/*  }*/
+/*  100% {*/
+/*    opacity: 0;*/
+/*  }*/
+/*}*/
+
+/*.animated-item {*/
+/*  animation: fadeInAnimation ease 1s;*/
+/*  animation-iteration-count: 1;*/
+/*  animation-fill-mode: forwards;*/
+/*}*/
+/*@keyframes fadeInAnimation {*/
+/*  0% {*/
+/*    opacity: 0;*/
+/*  }*/
+/*  100% {*/
+/*    opacity: 1;*/
+/*  }*/
+/*}*/

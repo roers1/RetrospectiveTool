@@ -115,9 +115,7 @@ export class RetroBoardComponent implements OnInit {
   }
 
   enableEditing(bool: boolean, column: RetroColumn) {
-    if (!this.enabledColumn[column.title]) {
-      this.enabledColumn[column.title] = bool;
-    }
+    this.enabledColumn[column.title] = bool;
   }
 
   hasEnabledEditing(column: RetroColumn) {

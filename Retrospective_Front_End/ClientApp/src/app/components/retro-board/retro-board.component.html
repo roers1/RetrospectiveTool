@@ -23,14 +23,14 @@
 
 
           <div class="example-container-toaddcard">
-            <h6  (click)="enable=true">+ Voeg een lijst toe</h6 >
-            <div *ngIf="enable">
+            <h6  (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ Voeg een kaart toe</h6 >
+            <div class="animated-item" *ngIf="hasEnabledEditing(column)">
               <br>
-              <input #card placeholder="Voer een beschrijving in."/>
+              <input class="inputfield" #card placeholder="Voer een beschrijving in."/>
               <br>
-              <button (click)="enable=false; addCard(column, card.value)" class="btn btn-color-primary">Add</button>
-              <button (click)="enable=false" class="btn btn-color-secondary">cancel</button>
-
+              <br>
+              <button (click)="enableEditing(false, column); addCard(column, card.value)" class="btn btn-color-primary">Add</button>
+              <button (click)="enableEditing(false, column);" class="btn btn-color-secondary">cancel</button>
             </div>
           </div>
 
@@ -40,7 +40,7 @@
 
       <div class="example-container-toadd">
         <h4 (click)="enable=true">+ Voeg een lijst toe</h4>
-        <div *ngIf="enable">
+        <div class="animated-item" *ngIf="enable">
           <br>
           <label>
             <input #column placeholder="Voer een titel in."/>
