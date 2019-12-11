@@ -8,7 +8,7 @@ using RetroSpective.Core.Services;
 
 namespace Retrospective_Back_End.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {

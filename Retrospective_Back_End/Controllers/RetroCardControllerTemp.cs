@@ -10,13 +10,13 @@ using RetroSpective.Core.TempData;
 
 namespace Retrospective_Back_End.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    public class RetroCardController : ControllerBase
+    public class RetroCardControllerTemp : ControllerBase
     {
         private IRetroCardRepository _repository;
 
-        public RetroCardController(IRetroCardRepository repository)
+        public RetroCardControllerTemp(IRetroCardRepository repository)
         {
             _repository = repository;
         }
