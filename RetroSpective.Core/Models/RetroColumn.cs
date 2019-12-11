@@ -12,5 +12,10 @@ namespace Retrospective_Core.Models {
         public string Title { get; set; }
         public Retrospective Retrospective { get; set; }
         public ICollection<RetroCard> RetroCards { get; set; }
+
+        public RetroColumn()
+        {
+            RetroCards = new List<RetroCard>();
+        }
     }
 }

@@ -17,29 +17,43 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl.Seeds
             {
 
                 // Look for any dishes.
-                if (context.RetroCards.Any())
+                if (context.Retrospectives.Any(x => x.Title == "Training 1"))
                 {
                     return;   // DB has been seeded
                 }
 
 
-                //Seet Dish data
-
-                var retroCards = new RetroCard[]
+                Retrospective retrospective = new Retrospective
                 {
-                new RetroCard { Content = "Volgende keer beter" },
-                new RetroCard { Content = "Jan deed zijn werk goed" },
-                new RetroCard { Content = "Tieneke kon soms beter opletten tijdens vergaderingen" },
-                new RetroCard { Content = "Ik voel me niet fijn" },
-                new RetroCard { Content = "Peter doet dat beter!" },
-                new RetroCard { Content = "Als groep konden we beter samenwerken." },
-
+                    CreatedDate = new DateTime(),
+                    Description = "Welkom bij de eerste retro training",
+                    Title = "Training 1"
                 };
 
-                foreach (RetroCard d in retroCards)
-                {
-                    context.RetroCards.Add(d);
-                }
+                RetroColumn retroColumn1 = new RetroColumn{Title = "Dit is collom 1"};
+                RetroColumn retroColumn2 = new RetroColumn{Title = "Dit is collom 2"};
+                RetroColumn retroColumn3 = new RetroColumn{Title = "Dit is collom 3"};
+
+                RetroCard retroCard1 = new RetroCard { Content = "Ik sta in collom 1 als het goed is" };
+
+                RetroCard retroCard2 = new RetroCard { Content = "Ik sta in collom 2 als het goed is" };
+
+                RetroCard retroCard3 = new RetroCard { Content = "Ik sta in collom 3 als het goed is" };
+
+                RetroCard retroCard4 = new RetroCard { Content = "Ik sta in collom 3 als het goed is" , Position = 1};
+
+                retroColumn1.RetroCards.Add(retroCard1);
+                retroColumn2.RetroCards.Add(retroCard2);
+                retroColumn3.RetroCards.Add(retroCard3);
+                retroColumn3.RetroCards.Add(retroCard4);
+
+
+                retrospective.RetroColumns.Add(retroColumn1);
+                retrospective.RetroColumns.Add(retroColumn2);
+                retrospective.RetroColumns.Add(retroColumn3);
+
+                context.Add(retrospective);
+
                 context.SaveChanges();
             }
 

@@ -14,8 +14,14 @@ namespace Retrospective_Core.Models {
 
         public string Description { get; set; }
 
+        [Column(TypeName = "Date"), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime CreatedDate { get; set; }
 
         public ICollection<RetroColumn> RetroColumns { get; set; }
+
+        public Retrospective()
+        {
+            RetroColumns = new List<RetroColumn>();
+        }
     }
 }
