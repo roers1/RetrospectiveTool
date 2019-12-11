@@ -56,6 +56,10 @@ export class RetroBoardComponent implements OnInit {
     'Fall asleep'
   ];
 
+  doing = [
+    'hmmpph'
+  ];
+
   done = [
     'Get up',
     'Brush teeth',
