@@ -1,4 +1,4 @@
-import {RetroColumn} from './RetroColumn';
+import {RetroColumn} from './retroColumn';
 
 export class Retrospective {
   id: number;

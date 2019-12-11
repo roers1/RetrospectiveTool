@@ -6,4 +6,4 @@ var Retrospective = /** @class */ (function () {
     return Retrospective;
 }());
 exports.Retrospective = Retrospective;
-//# sourceMappingURL=Retrospective.js.map
+//# sourceMappingURL=retrospective.js.map
