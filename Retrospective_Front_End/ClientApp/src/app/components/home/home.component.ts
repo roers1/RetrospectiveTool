@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { CreateBoardComponent } from '../create-board/create-board.component';
+import { CreateBoardComponent } from '../boardcreate-dialog/boardcreatedialog.component';
 
 @Component({
   selector: 'app-home',

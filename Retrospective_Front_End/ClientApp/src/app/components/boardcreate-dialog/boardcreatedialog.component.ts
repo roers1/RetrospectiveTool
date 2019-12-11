@@ -17,7 +17,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 @Component({
   selector: 'app-create-board',
-  templateUrl: './create-board.component.html',
+  templateUrl: './boardcreatedialog.component.html',
   styleUrls: ['../home/home.component.css']
 })
 export class CreateBoardComponent {

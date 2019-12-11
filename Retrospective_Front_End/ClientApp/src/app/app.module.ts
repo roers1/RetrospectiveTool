@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
-import { CreateBoardComponent } from './components/create-board/create-board.component';
+import { CreateBoardComponent } from './components/boardcreate-dialog/boardcreatedialog.component';
 
 import { StylesComponent } from './components/styles/styles.component';
 
