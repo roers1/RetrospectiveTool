@@ -52,3 +52,20 @@
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.foreground {
+  background-color: rgba(139, 211, 0, 0.4);
+  height: calc(100vh - 60px);
+}
+body {
+  background-image: url('../../../assets/images/forest2.jpg');
+  background-position: center;
+  /*background-repeat: no-repeat;*/
+  /* -60px for header */
+  height: calc(100vh - 60px);
+  font-family: din;
+}
+
+.board_area {
+  margin-top: 5%;
+}
