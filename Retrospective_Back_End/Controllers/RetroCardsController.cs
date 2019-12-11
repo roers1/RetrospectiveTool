@@ -10,7 +10,7 @@ using Retrospective_EFSQLRetrospectiveDbImpl;
 
 namespace Retrospective_Back_End.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class RetroCardsController : ControllerBase
     {
@@ -21,14 +21,14 @@ namespace Retrospective_Back_End.Controllers
             _context = context;
         }
 
-        // GET: api/RetroCards
+        // GET: RetroCards
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RetroCard>>> GetRetroCards()
         {
             return await _context.RetroCards.ToListAsync();
         }
 
-        // GET: api/RetroCards/5
+        // GET: RetroCards/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RetroCard>> GetRetroCard(int id)
         {
@@ -42,7 +42,7 @@ namespace Retrospective_Back_End.Controllers
             return retroCard;
         }
 
-        // PUT: api/RetroCards/5
+        // PUT: RetroCards/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
@@ -74,7 +74,7 @@ namespace Retrospective_Back_End.Controllers
             return NoContent();
         }
 
-        // POST: api/RetroCards
+        // POST: RetroCards
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
@@ -86,7 +86,7 @@ namespace Retrospective_Back_End.Controllers
             return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
         }
 
-        // DELETE: api/RetroCards/5
+        // DELETE: RetroCards/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<RetroCard>> DeleteRetroCard(int id)
         {
