@@ -12,11 +12,10 @@ import {RetroColumn} from '../../../models/RetroColumn';
 export class RetroBoardComponent implements OnInit {
   enable = false;
   elements = [];
-
   retrospective: Retrospective = {
     id: 0,
-    title: 'Hell yeah',
-    description: 'idc',
+    title: 'Nieuw bord',
+    description: 'Plaats hier een beschrijving.',
     retroColumns: [{
       title: 'Todo',
       cards: [
@@ -38,25 +37,41 @@ export class RetroBoardComponent implements OnInit {
       ]
     },
       {
-        title: 'Done',
+        title: 'Doing',
         cards: [
           {
             id: 3,
-<<<<<<< Updated upstream
-            content: 'Broeder...',
+            content: 'Nothing',
             position: 0
-=======
-            content: 'Broeder..'
->>>>>>> Stashed changes
           },
           {
             id: 4,
-            content: 'Nee',
+            content: 'Item',
             position: 1
           },
           {
             id: 5,
-            content: 'Dank u',
+            content: 'Item',
+            position: 2
+          }
+        ]
+      },
+      {
+        title: 'Done',
+        cards: [
+          {
+            id: 6,
+            content: 'Cooking',
+            position: 0
+          },
+          {
+            id: 7,
+            content: 'Grocery shopping',
+            position: 1
+          },
+          {
+            id: 8,
+            content: 'Cleaning',
             position: 2
           }
         ]
