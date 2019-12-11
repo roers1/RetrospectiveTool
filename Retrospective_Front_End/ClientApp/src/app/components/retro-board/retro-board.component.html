@@ -3,47 +3,7 @@
   <br>
   <h1>Boardnaam</h1>
   <div class="board_area">
-    <div class="example-container">
-      <h2>To do</h2>
-
-      <div
-        cdkDropList
-        #todoList="cdkDropList"
-        [cdkDropListData]="todo"
-        [cdkDropListConnectedTo]="[todoList, doingList, finishedList]"
-        class="example-list"
-        (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
-      </div>
-    </div>
-
-    <div class="example-container">
-      <h2>In progress</h2>
-
-      <div
-        cdkDropList
-        #doingList="cdkDropList"
-        [cdkDropListData]="doing"
-        [cdkDropListConnectedTo]="[todoList, doingList, finishedList]"
-        class="example-list"
-        (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of doing" cdkDrag>{{item}}</div>
-      </div>
-    </div>
-
-    <div class="example-container">
-      <h2>Done</h2>
-
-      <div
-        cdkDropList
-        #finishedList="cdkDropList"
-        [cdkDropListData]="done"
-        [cdkDropListConnectedTo]="[todoList, doingList, finishedList]"
-        class="example-list"
-        (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
-      </div>
-    </div>
+  
   </div>
 </div>
 </body>
