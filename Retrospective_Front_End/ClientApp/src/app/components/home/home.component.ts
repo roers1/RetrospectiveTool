@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit{
 
   opendialog(): void {
     const dialogRef = this.dialog.open(CreateBoardComponent, {
-      width: '35%',
+      width: '400px',
       data: {name: this.name, description: this.description}
     });
 

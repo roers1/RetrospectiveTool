@@ -20,3 +20,9 @@ body {
     min-width: 200px;
     width: 100%;
 }
+.font {
+    font-family: "din";
+}
+.font:focus {
+    outline: 0;
+}
