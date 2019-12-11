@@ -10,7 +10,7 @@ import {RetroColumn} from '../../../models/RetroColumn';
   styleUrls: ['./retro-board.component.css']
 })
 export class RetroBoardComponent implements OnInit {
-
+  enable = false;
   elements = [];
 
   retrospective: Retrospective = {
@@ -42,8 +42,12 @@ export class RetroBoardComponent implements OnInit {
         cards: [
           {
             id: 3,
+<<<<<<< Updated upstream
             content: 'Broeder...',
             position: 0
+=======
+            content: 'Broeder..'
+>>>>>>> Stashed changes
           },
           {
             id: 4,

@@ -4,6 +4,9 @@
   <br>
   <h1>{{retrospective.title}}</h1>
   <div class="board_area">
+
+
+
     <div class="example-container" *ngFor="let column of retrospective.retroColumns">
       <h2>{{column.title}}</h2>
 
@@ -18,6 +21,18 @@
         <div class="example-box" *ngFor="let item of column.cards" cdkDrag>{{item.content}}</div>
       </div>
     </div>
+
+    <div class="example-container-toadd">
+      <h4 (click)="enable=true">+ Voeg een lijst toe</h4>
+      <div *ngIf="enable">
+        <br>
+        <br>
+        <button (click)="enable=false" class="btn btn-color-primary">Add</button>
+        <button (click)="enable=false" class="btn btn-color-secondary">cancel</button>
+
+      </div>
+    </div>
+
   </div>
 </div>
 </body>

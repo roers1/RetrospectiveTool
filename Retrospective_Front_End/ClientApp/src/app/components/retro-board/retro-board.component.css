@@ -4,6 +4,9 @@
   margin: 0 25px 25px 0;
   display: inline-block;
   vertical-align: top;
+  background-color: rgba(248, 255, 249, 0.6);
+  padding: 8px;
+  border-radius: 4px;
 }
 
 .example-list {
@@ -71,8 +74,28 @@ body {
 }
 
 h2 {
-  color: #ffffff;
+  /*color: purple;*/
+  color: #ED5603;
 }
 h1 {
   color: #ffffff;
+}
+h4 {
+  font-size: 20px;
+  color: #ED5603;
+}
+
+
+
+
+.example-container-toadd {
+  width: 400px;
+  max-width: 100%;
+  margin: 0 25px 25px 0;
+  display: inline-block;
+  vertical-align: top;
+  background-color: rgba(248, 255, 249, 0.4);
+  padding: 8px;
+  border-radius: 4px;
+  cursor: grab;
 }
