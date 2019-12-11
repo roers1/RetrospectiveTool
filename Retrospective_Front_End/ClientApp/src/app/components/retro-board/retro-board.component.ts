@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {RetroCard} from '../../../models/RetroCard';
 import {Retrospective} from '../../../models/Retrospective';
+import {RetroColumn} from '../../../models/RetroColumn';
 
 @Component({
   selector: 'app-retro-board',
@@ -21,15 +22,18 @@ export class RetroBoardComponent implements OnInit {
       cards: [
         {
           id: 0,
-          content: 'Get to work'
+          content: 'Get to work',
+          position: 0
         },
         {
           id: 1,
-          content: 'Pick up groceries'
+          content: 'Pick up groceries',
+          position: 1
         },
         {
           id: 2,
-          content: 'Go to sleep...'
+          content: 'Go to sleep...',
+          position: 2
         }
       ]
     },
@@ -38,15 +42,18 @@ export class RetroBoardComponent implements OnInit {
         cards: [
           {
             id: 3,
-            content: 'Broeder...'
+            content: 'Broeder...',
+            position: 0
           },
           {
             id: 4,
-            content: 'Nee'
+            content: 'Nee',
+            position: 1
           },
           {
             id: 5,
-            content: 'Dank u'
+            content: 'Dank u',
+            position: 2
           }
         ]
       }]
@@ -73,7 +80,17 @@ export class RetroBoardComponent implements OnInit {
   // addCard()
 
   addColumn(title) {
+    this.retrospective.retroColumns.push(
+      {title: title, cards: []}
+    );
 
+    // TODO: ADD SERVICE!
+  }
+
+  addCard(column: RetroColumn, content) {
+    column.cards.push({content: content, id: 0, position: (column.cards.length - 1)});
+
+    // TODO ADD SERVICE!
   }
 
 
@@ -81,9 +98,5 @@ export class RetroBoardComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  get diagnostic() {
-    return JSON.stringify(this.retrospective.retroColumns[0].cards);
   }
 }
