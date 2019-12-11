@@ -8,6 +8,6 @@ namespace Retrospective_Core.Models {
 
         public string Content { get; set; }
         public int Position { get; set; }
-        public RetroColumn RetroColumn { get; set; }
+        public virtual RetroColumn RetroColumn { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Retrospective_EFSQLRetrospectiveDbImpl;
 
 namespace Retrospective_EFSQLRetroSpectiveDbImpl.Migrations
 {
     [DbContext(typeof(RetroSpectiveDbContext))]
-    partial class RetroSpectiveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191211132208_AddedVirtual fields")]
+    partial class AddedVirtualfields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,7 +34,7 @@ namespace Retrospective_EFSQLRetroSpectiveDbImpl.Migrations
                     b.Property<int>("Position")
                         .HasColumnType("int");
 
-                    b.Property<int>("RetroColumnId")
+                    b.Property<int?>("RetroColumnId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -49,7 +51,7 @@ namespace Retrospective_EFSQLRetroSpectiveDbImpl.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("RetrospectiveId")
+                    b.Property<int?>("RetrospectiveId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -87,18 +89,14 @@ namespace Retrospective_EFSQLRetroSpectiveDbImpl.Migrations
                 {
                     b.HasOne("Retrospective_Core.Models.RetroColumn", "RetroColumn")
                         .WithMany("RetroCards")
-                        .HasForeignKey("RetroColumnId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RetroColumnId");
                 });
 
             modelBuilder.Entity("Retrospective_Core.Models.RetroColumn", b =>
                 {
                     b.HasOne("Retrospective_Core.Models.Retrospective", "Retrospective")
                         .WithMany("RetroColumns")
-                        .HasForeignKey("RetrospectiveId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RetrospectiveId");
                 });
 #pragma warning restore 612, 618
         }
