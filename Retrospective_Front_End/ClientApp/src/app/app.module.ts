@@ -11,6 +11,8 @@ import { HomeComponent } from './components/home/home.component';
 import { StylesComponent } from './components/styles/styles.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
+import {RetroBoardComponent} from './components/retro-board/retro-board.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,9 +26,11 @@ import { MatSliderModule } from '@angular/material/slider';
     HttpClientModule,
     FormsModule,
     MatSliderModule,
+    DragDropModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'styles', component: StylesComponent}
+      { path: 'styles', component: StylesComponent},
+      { path: 'board', component: RetroBoardComponent}
     ]),
     BrowserAnimationsModule
   ],
