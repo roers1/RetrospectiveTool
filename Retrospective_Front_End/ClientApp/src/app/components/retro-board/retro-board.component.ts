@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {RetroColumn} from '../../../models/RetroColumn';
+import {RetroCard} from '../../../models/RetroCard';
 
 @Component({
   selector: 'app-retro-board',
@@ -7,6 +9,46 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
   styleUrls: ['./retro-board.component.css']
 })
 export class RetroBoardComponent implements OnInit {
+
+  elements = [];
+
+  retroColumns: RetroColumn[] = [
+    {
+      title: 'Todo',
+      cards: [
+        {
+          id: 0,
+          content: 'Get to work'
+        },
+        {
+          id: 1,
+          content: 'Pick up groceries'
+        },
+        {
+          id: 2,
+          content: 'Go to sleep...'
+        }
+      ]
+    },
+    {
+      title: 'Done',
+      cards: [
+        {
+          id: 3,
+          content: 'Broeder...'
+        },
+        {
+          id: 4,
+          content: 'Nee'
+        },
+        {
+          id: 5,
+          content: 'Dank u'
+        }
+      ]
+    }
+  ];
+
   todo = [
     'Get to work',
     'Pick up groceries',
@@ -20,11 +62,10 @@ export class RetroBoardComponent implements OnInit {
     'Take a shower',
     'Check e-mail',
     'Walk dog'
-    ];
+  ];
 
-
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
+  drop(event: CdkDragDrop<RetroCard[]>) {
+    if (event.container === event.previousContainer) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data,
@@ -34,10 +75,15 @@ export class RetroBoardComponent implements OnInit {
     }
   }
 
+  getColumnNames(any) {
+    this.elements.push(any);
 
-  constructor() { }
+    return this.elements;
+  }
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
-
 }

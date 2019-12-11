@@ -18,13 +18,15 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    StylesComponent
+    StylesComponent,
+    RetroBoardComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     MatSliderModule,
+    DragDropModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'styles', component: StylesComponent},
