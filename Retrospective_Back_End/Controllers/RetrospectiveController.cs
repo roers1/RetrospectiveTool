@@ -12,48 +12,48 @@ namespace Retrospective_Back_End.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class RetroCardsController : ControllerBase
+    public class RetrospectiveController : ControllerBase
     {
         private readonly RetroSpectiveDbContext _context;
 
-        public RetroCardsController(RetroSpectiveDbContext context)
+        public RetrospectiveController(RetroSpectiveDbContext context)
         {
             _context = context;
         }
 
-        // GET: RetroCards
+        // GET: /Retrospectives
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RetroCard>>> GetRetroCards()
+        public async Task<ActionResult<IEnumerable<Retrospective>>> GetRetrospectives()
         {
-            return await _context.RetroCards.ToListAsync();
+            return await _context.Retrospectives.ToListAsync();
         }
 
-        // GET: RetroCards/5
+        // GET: /Retrospectives/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RetroCard>> GetRetroCard(int id)
+        public async Task<ActionResult<Retrospective>> GetRetrospective(int id)
         {
-            var retroCard = await _context.RetroCards.FindAsync(id);
+            var retrospective = await _context.Retrospectives.FindAsync(id);
 
-            if (retroCard == null)
+            if (retrospective == null)
             {
                 return NotFound();
             }
 
-            return retroCard;
+            return retrospective;
         }
 
-        // PUT: RetroCards/5
+        // PUT: /Retrospectives/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRetroCard(int id, RetroCard retroCard)
+        public async Task<IActionResult> PutRetrospective(int id, Retrospective retrospective)
         {
-            if (id != retroCard.Id)
+            if (id != retrospective.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(retroCard).State = EntityState.Modified;
+            _context.Entry(retrospective).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace Retrospective_Back_End.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RetroCardExists(id))
+                if (!RetrospectiveExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +74,37 @@ namespace Retrospective_Back_End.Controllers
             return NoContent();
         }
 
-        // POST: RetroCards
+        // POST: /Retrospectives
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<RetroCard>> PostRetroCard(RetroCard retroCard)
+        public async Task<ActionResult<Retrospective>> PostRetrospective(Retrospective retrospective)
         {
-            _context.RetroCards.Add(retroCard);
+            _context.Retrospectives.Add(retrospective);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
+            return CreatedAtAction("GetRetrospective", new { id = retrospective.Id }, retrospective);
         }
 
-        // DELETE: RetroCards/5
+        // DELETE: /Retrospectives/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<RetroCard>> DeleteRetroCard(int id)
+        public async Task<ActionResult<Retrospective>> DeleteRetrospective(int id)
         {
-            var retroCard = await _context.RetroCards.FindAsync(id);
-            if (retroCard == null)
+            var retrospective = await _context.Retrospectives.FindAsync(id);
+            if (retrospective == null)
             {
                 return NotFound();
             }
 
-            _context.RetroCards.Remove(retroCard);
+            _context.Retrospectives.Remove(retrospective);
             await _context.SaveChangesAsync();
 
-            return retroCard;
+            return retrospective;
         }
 
-        private bool RetroCardExists(int id)
+        private bool RetrospectiveExists(int id)
         {
-            return _context.RetroCards.Any(e => e.Id == id);
+            return _context.Retrospectives.Any(e => e.Id == id);
         }
     }
 }
