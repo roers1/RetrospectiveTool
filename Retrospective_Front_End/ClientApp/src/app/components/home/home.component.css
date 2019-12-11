@@ -16,3 +16,7 @@ body {
 .buttonholder {
     margin-top: 15%;
 }
+.full-width {
+    min-width: 200px;
+    width: 100%;
+}

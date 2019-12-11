@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { CreateBoardComponent } from '../create-board/create-board.component';
 
 @Component({
   selector: 'app-home',
@@ -7,12 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit{
 
+  name: String = "";
+  description: String = "";
+
+  constructor(public dialog: MatDialog) {}
+
   ngOnInit(): void {
   }
 
-  openmodal() {
-    
+  opendialog(): void {
+    const dialogRef = this.dialog.open(CreateBoardComponent, {
+      width: '35%',
+      data: {name: this.name, description: this.description}
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      console.log('result: ' + JSON.stringify(data));
+      // this.name = data.name;
+      // this.description = data.description;
+    });
   }
-
-
 }

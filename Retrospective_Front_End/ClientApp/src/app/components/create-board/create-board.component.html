@@ -1,17 +1,14 @@
-<body>
-    <div class="foreground">
+<div mat-dialog-content>
+    <mat-form-field class="full-width">
+        <input matInput placeholder="Voer een naam in" [(ngModel)]="data.name">
+    </mat-form-field>
 
-        <div class="center-content">
-            <h1>Creëer een nieuw board</h1>
-        </div>
+    <mat-form-field class="full-width">
+        <textarea matInput placeholder="Voer een descripte in" [(ngModel)]="data.description"></textarea>
+    </mat-form-field>
+</div>
 
-        <div class="form-group center-self">
-            <input type="text" placeholder="Board naam">
-            <input type="number" placeholder="Aantal start colommen">
-            <div class="buttonholder center-content">
-                <button class="TLbtn btn-large btn-color-primary">Maak aan</button>
-            </div>
-        </div>
-
-    </div>
-</body>
+<div mat-dialog-action>
+    <button mat-button (click)="onNoClick()">Terug</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Aanmaken</button>
+</div>

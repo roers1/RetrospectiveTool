@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Retrospective.Core", "Retro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Retrospective.EFSQLRetroSpectiveDbImpl", "RetroSpective.EFSQLRetroSpectiveDbImpl\Retrospective.EFSQLRetroSpectiveDbImpl.csproj", "{469F7B63-2F48-4E23-B557-AA5A63BAA01D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Retrospective_Back_End", "Retrospective_Back_End\Retrospective_Back_End.csproj", "{D0C51421-1B5B-4C97-AC35-677DE6768F28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Retrospective_Back_End", "Retrospective_Back_End\Retrospective_Back_End.csproj", "{D0C51421-1B5B-4C97-AC35-677DE6768F28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +25,10 @@ Global
 		{3D4A103D-7C6F-411A-A52E-BC14F0FBA497}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D4A103D-7C6F-411A-A52E-BC14F0FBA497}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D4A103D-7C6F-411A-A52E-BC14F0FBA497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{469F7B63-2F48-4E23-B557-AA5A63BAA01D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{469F7B63-2F48-4E23-B557-AA5A63BAA01D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{469F7B63-2F48-4E23-B557-AA5A63BAA01D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{469F7B63-2F48-4E23-B557-AA5A63BAA01D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D0C51421-1B5B-4C97-AC35-677DE6768F28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D0C51421-1B5B-4C97-AC35-677DE6768F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0C51421-1B5B-4C97-AC35-677DE6768F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
