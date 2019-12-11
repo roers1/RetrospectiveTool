@@ -25,14 +25,14 @@ namespace Retrospective_Back_End.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Retrospective>>> GetRetrospectives()
         {
-            return await _context.Retrospectives.ToListAsync();
+            return await _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards).ToListAsync();
         }
 
         // GET: /Retrospectives/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Retrospective>> GetRetrospective(int id)
         {
-            var retrospective = await _context.Retrospectives.FindAsync(id);
+            var retrospective = await _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards).SingleOrDefaultAsync(i => i.Id == id);
 
             if (retrospective == null)
             {
