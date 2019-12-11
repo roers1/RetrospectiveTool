@@ -1,17 +1,24 @@
-<br>
 
-<div class="example-container" *ngFor="let column of retroColumns">
-  <h2>{{column.title}}</h2>
+<body>
+<div class="foreground">
+  <br>
+  <h1>{{retrospective.title}}</h1>
+  <div class="board_area">
+    <div class="example-container" *ngFor="let column of retrospective.retroColumns">
+      <h2>{{column.title}}</h2>
 
-  <div
-    cdkDropList
-    #element="cdkDropList"
-    [attr.id]="column.title"
-    [cdkDropListData]="column.cards"
-    [cdkDropListConnectedTo]="getColumnNames(element)"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)">
-    <div class="example-box" *ngFor="let item of column.cards" cdkDrag>{{item.content}}</div>
+      <div
+        cdkDropList
+        #element="cdkDropList"
+        [attr.id]="column.title"
+        [cdkDropListData]="column.cards"
+        [cdkDropListConnectedTo]="getColumnNames(element)"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of column.cards" cdkDrag>{{item.content}}</div>
+      </div>
+    </div>
   </div>
 </div>
+</body>
 
