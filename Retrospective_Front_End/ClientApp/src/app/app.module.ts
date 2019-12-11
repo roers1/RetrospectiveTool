@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
+import { CreateBoardComponent } from './components/create-board/create-board.component';
 
 import { StylesComponent } from './components/styles/styles.component';
 
@@ -15,7 +16,8 @@ import { StylesComponent } from './components/styles/styles.component';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    StylesComponent
+    StylesComponent,
+    CreateBoardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -23,6 +25,7 @@ import { StylesComponent } from './components/styles/styles.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'new', component: CreateBoardComponent},
       { path: 'styles', component: StylesComponent}
     ])
   ],
