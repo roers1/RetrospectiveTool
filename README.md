@@ -19,6 +19,6 @@ Hans van der Linden\
 Merel van de Wiel\
 \
 --------------------
-\
+
 Webpagina: https://truelime.azurewebsites.net/
 WebAPI: https://truelimeapi.azurewebsites.net/  
