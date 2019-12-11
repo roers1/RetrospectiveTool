@@ -12,6 +12,7 @@ import {RetroColumn} from '../../../models/RetroColumn';
 export class RetroBoardComponent implements OnInit {
   enable = false;
   elements = [];
+  enabledColumn = {};
   retrospective: Retrospective = {
     id: 0,
     title: 'Nieuw bord',
@@ -96,6 +97,7 @@ export class RetroBoardComponent implements OnInit {
     return this.elements;
   }
 
+
   // addCard()
 
   addColumn(title) {
@@ -112,6 +114,19 @@ export class RetroBoardComponent implements OnInit {
     // TODO ADD SERVICE!
   }
 
+  enableEditing(bool: boolean, column: RetroColumn) {
+    if (!this.enabledColumn[column.title]) {
+      this.enabledColumn[column.title] = bool;
+    }
+  }
+
+  hasEnabledEditing(column: RetroColumn) {
+    if (!this.enabledColumn[column.title]) {
+      this.enabledColumn[column.title] = false;
+    }
+
+    return this.enabledColumn[column.title];
+  }
 
   constructor() {
   }
