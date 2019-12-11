@@ -10,7 +10,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl.Seeds
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            //RetroSpectiveDbContext context = app.Service.GetRequiredService<RetroSpectiveDbContext>();
+            //RetrospectiveDbContext context = app.Service.GetRequiredService<RetrospectiveDbContext>();
             using (var context = new RetroSpectiveDbContext(
 
                     serviceProvider.GetRequiredService<DbContextOptions<RetroSpectiveDbContext>>()))

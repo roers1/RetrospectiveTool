@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using Retrospective_Core.Models;
+﻿//using System.Linq;
+//using Retrospective_Core.Models;
 
-namespace Retrospective_Core.Services {
-    public interface IFacilitatorRepository {
+//namespace Retrospective_Core.Services {
+//    public interface IFacilitatorRepository {
 
-        IQueryable<Facilitator> Facilitators { get; }
+//        IQueryable<Facilitator> Facilitators { get; }
 
-    }
-}
+//    }
+//}

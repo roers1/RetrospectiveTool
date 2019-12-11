@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Retrospective_Core.Models {
@@ -8,8 +10,7 @@ namespace Retrospective_Core.Models {
         public int Id { get; set; }
 
         public string Title { get; set; }
-
-        [ForeignKey("RetroCards")]
-        public virtual RetroCard[] RetroCards { get; set; }
+        public Retrospective Retrospective { get; set; }
+        public ICollection<RetroCard> RetroCards { get; set; }
     }
 }

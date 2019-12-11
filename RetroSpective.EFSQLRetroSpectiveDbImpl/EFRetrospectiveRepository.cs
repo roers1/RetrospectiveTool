@@ -12,6 +12,6 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl {
         }
 
 
-        public IQueryable<Retrospective> Retrospectives => _context.RetroSpectives;
+        public IQueryable<Retrospective> Retrospectives => _context.Retrospectives;
     }
 }

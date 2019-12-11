@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,7 +16,6 @@ namespace Retrospective_Core.Models {
 
         public DateTime CreatedDate { get; set; }
 
-        [ForeignKey("RetroColumns")]
-        public virtual RetroColumn[] RetroColumns { get; set; }
+        public ICollection<RetroColumn> RetroColumns { get; set; }
     }
 }
