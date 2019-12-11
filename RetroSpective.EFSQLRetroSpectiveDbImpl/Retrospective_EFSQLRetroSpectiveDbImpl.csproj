@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Retrospective_EFSQLRetroSpectiveDbImpl</RootNamespace>
+    <AssemblyName>Retrospective_EFSQLRetroSpectiveDbImpl</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RetroSpective.Core\Retrospective.Core.csproj" />
+    <ProjectReference Include="..\RetroSpective.Core\RetroSpective_Core.csproj" />
   </ItemGroup>
 
 </Project>

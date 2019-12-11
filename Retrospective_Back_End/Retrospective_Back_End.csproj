@@ -22,12 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RetroSpective.Core\RetroSpective.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\RetroSpective.Core\Retrospective.Core.csproj" />
-    <ProjectReference Include="..\RetroSpective.EFSQLRetroSpectiveDbImpl\Retrospective.EFSQLRetroSpectiveDbImpl.csproj" />
+    <ProjectReference Include="..\RetroSpective.Core\RetroSpective_Core.csproj" />
+    <ProjectReference Include="..\RetroSpective.EFSQLRetroSpectiveDbImpl\Retrospective_EFSQLRetroSpectiveDbImpl.csproj" />
   </ItemGroup>
 
 </Project>

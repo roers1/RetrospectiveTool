@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>RetroSpective_Core</AssemblyName>
+    <RootNamespace>RetroSpective_Core</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
