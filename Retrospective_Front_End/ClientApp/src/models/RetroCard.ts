@@ -1,4 +1,10 @@
 export class RetroCard {
-  id: number;
-  content: string;
+  constructor(
+    public id: number,
+    public content: string
+  ) { }
+
+  updateContent(input: string) {
+    this.content = input;
+  }
 }
