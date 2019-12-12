@@ -12,7 +12,6 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 
 
-
 export class RetroBoardComponent implements OnInit {
   enable = false;
   elements = [];
@@ -118,14 +117,17 @@ export class RetroBoardComponent implements OnInit {
     // TODO: ADD SERVICE!
   }
 
-  addCard(column: RetroColumn, content) {
-    column.cards.push({content: content, id: 0, position: (column.cards.length - 1)});
+  addCard(column: RetroColumn) {
+    const value = this.cardGroup.value;
+
+    column.cards.push({content: value.content, id: 0, position: (column.cards.length - 1)});
 
     // TODO ADD SERVICE!
   }
 
   enableEditing(bool: boolean, column: RetroColumn) {
-      this.enabledColumn[column.title] = bool;
+    this.enabledColumn = {};
+    this.enabledColumn[column.title] = bool;
   }
 
   hasEnabledEditing(column: RetroColumn) {
