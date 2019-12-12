@@ -94,7 +94,7 @@ body {
 }
 
 .board_area {
-  margin-top: 5%;
+  margin-top: 15%; /*Leave room for the title and description*/
   white-space: nowrap;
 }
 
@@ -150,6 +150,12 @@ h6 {
   margin-left: 20px;
 }
 
+.locked {
+  position: fixed;
+}
+
+
+
 
 /*.animated-item-fadeout {*/
 /*  animation: fadeInAnimation ease 1s;*/
@@ -165,16 +171,16 @@ h6 {
 /*  }*/
 /*}*/
 
-/*.animated-item {*/
-/*  animation: fadeInAnimation ease 1s;*/
-/*  animation-iteration-count: 1;*/
-/*  animation-fill-mode: forwards;*/
-/*}*/
-/*@keyframes fadeInAnimation {*/
-/*  0% {*/
-/*    opacity: 0;*/
-/*  }*/
-/*  100% {*/
-/*    opacity: 1;*/
-/*  }*/
-/*}*/
+.animated-item {
+  animation: fadeInAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

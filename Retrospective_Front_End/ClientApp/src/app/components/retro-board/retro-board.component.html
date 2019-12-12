@@ -1,12 +1,13 @@
 <body>
 <div class="foreground">
   <div class="scrollable">
+    <div class="locked">
     <br>
     <h1>{{retrospective.title}}</h1>
     <br>
     <h3 class="description">{{retrospective.description}}</h3>
+    </div>
     <div class="board_area">
-
 
       <div class="example-container" *ngFor="let column of retrospective.retroColumns">
         <h2>{{column.title}}</h2>
