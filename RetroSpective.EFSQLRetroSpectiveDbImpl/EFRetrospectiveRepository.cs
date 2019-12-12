@@ -21,6 +21,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl {
         public void RemoveRetrospective(Retrospective retrospective)
         {
 	        _context.Retrospectives.Remove(retrospective);
+	        _context.SaveChanges();
         }
 
         public void SaveRetrospective(Retrospective retrospective)
