@@ -6,33 +6,34 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Retrospective_Core.Models;
+using Retrospective_Core.Services;
 using Retrospective_EFSQLRetrospectiveDbImpl;
 
 namespace Retrospective_Back_End.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class RetrospectiveController : ControllerBase
+    public class RetrospectivesController : ControllerBase
     {
-        private readonly RetroSpectiveDbContext _context;
+        private readonly IRetroRespectiveRepository _context;
 
-        public RetrospectiveController(RetroSpectiveDbContext context)
+        public RetrospectivesController(IRetroRespectiveRepository context)
         {
             _context = context;
         }
 
-        // GET: /Retrospectives
+        // GET: api/Retrospectives
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Retrospective>>> GetRetrospectives()
         {
             return await _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards).ToListAsync();
         }
 
-        // GET: /Retrospectives/5
+        // GET: api/Retrospectives/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Retrospective>> GetRetrospective(int id)
         {
-            var retrospective = await _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards).SingleOrDefaultAsync(i => i.Id == id);
+            var retrospective = _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards).FirstOrDefault(r => r.Id == id);
 
             if (retrospective == null)
             {
@@ -42,7 +43,7 @@ namespace Retrospective_Back_End.Controllers
             return retrospective;
         }
 
-        // PUT: /Retrospectives/5
+        // PUT: api/Retrospectives/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
@@ -53,11 +54,9 @@ namespace Retrospective_Back_End.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(retrospective).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                _context.SaveRetrospective(retrospective);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -74,31 +73,29 @@ namespace Retrospective_Back_End.Controllers
             return NoContent();
         }
 
-        // POST: /Retrospectives
+        // POST: api/Retrospectives
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
         public async Task<ActionResult<Retrospective>> PostRetrospective(Retrospective retrospective)
         {
-            _context.Retrospectives.Add(retrospective);
-            await _context.SaveChangesAsync();
+            _context.SaveRetrospective(retrospective);
 
             return CreatedAtAction("GetRetrospective", new { id = retrospective.Id }, retrospective);
         }
 
-        // DELETE: /Retrospectives/5
+        // DELETE: api/Retrospectives/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Retrospective>> DeleteRetrospective(int id)
         {
-            var retrospective = await _context.Retrospectives.FindAsync(id);
+            var retrospective = _context.Retrospectives.First(r => r.Id == id);
             if (retrospective == null)
             {
                 return NotFound();
             }
 
-            _context.Retrospectives.Remove(retrospective);
-            await _context.SaveChangesAsync();
-
+            _context.RemoveRetrospective(retrospective);
+      
             return retrospective;
         }
 
