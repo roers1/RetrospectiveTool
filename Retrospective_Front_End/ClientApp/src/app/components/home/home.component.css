@@ -1,0 +1,31 @@
+h1 {
+    color: white;
+    font-family: "din";
+}
+.title {
+    padding-top: 20px;
+}
+.foreground {
+    background-color: rgba(139, 211, 0, 0.4);
+    height: calc(100vh - 60px);
+}
+body {
+    background-image: url('../../../assets/images/forest2.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    /* -60px for header */
+    height: calc(100vh - 60px);
+}
+.buttonholder {
+    margin-top: 15%;
+}
+.full-width {
+    min-width: 200px;
+    width: 100%;
+}
+.font {
+    font-family: "din";
+}
+.font:focus {
+    outline: 0;
+}

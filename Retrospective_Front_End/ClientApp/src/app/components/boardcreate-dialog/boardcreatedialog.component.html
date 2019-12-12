@@ -1,0 +1,22 @@
+<div mat-dialog-content class="font">
+    <mat-form-field class="full-width">
+        <input matInput placeholder="Voer een naam in" [(ngModel)]="data.name"
+        [formControl]="nameFormControl" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="nameFormControl.hasError('name') && !nameFormControl.hasError('required')">
+            Deze naam is niet geldig.
+        </mat-error>
+        <mat-error *ngIf="nameFormControl.hasError('required')">
+            Naam is <strong>verplicht</strong>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <textarea matInput placeholder="Voer een descripte in*" [(ngModel)]="data.description"></textarea>
+    </mat-form-field>
+</div>
+
+<div mat-dialog-action class="font">
+    <button mat-button (click)="onNoClick()" class="font">Terug</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="font"
+        [disabled]="nameFormControl.hasError('name') || nameFormControl.hasError('required')">Aanmaken</button>
+</div>
