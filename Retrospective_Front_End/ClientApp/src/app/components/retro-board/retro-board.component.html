@@ -32,7 +32,7 @@
                                                       placeholder="Voer een beschrijving in."/>
               <br>
               <br>
-              <button [disabled]="cardGroup.invalid" (click)="enableEditing(false, column); addCard(column, card.value)"
+              <button [disabled]="cardGroup.invalid" (click)="enableEditing(false, column); addCard(column)"
                       class="btn btn-color-primary">Add
               </button>
               <button (click)="enableEditing(false, column);" class="btn btn-color-secondary">cancel</button>
