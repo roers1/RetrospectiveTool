@@ -3,6 +3,7 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 import {RetroCard} from '../../../models/RetroCard';
 import {Retrospective} from '../../../models/Retrospective';
 import {RetroColumn} from '../../../models/RetroColumn';
+import {MatMenuModule} from '@angular/material/menu';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -15,6 +16,7 @@ export class RetroBoardComponent implements OnInit {
   enable = false;
   elements = [];
   enabledColumn = {};
+  editedContent = {};
   retrospective: Retrospective = new Retrospective(0, 'Title', 'Description', [
     new RetroColumn(0, 'Todo', [
       new RetroCard(0, 'Nothing', 0),
@@ -58,7 +60,13 @@ export class RetroBoardComponent implements OnInit {
     this.retrospective.retroColumns.push(
       new RetroColumn(this.retrospective.retroColumns.length, title, [])
     );
+    // TODO: ADD SERVICE!
+  }
 
+  emptyColumn(column: RetroColumn) {
+    if(confirm("Weet je zeker dat je alle kaarten in deze kolom wilt verwijderen?")) {
+      column.cards = [];
+    }
     // TODO: ADD SERVICE!
   }
 
@@ -70,6 +78,47 @@ export class RetroBoardComponent implements OnInit {
     );
 
     // TODO ADD SERVICE!
+  }
+  deleteColumn(givenColumn: RetroColumn) {
+
+    if(confirm("Weet je zeker dat je deze kolom wilt verwijderen?")) {
+      let index = this.retrospective.retroColumns.indexOf(givenColumn);
+      this.retrospective.retroColumns.splice(index, 1);
+    }
+    // TODO ADD SERVICE!
+  }
+  deleteCard(givenCard: RetroCard) {
+
+    if(confirm("Weet je zeker dat je deze kaart wilt verwijderen?")) {
+      this.retrospective.retroColumns.forEach(column => {
+        column.cards.forEach(card => {
+          if(card.id == givenCard.id) {
+            let index = column.cards.indexOf(givenCard);
+            column.cards.splice(index, 1)
+          }
+        });
+
+      });
+    }
+    // TODO ADD SERVICE!
+  }
+
+  updateContent(card: RetroCard, content) {
+    card.content = content;
+    this.enableContentEditing(false, card)
+    // TODO ADD SERVICE!
+  }
+
+  enableContentEditing(bool: boolean, card: RetroCard) {
+    this.editedContent[card.id] = bool;
+  }
+
+  hasEnabledContentEditing(card: RetroCard) {
+    if (!this.editedContent[card.id]) {
+      this.editedContent[card.id] = false;
+    }
+
+    return this.editedContent[card.id];
   }
 
   enableEditing(bool: boolean, column: RetroColumn) {

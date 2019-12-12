@@ -16,6 +16,7 @@ import { CreateBoardComponent } from './components/boardcreate-dialog/boardcreat
 
 import { StylesComponent } from './components/styles/styles.component';
 import { MatSliderModule } from '@angular/material/slider';
+import {MatMenuModule} from '@angular/material/menu';
 import {RetroBoardComponent} from './components/retro-board/retro-board.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 @NgModule({
@@ -38,6 +39,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatButtonModule,
     MatInputModule,
     MatSliderModule,
+    MatMenuModule,
     DragDropModule,
     RouterModule.forRoot([
       {path: '', component: HomeComponent, pathMatch: 'full'},
