@@ -15,7 +15,6 @@ import { HomeComponent } from './components/home/home.component';
 import { CreateBoardComponent } from './components/boardcreate-dialog/boardcreatedialog.component';
 
 import { StylesComponent } from './components/styles/styles.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import {RetroBoardComponent} from './components/retro-board/retro-board.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
@@ -25,8 +24,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     NavMenuComponent,
     HomeComponent,
     StylesComponent,
-    CreateBoardComponent
-    RetroBoardComponent,
+    CreateBoardComponent,
+    RetroBoardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),

@@ -1,7 +1,6 @@
 import {RetroColumn} from './retroColumn';
 
 export class Retrospective {
- 
 
   constructor(
     public id: number,

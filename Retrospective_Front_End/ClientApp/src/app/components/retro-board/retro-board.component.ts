@@ -11,79 +11,15 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./retro-board.component.css']
 })
 
-
 export class RetroBoardComponent implements OnInit {
   enable = false;
   elements = [];
   enabledColumn = {};
-  retrospective: Retrospective = {
-    id: 0,
-    title: 'Nieuw bord',
-    description: 'Plaats hier een beschrijving.',
-    retroColumns: [{
-      title: 'Todo',
-      id: 0,
-      cards: [
-        {
-          id: 0,
-          content: 'Get to work',
-          position: 0
-        },
-        {
-          id: 1,
-          content: 'Pick up groceries',
-          position: 1
-        },
-        {
-          id: 2,
-          content: 'Go to sleep...',
-          position: 2
-        }
-      ]
-    },
-      {
-        id: 1,
-        title: 'Doing',
-        cards: [
-          {
-            id: 3,
-            content: 'Nothing',
-            position: 0
-          },
-          {
-            id: 4,
-            content: 'Item',
-            position: 1
-          },
-          {
-            id: 5,
-            content: 'Item',
-            position: 2
-          }
-        ]
-      },
-      {
-        id: 2,
-        title: 'Done',
-        cards: [
-          {
-            id: 6,
-            content: 'Cooking',
-            position: 0
-          },
-          {
-            id: 7,
-            content: 'Grocery shopping',
-            position: 1
-          },
-          {
-            id: 8,
-            content: 'Cleaning',
-            position: 2
-          }
-        ]
-      }]
-  };
+  retrospective: Retrospective = new Retrospective(0, 'Title', 'Description', [
+    new RetroColumn(0, 'Todo', [
+      new RetroCard(0, 'Nothing', 0),
+    ])
+  ]);
 
   cardGroup: FormGroup = new FormGroup({
     content: new FormControl('', Validators.required)
@@ -114,7 +50,7 @@ export class RetroBoardComponent implements OnInit {
 
   addColumn(title) {
     this.retrospective.retroColumns.push(
-      {id: 0, title: title, cards: []}
+      new RetroColumn(this.retrospective.retroColumns.length, title, [])
     );
 
     // TODO: ADD SERVICE!
@@ -123,7 +59,9 @@ export class RetroBoardComponent implements OnInit {
   addCard(column: RetroColumn) {
     const value = this.cardGroup.value;
 
-    column.cards.push({content: value.content, id: 0, position: (column.cards.length - 1)});
+    column.cards.push(
+      new RetroCard(column.cards.length, value.content, column.cards.length)
+    );
 
     // TODO ADD SERVICE!
   }

@@ -1,19 +1,20 @@
-import { RetroCard } from './RetroCard';
+import {RetroCard} from './RetroCard';
 
 export class RetroColumn {
   constructor(
     public id: number,
     public title: string,
-    public retrocards: RetroCard[]
-  ) { }
-
-  addRetroCard(retrocard: RetroCard) {
-    this.retrocards.push(retrocard);
+    public cards: RetroCard[]
+  ) {
   }
 
-  removeRetroCard(retrocardId: number) {
-    if (retrocardId >= 0) {
-      this.retrocards.filter(rc => rc.id != retrocardId);
+  addRetroCard(card: RetroCard) {
+    this.cards.push(card);
+  }
+
+  removeRetroCard(cardId: number) {
+    if (cardId >= 0) {
+      this.cards.filter(rc => rc.id !== cardId);
     }
   }
 }
