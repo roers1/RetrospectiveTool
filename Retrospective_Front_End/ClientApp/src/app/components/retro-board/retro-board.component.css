@@ -8,7 +8,7 @@
 
 /*}*/
 .example-container {
-  width: 400px;
+  width: 275px;
   max-width: 100%;
   margin: 0 25px 25px 0;
   display: inline-block;
@@ -120,7 +120,7 @@ h6 {
 
 
 .example-container-toaddcard {
-  width: 400px;
+  width: 275px;
   max-width: 100%;
   margin: 8px 0 0 0;
   display: inline-block;
@@ -130,11 +130,14 @@ h6 {
   /*border-radius: 4px;*/
   cursor: grab;
   font-size: 12px;
+
+  transition-duration: 0.2s;
+  transition-property: background-color;
 }
 
 
 .example-container-toadd {
-  width: 400px;
+  width: 275px;
   max-width: 100%;
   margin: 0 25px 25px 0;
   display: inline-block;
@@ -143,6 +146,18 @@ h6 {
   padding: 8px;
   border-radius: 4px;
   cursor: grab;
+
+  transition-duration: 0.2s;
+  transition-property: background-color;
+}
+
+.example-container-toadd:hover {
+  background-color: rgba(77, 255, 75, 0.4);
+}
+
+.example-container-toaddcard:hover {
+  background-color: rgba(255, 84, 60, 0.6);
+  color: limegreen;
 }
 
 .description {
@@ -183,4 +198,9 @@ h6 {
   100% {
     opacity: 1;
   }
+}
+
+
+.inputfield {
+  width: 200px;
 }

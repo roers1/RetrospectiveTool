@@ -3,12 +3,16 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 import {RetroCard} from '../../../models/RetroCard';
 import {Retrospective} from '../../../models/Retrospective';
 import {RetroColumn} from '../../../models/RetroColumn';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-retro-board',
   templateUrl: './retro-board.component.html',
   styleUrls: ['./retro-board.component.css']
 })
+
+
+
 export class RetroBoardComponent implements OnInit {
   enable = false;
   elements = [];
@@ -79,6 +83,10 @@ export class RetroBoardComponent implements OnInit {
       }]
   };
 
+  cardGroup: FormGroup = new FormGroup({
+    content: new FormControl('', Validators.required)
+  });
+
 
   drop(event: CdkDragDrop<RetroCard[]>) {
     if (event.container === event.previousContainer) {
@@ -115,7 +123,7 @@ export class RetroBoardComponent implements OnInit {
   }
 
   enableEditing(bool: boolean, column: RetroColumn) {
-    this.enabledColumn[column.title] = bool;
+      this.enabledColumn[column.title] = bool;
   }
 
   hasEnabledEditing(column: RetroColumn) {

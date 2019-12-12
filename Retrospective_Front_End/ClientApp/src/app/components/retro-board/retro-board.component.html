@@ -25,12 +25,14 @@
         <div class="example-container-toaddcard">
           <h6  (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ Voeg een kaart toe</h6 >
           <div class="animated-item" *ngIf="hasEnabledEditing(column)">
+            <form [formGroup]="cardGroup">
             <br>
-            <input class="inputfield" #card placeholder="Voer een beschrijving in."/>
+            <input id="description" name="description" formControlName="desc" class="inputfield form-control" #card placeholder="Voer een beschrijving in." />
             <br>
             <br>
-            <button (click)="enableEditing(false, column); addCard(column, card.value)" class="btn btn-color-primary">Add</button>
+            <button [disabled]="!cardGroup.valid" (click)="enableEditing(false, column); addCard(column, card.value)" class="btn btn-color-primary">Add</button>
             <button (click)="enableEditing(false, column);" class="btn btn-color-secondary">cancel</button>
+            </form>
           </div>
         </div>
       </div>
