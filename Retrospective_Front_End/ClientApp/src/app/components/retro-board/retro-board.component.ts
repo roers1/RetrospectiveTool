@@ -3,6 +3,7 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 import {RetroCard} from '../../../models/RetroCard';
 import {Retrospective} from '../../../models/Retrospective';
 import {RetroColumn} from '../../../models/RetroColumn';
+import {MatMenuModule} from '@angular/material/menu';
 
 @Component({
   selector: 'app-retro-board',
@@ -13,11 +14,13 @@ export class RetroBoardComponent implements OnInit {
   enable = false;
   elements = [];
   enabledColumn = {};
+  editedContent = {};
   retrospective: Retrospective = {
     id: 0,
     title: 'Nieuw bord',
     description: 'Plaats hier een beschrijving.',
     retroColumns: [{
+      id: 0,
       title: 'Todo',
       cards: [
         {
@@ -38,6 +41,7 @@ export class RetroBoardComponent implements OnInit {
       ]
     },
       {
+        id: 0,
         title: 'Doing',
         cards: [
           {
@@ -58,6 +62,7 @@ export class RetroBoardComponent implements OnInit {
         ]
       },
       {
+        id: 0,
         title: 'Done',
         cards: [
           {
@@ -102,9 +107,17 @@ export class RetroBoardComponent implements OnInit {
 
   addColumn(title) {
     this.retrospective.retroColumns.push(
-      {title: title, cards: []}
+      {id: 0, title: title, cards: []}
     );
 
+    console.log("test")
+    // TODO: ADD SERVICE!
+  }
+
+  emptyColumn(column: RetroColumn) {
+    if(confirm("Weet je zeker dat je alle kaarten in deze kolom wilt verwijderen?")) {
+      column.cards = [];
+    }
     // TODO: ADD SERVICE!
   }
 
@@ -112,6 +125,47 @@ export class RetroBoardComponent implements OnInit {
     column.cards.push({content: content, id: 0, position: (column.cards.length - 1)});
 
     // TODO ADD SERVICE!
+  }
+  deleteColumn(givenColumn: RetroColumn) {
+
+    if(confirm("Weet je zeker dat je deze kolom wilt verwijderen?")) {
+      let index = this.retrospective.retroColumns.indexOf(givenColumn);
+      this.retrospective.retroColumns.splice(index, 1);
+    }
+    // TODO ADD SERVICE!
+  }
+  deleteCard(givenCard: RetroCard) {
+
+    if(confirm("Weet je zeker dat je deze kaart wilt verwijderen?")) {
+      this.retrospective.retroColumns.forEach(column => {
+        column.cards.forEach(card => {
+          if(card.id == givenCard.id) {
+            let index = column.cards.indexOf(givenCard);
+            column.cards.splice(index, 1)
+          }
+        });
+
+      });
+    }
+    // TODO ADD SERVICE!
+  }
+
+  updateContent(card: RetroCard, content) {
+    card.content = content;
+    this.enableContentEditing(false, card)
+    // TODO ADD SERVICE!
+  }
+
+  enableContentEditing(bool: boolean, card: RetroCard) {
+    this.editedContent[card.id] = bool;
+  }
+
+  hasEnabledContentEditing(card: RetroCard) {
+    if (!this.editedContent[card.id]) {
+      this.editedContent[card.id] = false;
+    }
+
+    return this.editedContent[card.id];
   }
 
   enableEditing(bool: boolean, column: RetroColumn) {

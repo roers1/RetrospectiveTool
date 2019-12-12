@@ -37,7 +37,7 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  cursor: move;
+  cursor: grab;
   background: white;
   font-size: 14px;
   clear: both;
@@ -45,6 +45,7 @@
   height: fit-content;
   word-wrap: break-word;
   white-space: initial;
+  position: relative;
 }
 
 .cdk-drag-preview {
@@ -100,6 +101,7 @@ body {
 
 h2 {
   /*color: purple;*/
+  display: inline;
   color: #ED5603;
 }
 h1 {
@@ -117,8 +119,6 @@ h6 {
 .inputfield {
   width: 300px;
 }
-
-
 .example-container-toaddcard {
   width: 400px;
   max-width: 100%;
@@ -128,7 +128,7 @@ h6 {
   background-color: rgba(248, 255, 249, 0.9);
   padding: 8px;
   /*border-radius: 4px;*/
-  cursor: grab;
+  cursor: pointer;
   font-size: 12px;
 }
 
@@ -154,23 +154,6 @@ h6 {
   position: fixed;
 }
 
-
-
-
-/*.animated-item-fadeout {*/
-/*  animation: fadeInAnimation ease 1s;*/
-/*  animation-iteration-count: 1;*/
-/*  animation-fill-mode: forwards;*/
-/*}*/
-/*@keyframes fadeInAnimation {*/
-/*  0% {*/
-/*    opacity: 1;*/
-/*  }*/
-/*  100% {*/
-/*    opacity: 0;*/
-/*  }*/
-/*}*/
-
 .animated-item {
   animation: fadeInAnimation ease 1s;
   animation-iteration-count: 1;
@@ -183,4 +166,44 @@ h6 {
   100% {
     opacity: 1;
   }
+}
+
+.editContentInput {
+  box-sizing: border-box;
+  width: 300px;
+}
+
+/*icons*/
+.icons {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 5px;
+}
+.box-content {
+  padding-right: 65px;
+}
+.icon {
+  height: 24px;
+  transition-duration: 0.2s;
+}
+.icon:hover {
+  cursor: pointer;
+  transform: scale(1.1,1.1)
+}
+.icon:active {
+  transform: scale(1.0,1.0)
+}
+.icon_menu {
+  float: right;
+  margin-top: 5px;
+}
+#icon_edit {
+  height: 30px;
+}
+#icon_delete {
+  height: 30px;
+}
+.dropdownitem:focus {
+  outline: 0;
 }
