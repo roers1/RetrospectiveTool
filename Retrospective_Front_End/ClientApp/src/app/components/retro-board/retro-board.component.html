@@ -2,10 +2,10 @@
 <div class="foreground">
   <div class="scrollable">
     <div class="locked">
-    <br>
-    <h1>{{retrospective.title}}</h1>
-    <br>
-    <h3 class="description">{{retrospective.description}}</h3>
+      <br>
+      <h1>{{retrospective.title}}</h1>
+      <br>
+      <h3 class="description">{{retrospective.description}}</h3>
     </div>
     <div class="board_area">
 
@@ -23,15 +23,19 @@
           <div class="example-box" *ngFor="let item of column.cards" cdkDrag>{{item.content}}</div>
         </div>
         <div class="example-container-toaddcard">
-          <h6  (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ Voeg een kaart toe</h6 >
+          <h6 (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ Voeg een kaart toe</h6>
           <div class="animated-item" *ngIf="hasEnabledEditing(column)">
             <form [formGroup]="cardGroup">
-            <br>
-            <input id="description" name="description" formControlName="desc" class="inputfield form-control" #card placeholder="Voer een beschrijving in." />
-            <br>
-            <br>
-            <button [disabled]="!cardGroup.valid" (click)="enableEditing(false, column); addCard(column, card.value)" class="btn btn-color-primary">Add</button>
-            <button (click)="enableEditing(false, column);" class="btn btn-color-secondary">cancel</button>
+              <br>
+              <label for="description"></label>
+              <input id="description" name="description" formControlName="content" class="inputfield form-control"
+                                                      placeholder="Voer een beschrijving in."/>
+              <br>
+              <br>
+              <button [disabled]="cardGroup.invalid" (click)="enableEditing(false, column); addCard(column, card.value)"
+                      class="btn btn-color-primary">Add
+              </button>
+              <button (click)="enableEditing(false, column);" class="btn btn-color-secondary">cancel</button>
             </form>
           </div>
         </div>
