@@ -11,9 +11,9 @@ import { RetroColumn } from "../models/retroColumn";
 })
 export class RetrospectiveService {
 
-  private readonly baseUrlRetrospective: string = BASE_URL + "api/retrospectives/";
+  private readonly baseUrlRetrospective: string = BASE_URL + "retrospectives/";
 
-  private readonly baseUrlRetroColumn: string = BASE_URL + "api/retroColumns/";
+  private readonly baseUrlRetroColumn: string = BASE_URL + "retroColumns/";
 
   private retrospective: Retrospective;
 
@@ -42,17 +42,30 @@ export class RetrospectiveService {
       });
   }
 
-  getRetrospective(id, cb) {
-    this.http.get<Retrospective>(this.baseUrlRetrospective + id, this.httpOptions).subscribe((retrospective) => {
-      this.retrospective = retrospective;
-      cb(retrospective);
-    })
+  getRetrospective(id): Observable<Retrospective> {
+    return this.http.get<Retrospective>(this.baseUrlRetrospective + id, this.httpOptions);
   }
 
   removeRetrospective() {
     if (this.retrospective) {
       this.http.delete(this.baseUrlRetrospective + this.retrospective.id, this.httpOptions);
       this.retrospective = null;
+    }
+  }
+
+  getCurrentRetrospective(): Retrospective {
+    if (this.retrospective != null && this.retrospective != undefined) {
+      return this.retrospective;
+    } else {
+      return null;
+    }
+  }
+
+  getCurrentRetrospectiveId(): number {
+    if (this.retrospective != null && this.retrospective != undefined) {
+      return this.retrospective.id;
+    } else {
+      return null;
     }
   }
 }

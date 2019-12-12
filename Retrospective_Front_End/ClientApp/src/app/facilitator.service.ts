@@ -10,7 +10,7 @@ import { Facilitator } from "../models/Facilitator";
 })
 export class FacilitatorService {
 
-  constructor(private message: MessageService) { }
+  constructor(private http: HttpClient, private message: MessageService) { }
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -18,11 +18,11 @@ export class FacilitatorService {
     })
   };
 
-  addParticipant(id: number) {
+  addParticipant(id) {
 
   }
 
-  removeParticipant(id: number) {
+  removeParticipant(id) {
 
   }
 

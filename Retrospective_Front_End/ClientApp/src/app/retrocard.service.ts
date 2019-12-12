@@ -9,7 +9,8 @@ import { RetroCard } from "../models/RetroCard";
   providedIn: 'root'
 })
 export class RetrocardService {
-  private readonly baseUrlRetroCards = BASE_URL + "api/retroCards/";
+  private readonly baseUrlRetroCards = BASE_URL + "retrocards/";
+  private readonly baseUrlRetroColumn = BASE_URL + "retroColumns/";
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -20,19 +21,30 @@ export class RetrocardService {
   constructor(private http: HttpClient, private message: MessageService) { }
 
   createRetroCard(content) {
-    this.http.post<RetroCard>(this.baseUrlRetroCards, { content: content }, this.httpOptions);
+    return this.http.post<RetroCard>(this.baseUrlRetroCards, { content: content }, this.httpOptions);
   }
 
-  getRetroCard(id, cb) {
-    this.http.get<RetroCard>(this.baseUrlRetroCards + id, this.httpOptions)
-      .subscribe((retroCard) => cb(retroCard));
+  addRetroCardToColumn(cardId, columnId): Observable<RetroCard> {
+    return this.http.post<RetroCard>(this.baseUrlRetroColumn + columnId + "/retrocards/" + cardId, this.httpOptions);
+  }
+
+  removeRetroCardFromColumn(cardId, columnId) {
+    return this.http.delete<RetroCard>(this.baseUrlRetroColumn + columnId + "/retrocards/" + cardId, this.httpOptions);
+  }
+
+  getRetroCard(id): Observable<RetroCard> {
+    return this.http.get<RetroCard>(this.baseUrlRetroCards + id, this.httpOptions);
+  }
+
+  getRetroCards(): Observable<RetroCard[]> {
+    return this.http.get<RetroCard[]>(this.baseUrlRetroCards, this.httpOptions);
   }
 
   updateRetroCard(id, content) {
-    this.http.put<RetroCard>(this.baseUrlRetroCards + id, { content: content }, this.httpOptions);
+    return this.http.put<RetroCard>(this.baseUrlRetroCards + id, { content: content }, this.httpOptions);
   }
 
   deleteRetroCard(id) {
-    this.http.delete(this.baseUrlRetroCards + id, this.httpOptions);
+    return this.http.delete(this.baseUrlRetroCards + id, this.httpOptions);
   }
 }
