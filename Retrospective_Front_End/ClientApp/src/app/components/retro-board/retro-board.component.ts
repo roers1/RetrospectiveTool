@@ -18,6 +18,12 @@ export class RetroBoardComponent implements OnInit {
   retrospective: Retrospective = new Retrospective(0, 'Title', 'Description', [
     new RetroColumn(0, 'Todo', [
       new RetroCard(0, 'Nothing', 0),
+    ]),
+    new RetroColumn(0, 'Doing', [
+      new RetroCard(0, 'Nothing', 0),
+    ]),
+    new RetroColumn(0, 'Done', [
+      new RetroCard(0, 'Nothing', 0),
     ])
   ]);
 
@@ -72,11 +78,11 @@ export class RetroBoardComponent implements OnInit {
   }
 
   hasEnabledEditing(column: RetroColumn) {
-    if (!this.enabledColumn[column.title]) {
-      this.enabledColumn[column.title] = false;
+    if (!this.enabledColumn[column.id]) {
+      this.enabledColumn[column.id] = false;
     }
 
-    return this.enabledColumn[column.title];
+    return this.enabledColumn[column.id];
   }
 
   constructor() {
