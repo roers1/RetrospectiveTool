@@ -27,7 +27,7 @@
           <div class="animated-item" *ngIf="hasEnabledEditing(column)">
             <form [formGroup]="cardGroup">
               <br>
-              <label>
+              <label for="description"></label>
               <input id="description" name="description" formControlName="content" class="inputfield form-control" #card
                      placeholder="Voer een beschrijving in."/>
               </label>

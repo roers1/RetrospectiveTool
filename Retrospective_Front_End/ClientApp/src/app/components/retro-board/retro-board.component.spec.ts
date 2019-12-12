@@ -3,6 +3,7 @@ import {RetroBoardComponent} from './retro-board.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {RetroColumn} from '../../../models/RetroColumn';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Retrospective} from '../../../models/Retrospective';
 
 describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
@@ -27,12 +28,12 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should add column', () => {
-    component.retrospective = {
-      id: 0,
-      title: 'Cool board',
-      description: 'Wow',
-      retroColumns: []
-    };
+    component.retrospective = new Retrospective(
+      0,
+      'Cool board',
+      'Wow',
+      []
+    );
     fixture.detectChanges();
 
     component.addColumn('TestColumn');
@@ -49,18 +50,19 @@ describe('RetroBoardComponent', () => {
     expect(column.title).toBe('TestColumn');
   });
 
-  xit('should add card', () => {
-    const column: RetroColumn = {
-      title: 'TestColumn',
-      cards: []
-    };
+  it('should add card', () => {
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      []
+    );
 
-    component.retrospective = {
-      id: 0,
-      title: 'Cool board',
-      description: 'Wow',
-      retroColumns: [column]
-    };
+    component.retrospective = new Retrospective(
+      0,
+      'Cool board',
+      'Wow',
+      [column]
+    );
 
     fixture.detectChanges();
 
@@ -78,17 +80,18 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should enable editing', () => {
-    const column: RetroColumn = {
-      title: 'TestColumn',
-      cards: []
-    };
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      []
+    );
 
-    component.retrospective = {
-      id: 0,
-      title: 'Cool board',
-      description: 'Wow',
-      retroColumns: [column]
-    };
+    component.retrospective = new Retrospective(
+      0,
+      'Cool board',
+      'Wow',
+      [column]
+  );
 
     fixture.detectChanges();
 
