@@ -24,7 +24,11 @@ html {
   -moz-user-drag: none;
   -o-user-drag: none;
   padding: 0px;
-
+  cursor: pointer;
+  height: 60px;
+}
+#logo:focus {
+  outline: 0;
 }
 
 header {

@@ -1,11 +1,11 @@
-<body>
+<body *ngIf="retrospective">
 <div class="foreground">
   <div class="scrollable">
     <div class="locked">
-    <br>
-    <h1>{{retrospective.title}}</h1>
-    <br>
-    <h3 class="description">{{retrospective.description}}</h3>
+      <br>
+      <h1>{{retrospective.title}}</h1>
+      <br>
+      <h3 class="description">{{retrospective.description}}</h3>
     </div>
     <div class="board_area">
 
@@ -47,29 +47,53 @@
         </div>
 
         <div class="example-container-toaddcard">
-          <h6  (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ Voeg een kaart toe</h6 >
+          <h6 (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ Voeg een kaart toe</h6>
           <div class="animated-item" *ngIf="hasEnabledEditing(column)">
-            <br>
-            <input class="inputfield" #card placeholder="Voer een beschrijving in."/>
-            <br>
-            <br>
-            <button (click)="enableEditing(false, column); addCard(column, card.value)" class="TLbtn btn-small btn-color-primary">Add</button>
-            <button (click)="enableEditing(false, column);" class="TLbtn btn-small btn-color-secondary">cancel</button>
+            <form [formGroup]="cardGroup">
+              <br>
+              <label for="description"></label>
+              <input id="description" name="description" formControlName="content" class="inputfield form-control" #card
+                     placeholder="Voer een beschrijving in."/>
+              </label>
+              <div *ngIf="cardGroup.valid">
+                <br>
+                <br>
+              </div>
+              <div *ngIf="!cardGroup.valid">
+                <br>
+                <p class="form-control alert-danger">Voer een valide beschrijving in!</p>
+              </div>
+              <button [disabled]="!cardGroup.valid" (click)="enableEditing(false, column); addCard(column)"
+                      class="TLbtn btn-small btn-color-primary">Add
+              </button>
+              <button (click)="enableEditing(false, column);" class="TLbtn btn-small btn-color-secondary">cancel</button>
+            </form>
           </div>
         </div>
       </div>
 
       <div class="example-container-toadd">
-        <h4 (click)="enable=true">+ Voeg een lijst toe</h4>
+        <h4 class="clickable_element" (click)="enable=true">+ Voeg een lijst toe</h4>
         <div class="animated-item" *ngIf="enable">
-          <br>
-          <label>
-            <input #column placeholder="Voer een titel in."/>
-          </label>
-          <br>
-          <button (click)="enable=false; addColumn(column.value)" class="TLbtn btn-small btn-color-primary">Add</button>
-          <button (click)="enable=false" class="TLbtn btn-small btn-color-secondary">cancel</button>
-
+          <form [formGroup]="listGroup">
+            <br>
+            <label>
+              <input id="title" name="title" formControlName="title" class="inputfield form-control" #column
+                     placeholder="Voer een titel in."/>
+            </label>
+            <div *ngIf="listGroup.valid">
+              <br>
+              <br>
+            </div>
+            <div *ngIf="!listGroup.valid">
+              <br>
+              <p class="form-control alert-danger">Voer een valide titel in!</p>
+            </div>
+            <button class="clickable_element_close" [disabled]="!listGroup.valid" (click)="enable=false; addColumn(column.value)"
+                    class="TLbtn btn-small btn-color-secondary">Add
+            </button>
+            <button class="clickable_element_close_alt" (click)="enable=false" class="TLbtn btn-small btn-color-secondary">cancel</button>
+          </form>
         </div>
       </div>
 

@@ -8,7 +8,7 @@
 
 /*}*/
 .example-container {
-  width: 400px;
+  width: 275px;
   max-width: 100%;
   margin: 0 25px 25px 0;
   display: inline-block;
@@ -120,7 +120,7 @@ h6 {
   width: 300px;
 }
 .example-container-toaddcard {
-  width: 400px;
+  width: 275px;
   max-width: 100%;
   margin: 8px 0 0 0;
   display: inline-block;
@@ -130,11 +130,14 @@ h6 {
   /*border-radius: 4px;*/
   cursor: pointer;
   font-size: 12px;
+
+  transition-duration: 0.2s;
+  transition-property: background-color;
 }
 
 
 .example-container-toadd {
-  width: 400px;
+  width: 275px;
   max-width: 100%;
   margin: 0 25px 25px 0;
   display: inline-block;
@@ -143,7 +146,23 @@ h6 {
   padding: 8px;
   border-radius: 4px;
   cursor: grab;
+
+  transition-duration: 0.2s;
+  transition-property: background-color;
 }
+
+.example-container-toadd:hover {
+  /*background-color: rgba(77, 255, 75, 0.4);*/
+}
+
+.example-container-toaddcard:hover {
+  /*background-color: rgba(255, 84, 60, 0.6);*/
+  color: limegreen;
+}
+/*.example-container-toaddcard:invalid {*/
+/*  background-color: rgba(255, 84, 60, 0.6);*/
+/*  background-color: rgba(74, 255, 45, 0.6);*/
+/*}*/
 
 .description {
   color: #ffffff;
@@ -206,4 +225,19 @@ h6 {
 }
 .dropdownitem:focus {
   outline: 0;
+}
+
+.inputfield {
+  width: 200px;
+}
+
+
+ng-valid.ng-touched {
+  border: 5px solid #42A948;
+  background-color: rgba(104, 255, 95, 0.6);
+}
+
+ng-invalid.ng-touched {
+  border: 5px solid red;
+  background-color: rgba(255, 84, 60, 0.6);
 }

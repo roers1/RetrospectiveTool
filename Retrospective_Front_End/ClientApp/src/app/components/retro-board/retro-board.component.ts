@@ -4,86 +4,31 @@ import {RetroCard} from '../../../models/RetroCard';
 import {Retrospective} from '../../../models/Retrospective';
 import {RetroColumn} from '../../../models/RetroColumn';
 import {MatMenuModule} from '@angular/material/menu';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-retro-board',
   templateUrl: './retro-board.component.html',
   styleUrls: ['./retro-board.component.css']
 })
+
 export class RetroBoardComponent implements OnInit {
   enable = false;
   elements = [];
   enabledColumn = {};
   editedContent = {};
-  retrospective: Retrospective = {
-    id: 0,
-    title: 'Nieuw bord',
-    description: 'Plaats hier een beschrijving.',
-    retroColumns: [{
-      id: 0,
-      title: 'Todo',
-      cards: [
-        {
-          id: 0,
-          content: 'Get to work',
-          position: 0
-        },
-        {
-          id: 1,
-          content: 'Pick up groceries',
-          position: 1
-        },
-        {
-          id: 2,
-          content: 'Go to sleep...',
-          position: 2
-        }
-      ]
-    },
-      {
-        id: 0,
-        title: 'Doing',
-        cards: [
-          {
-            id: 3,
-            content: 'Nothing',
-            position: 0
-          },
-          {
-            id: 4,
-            content: 'Item',
-            position: 1
-          },
-          {
-            id: 5,
-            content: 'Item',
-            position: 2
-          }
-        ]
-      },
-      {
-        id: 0,
-        title: 'Done',
-        cards: [
-          {
-            id: 6,
-            content: 'Cooking',
-            position: 0
-          },
-          {
-            id: 7,
-            content: 'Grocery shopping',
-            position: 1
-          },
-          {
-            id: 8,
-            content: 'Cleaning',
-            position: 2
-          }
-        ]
-      }]
-  };
+  retrospective: Retrospective = new Retrospective(0, 'Title', 'Description', [
+    new RetroColumn(0, 'Todo', [
+      new RetroCard(0, 'Nothing', 0),
+    ])
+  ]);
 
+  cardGroup: FormGroup = new FormGroup({
+    content: new FormControl('', Validators.required)
+  });
+  listGroup: FormGroup = new FormGroup({
+    title: new FormControl('', Validators.required)
+  });
 
   drop(event: CdkDragDrop<RetroCard[]>) {
     if (event.container === event.previousContainer) {
@@ -107,10 +52,8 @@ export class RetroBoardComponent implements OnInit {
 
   addColumn(title) {
     this.retrospective.retroColumns.push(
-      {id: 0, title: title, cards: []}
+      new RetroColumn(this.retrospective.retroColumns.length, title, [])
     );
-
-    console.log("test")
     // TODO: ADD SERVICE!
   }
 
@@ -121,8 +64,12 @@ export class RetroBoardComponent implements OnInit {
     // TODO: ADD SERVICE!
   }
 
-  addCard(column: RetroColumn, content) {
-    column.cards.push({content: content, id: 0, position: (column.cards.length - 1)});
+  addCard(column: RetroColumn) {
+    const value = this.cardGroup.value;
+
+    column.cards.push(
+      new RetroCard(column.cards.length, value.content, column.cards.length)
+    );
 
     // TODO ADD SERVICE!
   }
@@ -169,7 +116,8 @@ export class RetroBoardComponent implements OnInit {
   }
 
   enableEditing(bool: boolean, column: RetroColumn) {
-    this.enabledColumn[column.title] = bool;
+    this.enabledColumn = {};
+    this.enabledColumn[column.id] = bool;
   }
 
   hasEnabledEditing(column: RetroColumn) {

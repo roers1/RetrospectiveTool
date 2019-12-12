@@ -1,5 +1,11 @@
 export class RetroCard {
-  id: number;
-  content: string;
-  position: number;
+  constructor(
+    public id: number,
+      public content: string,
+    public position: number
+  ) { }
+
+  updateContent(input: string) {
+    this.content = input;
+  }
 }
