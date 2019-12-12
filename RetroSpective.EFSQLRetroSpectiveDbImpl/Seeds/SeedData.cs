@@ -16,53 +16,52 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl.Seeds
                     serviceProvider.GetRequiredService<DbContextOptions<RetroSpectiveDbContext>>()))
             {
 
-                //// Look for any dishes.
-                //if (context.Retrospectives.Any(x => x.Title == "Training 1"))
-                //{
-                //    return;   // DB has been seeded
-                //}
+                if (context.Retrospectives.Any(x => x.Title == "Training 1"))
+                {
+                    return;   // DB has been seeded
+                }
 
 
-                //Retrospective retrospective = new Retrospective
-                //{
-                //    CreatedDate = new DateTime(),
-                //    Description = "Welkom bij de eerste retro training",
-                //    Title = "Training 1"
-                //};
+                Retrospective retrospective = new Retrospective
+                {
+                    CreatedDate = new DateTime(),
+                    Description = "Welkom bij de eerste retro training",
+                    Title = "Training 1"
+                };
 
-                //RetroColumn retroColumn1 = new RetroColumn{Title = "Dit is collom 1"};
-                //RetroColumn retroColumn2 = new RetroColumn{Title = "Dit is collom 2"};
-                //RetroColumn retroColumn3 = new RetroColumn{Title = "Dit is collom 3"};
+                RetroColumn retroColumn1 = new RetroColumn { Title = "Dit is collom 1" };
+                RetroColumn retroColumn2 = new RetroColumn { Title = "Dit is collom 2" };
+                RetroColumn retroColumn3 = new RetroColumn { Title = "Dit is collom 3" };
 
-                //RetroCard retroCard1 = new RetroCard { Content = "Ik sta in collom 1 als het goed is" };
+                RetroCard retroCard1 = new RetroCard { Content = "Ik sta in collom 1 als het goed is" };
 
-                //RetroCard retroCard2 = new RetroCard { Content = "Ik sta in collom 2 als het goed is" };
+                RetroCard retroCard2 = new RetroCard { Content = "Ik sta in collom 2 als het goed is" };
 
-                //RetroCard retroCard3 = new RetroCard { Content = "Ik sta in collom 3 als het goed is" };
+                RetroCard retroCard3 = new RetroCard { Content = "Ik sta in collom 3 als het goed is" };
 
-                //RetroCard retroCard4 = new RetroCard { Content = "Ik sta in collom 3 als het goed is" , Position = 1};
+                RetroCard retroCard4 = new RetroCard { Content = "Ik sta in collom 3 als het goed is", Position = 1 };
 
-                //context.RetroCards.Add(retroCard1);
-                //context.RetroCards.Add(retroCard2);
-                //context.RetroCards.Add(retroCard3);
-                //context.RetroCards.Add(retroCard4);
+                context.RetroCards.Add(retroCard1);
+                context.RetroCards.Add(retroCard2);
+                context.RetroCards.Add(retroCard3);
+                context.RetroCards.Add(retroCard4);
 
-                //retroColumn1.RetroCards.Add(retroCard1);
-                //retroColumn2.RetroCards.Add(retroCard2);
-                //retroColumn3.RetroCards.Add(retroCard3);
-                //retroColumn3.RetroCards.Add(retroCard4);
+                retroColumn1.RetroCards.Add(retroCard1);
+                retroColumn2.RetroCards.Add(retroCard2);
+                retroColumn3.RetroCards.Add(retroCard3);
+                retroColumn3.RetroCards.Add(retroCard4);
 
-                //context.RetroColumns.Add(retroColumn1);
-                //context.RetroColumns.Add(retroColumn2);
-                //context.RetroColumns.Add(retroColumn3);
+                context.RetroColumns.Add(retroColumn1);
+                context.RetroColumns.Add(retroColumn2);
+                context.RetroColumns.Add(retroColumn3);
 
-                //retrospective.RetroColumns.Add(retroColumn1);
-                //retrospective.RetroColumns.Add(retroColumn2);
-                //retrospective.RetroColumns.Add(retroColumn3);
+                retrospective.RetroColumns.Add(retroColumn1);
+                retrospective.RetroColumns.Add(retroColumn2);
+                retrospective.RetroColumns.Add(retroColumn3);
 
-                //context.Retrospectives.Add(retrospective);
+                context.Retrospectives.Add(retrospective);
 
-                //context.SaveChanges();
+                context.SaveChanges();
             }
 
         }
