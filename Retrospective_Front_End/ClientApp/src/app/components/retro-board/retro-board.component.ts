@@ -86,7 +86,9 @@ export class RetroBoardComponent implements OnInit {
   cardGroup: FormGroup = new FormGroup({
     content: new FormControl('', Validators.required)
   });
-
+  listGroup: FormGroup = new FormGroup({
+    title: new FormControl('', Validators.required)
+  });
 
   drop(event: CdkDragDrop<RetroCard[]>) {
     if (event.container === event.previousContainer) {
