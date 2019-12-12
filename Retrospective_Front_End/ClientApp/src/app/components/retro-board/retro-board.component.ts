@@ -22,6 +22,7 @@ export class RetroBoardComponent implements OnInit {
     description: 'Plaats hier een beschrijving.',
     retroColumns: [{
       title: 'Todo',
+      id: 0,
       cards: [
         {
           id: 0,
@@ -41,6 +42,7 @@ export class RetroBoardComponent implements OnInit {
       ]
     },
       {
+        id: 1,
         title: 'Doing',
         cards: [
           {
@@ -61,6 +63,7 @@ export class RetroBoardComponent implements OnInit {
         ]
       },
       {
+        id: 2,
         title: 'Done',
         cards: [
           {
@@ -111,7 +114,7 @@ export class RetroBoardComponent implements OnInit {
 
   addColumn(title) {
     this.retrospective.retroColumns.push(
-      {title: title, cards: []}
+      {id: 0, title: title, cards: []}
     );
 
     // TODO: ADD SERVICE!
@@ -127,7 +130,7 @@ export class RetroBoardComponent implements OnInit {
 
   enableEditing(bool: boolean, column: RetroColumn) {
     this.enabledColumn = {};
-    this.enabledColumn[column.title] = bool;
+    this.enabledColumn[column.id] = bool;
   }
 
   hasEnabledEditing(column: RetroColumn) {

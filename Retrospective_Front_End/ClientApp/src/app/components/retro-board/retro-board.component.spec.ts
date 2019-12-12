@@ -51,6 +51,7 @@ describe('RetroBoardComponent', () => {
 
   it('should add card', () => {
     const column: RetroColumn = {
+      id: 0,
       title: 'TestColumn',
       cards: []
     };
@@ -64,7 +65,7 @@ describe('RetroBoardComponent', () => {
 
     fixture.detectChanges();
 
-    component.addCard(column, 'TestCard');
+    component.addCard(column);
 
     const testColumn = component.retrospective.retroColumns[0];
 
@@ -79,6 +80,7 @@ describe('RetroBoardComponent', () => {
 
   it('should enable editing', () => {
     const column: RetroColumn = {
+      id: 0,
       title: 'TestColumn',
       cards: []
     };

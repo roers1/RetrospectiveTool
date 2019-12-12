@@ -27,8 +27,9 @@
           <div class="animated-item" *ngIf="hasEnabledEditing(column)">
             <form [formGroup]="cardGroup">
               <br>
+              <label for="description"></label>
               <input id="description" name="description" formControlName="content" class="inputfield form-control" #card
-                     placeholder="Voer een beschrijving in."/>
+                                                      placeholder="Voer een beschrijving in."/>
               <div *ngIf="cardGroup.valid">
                 <br>
                 <br>
@@ -37,7 +38,7 @@
                 <br>
                 <p class="form-control alert-danger">Voer een valide beschrijving in!</p>
               </div>
-              <button [disabled]="!cardGroup.valid" (click)="enableEditing(false, column); addCard(column, card.value)"
+              <button [disabled]="!cardGroup.valid" (click)="enableEditing(false, column); addCard(column)"
                       class="btn btn-color-primary">Add
               </button>
               <button (click)="enableEditing(false, column);" class="btn btn-color-secondary">cancel</button>
