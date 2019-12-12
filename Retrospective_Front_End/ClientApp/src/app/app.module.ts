@@ -25,6 +25,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     MatSliderModule,
     DragDropModule,
     RouterModule.forRoot([
@@ -32,8 +33,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
       {path: 'styles', component: StylesComponent},
       {path: 'board', component: RetroBoardComponent}
     ]),
-    BrowserAnimationsModule,
-    ReactiveFormsModule
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

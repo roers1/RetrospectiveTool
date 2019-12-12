@@ -39,7 +39,7 @@
                 <br>
                 <p class="form-control alert-danger">Voer een valide beschrijving in!</p>
               </div>
-              <button [disabled]="!cardGroup.valid" (click)="enableEditing(false, column); addCard(column, card.value)"
+              <button [disabled]="!cardGroup.valid" (click)="enableEditing(false, column); addCard(column)"
                       class="btn btn-color-primary">Add
               </button>
               <button (click)="enableEditing(false, column);" class="btn btn-color-secondary">cancel</button>
@@ -49,7 +49,7 @@
       </div>
 
       <div class="example-container-toadd">
-        <h4 (click)="enable=true">+ Voeg een lijst toe</h4>
+        <h4 class="clickable_element" (click)="enable=true">+ Voeg een lijst toe</h4>
         <div class="animated-item" *ngIf="enable">
           <form [formGroup]="listGroup">
             <br>
@@ -65,10 +65,10 @@
               <br>
               <p class="form-control alert-danger">Voer een valide titel in!</p>
             </div>
-            <button [disabled]="!listGroup.valid" (click)="enable=false; addColumn(column.value)"
+            <button class="clickable_element_close" [disabled]="!listGroup.valid" (click)="enable=false; addColumn(column.value)"
                     class="btn btn-color-primary">Add
             </button>
-            <button (click)="enable=false" class="btn btn-color-secondary">cancel</button>
+            <button class="clickable_element_close_alt" (click)="enable=false" class="btn btn-color-secondary">cancel</button>
           </form>
         </div>
       </div>
