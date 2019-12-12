@@ -121,11 +121,11 @@ export class RetroBoardComponent implements OnInit {
   }
 
   hasEnabledEditing(column: RetroColumn) {
-    if (!this.enabledColumn[column.title]) {
-      this.enabledColumn[column.title] = false;
+    if (!this.enabledColumn[column.id]) {
+      this.enabledColumn[column.id] = false;
     }
 
-    return this.enabledColumn[column.title];
+    return this.enabledColumn[column.id];
   }
 
   constructor() {
