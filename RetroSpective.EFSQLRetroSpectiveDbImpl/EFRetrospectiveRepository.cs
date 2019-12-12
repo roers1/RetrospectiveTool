@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Retrospective_Core.Models;
 using Retrospective_Core.Services;

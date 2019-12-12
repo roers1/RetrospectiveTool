@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Retrospective_Core.Models;
 
 namespace Retrospective_EFSQLRetrospectiveDbImpl {
+  
     public class RetroSpectiveDbContext : DbContext {
 
         public RetroSpectiveDbContext(DbContextOptions<RetroSpectiveDbContext> options) : base(options) { }
-
+      
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 	        modelBuilder.Entity<Retrospective>()
