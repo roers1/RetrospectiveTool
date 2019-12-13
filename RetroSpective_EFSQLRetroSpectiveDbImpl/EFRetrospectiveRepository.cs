@@ -21,6 +21,12 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 
 		public IQueryable<RetroCard> RetroCards => _context.RetroCards;
 
+		public void RemoveRetroCard(RetroCard retroCard)
+		{
+			_context.RetroCards.Remove(retroCard);
+			_context.SaveChanges();
+		}
+
 		public void RemoveRetroColumn(RetroColumn retroColumn)
 		{
 			_context.RetroColumns.Remove(retroColumn);
