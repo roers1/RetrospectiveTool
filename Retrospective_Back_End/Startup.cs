@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
-using RetroSpective.Core.Services;
-using RetroSpective.Core.TempData;
-
-
-
+using Retrospective_Core.Services;
+using Retrospective_EFSQLRetrospectiveDbImpl;
+using Retrospective_EFSQLRetrospectiveDbImpl.Seeds;
 
 namespace Retrospective_Back_End
 {
@@ -31,14 +23,24 @@ namespace Retrospective_Back_End
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+	        services.AddCors(options =>
+	        {
+		        options.AddPolicy("CorsPolicy", builder => builder
+			        .AllowAnyOrigin()
+			        .AllowAnyMethod()
+			        .AllowAnyHeader());
+	        });
             _ = services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMvc(option => option.EnableEndpointRouting = false);
-            services.AddScoped<IRetroCardRepository, FakeRetroCardRepo>();
-
+            services.AddDbContext<RetroSpectiveDbContext>(options =>
+	            options.UseSqlServer(
+		            Configuration["Data:ConnectionString"]));
+            services.AddTransient<IRetroRespectiveRepository, EFRetrospectiveRepository>();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider service)
         {
             if (env.IsDevelopment())
             {
@@ -51,7 +53,9 @@ namespace Retrospective_Back_End
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("CorsPolicy");
             app.UseMvc();
+            SeedData.Initialize(service);
         }
     }
 }
