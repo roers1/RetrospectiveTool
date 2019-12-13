@@ -1,6 +1,5 @@
 RetrospectiveTool
 =================
-![Build Status](https://dev.azure.com/rvanoers1/TrueLime/_apis/build/status/roers1.RetrospectiveTool?branchName=master)\
 \
 In opdracht voor TrueLime\
 Uitgevoerd door:\
