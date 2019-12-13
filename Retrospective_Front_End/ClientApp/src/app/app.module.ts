@@ -15,17 +15,21 @@ import { HomeComponent } from './components/home/home.component';
 import { CreateBoardComponent } from './components/boardcreate-dialog/boardcreatedialog.component';
 
 import { StylesComponent } from './components/styles/styles.component';
-
+import { MatSliderModule } from '@angular/material/slider';
+import {MatMenuModule} from '@angular/material/menu';
+import {RetroBoardComponent} from './components/retro-board/retro-board.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
     StylesComponent,
-    CreateBoardComponent
+    CreateBoardComponent,
+    RetroBoardComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -34,10 +38,15 @@ import { StylesComponent } from './components/styles/styles.component';
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
+    MatSliderModule,
+    MatMenuModule,
+    DragDropModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'styles', component: StylesComponent}
-    ])
+      {path: '', component: HomeComponent, pathMatch: 'full'},
+      {path: 'styles', component: StylesComponent},
+      {path: 'board/:id', component: RetroBoardComponent}
+    ]),
+    BrowserAnimationsModule
   ],
   entryComponents: [
     CreateBoardComponent
