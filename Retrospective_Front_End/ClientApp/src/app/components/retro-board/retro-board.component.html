@@ -1,104 +1,196 @@
 <body *ngIf="retrospective">
-<div class="foreground">
-  <div class="scrollable">
-    <div class="locked">
-      <br>
-      <h1>{{retrospective.title}}</h1>
-      <br>
-      <h3 class="description">{{retrospective.description}}</h3>
-    </div>
-    <div class="board_area">
-
-      <div class="example-container" *ngFor="let column of retrospective.retroColumns">
-        <div class="board-title-holder">
-          <h2 class="testtitle">{{column.title}}</h2>
-          <div class="icon_menu">
-              <img class="icon" src="../../../assets/images/icon_dot_menu.png" [matMenuTriggerFor]="menu">
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item class="dropdownitem" (click)="emptyColumn(column)">Maak kolom leeg</button>
-                <button mat-menu-item class="dropdownitem" (click)="deleteColumn(column)">Verwijder kolom</button>
-              </mat-menu>
-          </div>
-
+  <div class="foreground">
+    <div class="scrollable">
+      <div class="locked">
+        <div class="row board-top-content">
+          <br />
+          <h1>{{ retrospective.title }}</h1>
+          <br />
+          <h3 class="description">{{ retrospective.description }}</h3>
         </div>
-        
+
+        <div class="row board-top-content-clean" id="wrapper">
+          <img
+            class="btn-small hover"
+            id="icon-wipe"
+            src="../../../assets/images/broom.png"
+            (click)="cleanRetroBoard()"
+          />
+          <p class="clean-btn-text">Clean Board</p>
+        </div>
+      </div>
+
+      <div class="board_area">
         <div
-          cdkDropList
-          #element="cdkDropList"
-          [attr.id]="column.title"
-          [cdkDropListData]="column.cards"
-          [cdkDropListConnectedTo]="getColumnNames(element)"
-          class="example-list"
-          (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of column.cards" cdkDrag>
-            <div class="box-content" *ngIf="!hasEnabledContentEditing(item)">
-              {{item.content}}
+          class="example-container"
+          *ngFor="let column of retrospective.retroColumns"
+        >
+          <div class="board-title-holder">
+            <h2 class="testtitle">{{ column.title }}</h2>
+            <div class="icon_menu">
+              <img
+                class="icon"
+                src="../../../assets/images/icon_dot_menu.png"
+                [matMenuTriggerFor]="menu"
+              />
+              <mat-menu #menu="matMenu">
+                <button
+                  mat-menu-item
+                  class="dropdownitem"
+                  (click)="emptyColumn(column)"
+                >
+                  Maak kolom leeg
+                </button>
+                <button
+                  mat-menu-item
+                  class="dropdownitem"
+                  (click)="deleteColumn(column)"
+                >
+                  Verwijder kolom
+                </button>
+              </mat-menu>
             </div>
-            <div class="box-content" *ngIf="hasEnabledContentEditing(item)">
-              <textarea type="text" class="editContentInput" #content value="{{item.content}}"></textarea>
-              <button class="TLbtn btn-small btn-color-primary" (click)="updateContent(item, content.value)">Aanpassen</button>
+          </div>
+
+          <div
+            cdkDropList
+            #element="cdkDropList"
+            [attr.id]="column.title"
+            [cdkDropListData]="column.cards"
+            [cdkDropListConnectedTo]="getColumnNames(element)"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <div class="example-box" *ngFor="let item of column.cards" cdkDrag>
+              <div class="box-content" *ngIf="!hasEnabledContentEditing(item)">
+                {{ item.content }}
+              </div>
+              <div class="box-content" *ngIf="hasEnabledContentEditing(item)">
+                <textarea
+                  type="text"
+                  class="editContentInput"
+                  #content
+                  value="{{ item.content }}"
+                ></textarea>
+                <button
+                  class="TLbtn btn-small btn-color-primary"
+                  (click)="updateContent(item, content.value)"
+                >
+                  Aanpassen
+                </button>
+              </div>
+
+              <div class="icons">
+                <img
+                  class="icon"
+                  id="icon_edit"
+                  src="../../../assets/images/icon_edit.png"
+                  (click)="enableContentEditing(true, item)"
+                />
+                <img
+                  class="icon"
+                  id="icon_delete"
+                  src="../../../assets/images/icon_delete.png"
+                  (click)="deleteCard(item)"
+                />
+              </div>
             </div>
-            
-            <div class="icons">
-              <img class="icon" id="icon_edit" src="../../../assets/images/icon_edit.png" (click)="enableContentEditing(true, item)">
-              <img class="icon" id="icon_delete" src="../../../assets/images/icon_delete.png" (click)="deleteCard(item)">
+          </div>
+
+          <div class="example-container-toaddcard">
+            <h6
+              (click)="enableEditing(true, column)"
+              *ngIf="!hasEnabledEditing(column)"
+            >
+              + Voeg een kaart toe
+            </h6>
+            <div class="animated-item" *ngIf="hasEnabledEditing(column)">
+              <form [formGroup]="cardGroup">
+                <br />
+                <label for="description">
+                  <input
+                    id="description"
+                    name="description"
+                    formControlName="content"
+                    class="inputfield form-control"
+                    #card
+                    placeholder="Voer een beschrijving in."
+                  />
+                </label>
+                <div *ngIf="cardGroup.valid">
+                  <br />
+                  <br />
+                </div>
+                <div *ngIf="!cardGroup.valid">
+                  <br />
+                  <p class="form-control alert-danger">
+                    Voer een valide beschrijving in!
+                  </p>
+                </div>
+                <button
+                  [disabled]="!cardGroup.valid"
+                  (click)="enableEditing(false, column); addCard(column)"
+                  class="TLbtn btn-small btn-color-primary"
+                >
+                  Add
+                </button>
+                <button
+                  (click)="enableEditing(false, column)"
+                  class="TLbtn btn-small btn-color-secondary"
+                >
+                  cancel
+                </button>
+              </form>
             </div>
           </div>
         </div>
 
-        <div class="example-container-toaddcard">
-          <h6 (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ Voeg een kaart toe</h6>
-          <div class="animated-item" *ngIf="hasEnabledEditing(column)">
-            <form [formGroup]="cardGroup">
-              <br>
-              <label for="description">
-              <input id="description" name="description" formControlName="content" class="inputfield form-control" #card
-                     placeholder="Voer een beschrijving in."/>
+        <div class="example-container-toadd">
+          <h4 class="clickable_element" (click)="enable = true">
+            + Voeg een lijst toe
+          </h4>
+          <div class="animated-item" *ngIf="enable">
+            <form [formGroup]="listGroup">
+              <br />
+              <label>
+                <input
+                  id="title"
+                  name="title"
+                  formControlName="title"
+                  class="inputfield form-control"
+                  #column
+                  placeholder="Voer een titel in."
+                />
               </label>
-              <div *ngIf="cardGroup.valid">
-                <br>
-                <br>
+              <div *ngIf="listGroup.valid">
+                <br />
+                <br />
               </div>
-              <div *ngIf="!cardGroup.valid">
-                <br>
-                <p class="form-control alert-danger">Voer een valide beschrijving in!</p>
+              <div *ngIf="!listGroup.valid">
+                <br />
+                <p class="form-control alert-danger">
+                  Voer een valide titel in!
+                </p>
               </div>
-              <button [disabled]="!cardGroup.valid" (click)="enableEditing(false, column); addCard(column)"
-                      class="TLbtn btn-small btn-color-primary">Add
+              <button
+                class="clickable_element_close"
+                [disabled]="!listGroup.valid"
+                (click)="enable = false; addColumn(column.value)"
+                class="TLbtn btn-small btn-color-secondary"
+              >
+                Add
               </button>
-              <button (click)="enableEditing(false, column);" class="TLbtn btn-small btn-color-secondary">cancel</button>
+              <button
+                class="clickable_element_close_alt"
+                (click)="enable = false"
+                class="TLbtn btn-small btn-color-secondary"
+              >
+                cancel
+              </button>
             </form>
           </div>
         </div>
       </div>
-
-      <div class="example-container-toadd">
-        <h4 class="clickable_element" (click)="enable=true">+ Voeg een lijst toe</h4>
-        <div class="animated-item" *ngIf="enable">
-          <form [formGroup]="listGroup">
-            <br>
-            <label>
-              <input id="title" name="title" formControlName="title" class="inputfield form-control" #column
-                     placeholder="Voer een titel in."/>
-            </label>
-            <div *ngIf="listGroup.valid">
-              <br>
-              <br>
-            </div>
-            <div *ngIf="!listGroup.valid">
-              <br>
-              <p class="form-control alert-danger">Voer een valide titel in!</p>
-            </div>
-            <button class="clickable_element_close" [disabled]="!listGroup.valid" (click)="enable=false; addColumn(column.value)"
-                    class="TLbtn btn-small btn-color-secondary">Add
-            </button>
-            <button class="clickable_element_close_alt" (click)="enable=false" class="TLbtn btn-small btn-color-secondary">cancel</button>
-          </form>
-        </div>
-      </div>
-
     </div>
   </div>
-</div>
 </body>
-

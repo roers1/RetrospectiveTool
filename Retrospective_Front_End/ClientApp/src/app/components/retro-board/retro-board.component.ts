@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {RetroCard} from '../../../models/RetroCard';
-import {Retrospective} from '../../../models/Retrospective';
-import {RetroColumn} from '../../../models/RetroColumn';
-import {MatMenuModule} from '@angular/material/menu';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {RetrospectiveService} from '../../retrospective.service';
-import {RetrocolumnService} from '../../retrocolumn.service';
-import {RetrocardService} from '../../retrocard.service';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { RetroCard } from '../../../models/RetroCard';
+import { Retrospective } from '../../../models/Retrospective';
+import { RetroColumn } from '../../../models/RetroColumn';
+import { MatMenuModule } from '@angular/material/menu';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RetrospectiveService } from '../../retrospective.service';
+import { RetrocolumnService } from '../../retrocolumn.service';
+import { RetrocardService } from '../../retrocard.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-retro-board',
@@ -153,5 +153,11 @@ export class RetroBoardComponent implements OnInit {
     }
 
     return this.enabledColumn[column.id];
+  }
+
+  cleanRetroBoard() {
+    if (confirm('kWeet je zeker dat je de retrospective with opschonen? (kan niet ongedaan maken)')) {
+      this.retrospective = new Retrospective(0, "title", "description", []);
+    }
   }
 }

@@ -11,6 +11,7 @@
   width: 275px;
   max-width: 100%;
   margin: 0 25px 25px 0;
+  margin-left: 10px;
   display: inline-block;
   vertical-align: top;
   background-color: rgba(248, 255, 249, 0.6);
@@ -52,8 +53,7 @@
   box-sizing: border-box;
   border-radius: 4px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-  0 8px 10px 1px rgba(0, 0, 0, 0.14),
-  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
 .cdk-drag-placeholder {
@@ -82,7 +82,7 @@
 }
 
 body {
-  background-image: url('../../../assets/images/forest2.jpg');
+  background-image: url("../../../assets/images/forest2.jpg");
   background-position: center;
   /*background-repeat: no-repeat;*/
   /* -60px for header */
@@ -91,29 +91,39 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-
 }
 
 .board_area {
   margin-top: 15%; /*Leave room for the title and description*/
+  margin-left: 2%;
   white-space: nowrap;
+}
+
+.board-top-content {
+  margin-top: 5%;
+  padding-bottom: 3%;
+}
+
+.board-top-content-clean {
+  padding-top: 2%;
+  flex-direction: row;
 }
 
 h2 {
   /*color: purple;*/
   display: inline;
-  color: #ED5603;
+  color: #ed5603;
 }
 h1 {
   color: #ffffff;
 }
 h4 {
   font-size: 20px;
-  color: #ED5603;
+  color: #ed5603;
 }
 h6 {
   font-size: 16px;
-  color: #ED5603;
+  color: #ed5603;
 }
 
 .inputfield {
@@ -134,7 +144,6 @@ h6 {
   transition-duration: 0.2s;
   transition-property: background-color;
 }
-
 
 .example-container-toadd {
   width: 275px;
@@ -164,13 +173,27 @@ h6 {
 /*  background-color: rgba(74, 255, 45, 0.6);*/
 /*}*/
 
+#wrapper .clean-btn-text {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  visibility: hidden;
+  color: red;
+}
+
+#wrapper:hover .clean-btn-text {
+  visibility: visible;
+}
+
 .description {
   color: #ffffff;
-  margin-left: 20px;
+  margin-left: 3%;
 }
 
 .locked {
   position: fixed;
+  margin-left: 3%;
 }
 
 .animated-item {
@@ -208,10 +231,10 @@ h6 {
 }
 .icon:hover {
   cursor: pointer;
-  transform: scale(1.1,1.1)
+  transform: scale(1.1, 1.1);
 }
 .icon:active {
-  transform: scale(1.0,1.0)
+  transform: scale(1, 1);
 }
 .icon_menu {
   float: right;
@@ -223,6 +246,9 @@ h6 {
 #icon_delete {
   height: 30px;
 }
+#icon_wipe {
+  transition-duration: 0.2s;
+}
 .dropdownitem:focus {
   outline: 0;
 }
@@ -230,10 +256,13 @@ h6 {
 .inputfield {
   width: 200px;
 }
-
+#icon-wipe:hover {
+  cursor: pointer;
+  transform: scale(1.1, 1.1);
+}
 
 ng-valid.ng-touched {
-  border: 5px solid #42A948;
+  border: 5px solid #42a948;
   background-color: rgba(104, 255, 95, 0.6);
 }
 

@@ -109,12 +109,26 @@ describe('RetroBoardComponent', () => {
   it('should instantiate', () => {
     expect(component).toBeDefined();
   });
+
   it('should trigger variable when add button is clicked', () => {
     const button = fixture.debugElement.nativeElement.querySelector('.clickable_element');
 
     button.click();
 
     expect(component.enable).toEqual(true);
+  });
+
+  it('should clean Retro Board', () => {
+    component.retrospective = new Retrospective(1000, "title", "description", [
+      new RetroColumn(11, "rc1", []),
+      new RetroColumn(22, "rc2", [])
+    ]);
+
+    fixture.detectChanges();
+
+    component.cleanRetroBoard();
+
+    expect(component.retrospective.retroColumns.length).toBe(0);
   });
 
   // it('should trigger variable when add  button is clicked should close menu', () => {
