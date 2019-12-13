@@ -44,7 +44,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     RouterModule.forRoot([
       {path: '', component: HomeComponent, pathMatch: 'full'},
       {path: 'styles', component: StylesComponent},
-      {path: 'board', component: RetroBoardComponent}
+      {path: 'board/:id', component: RetroBoardComponent}
     ]),
     BrowserAnimationsModule
   ],
