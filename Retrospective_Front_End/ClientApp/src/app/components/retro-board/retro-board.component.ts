@@ -20,6 +20,12 @@ export class RetroBoardComponent implements OnInit {
   retrospective: Retrospective = new Retrospective(0, 'Title', 'Description', [
     new RetroColumn(0, 'Todo', [
       new RetroCard(0, 'Nothing', 0),
+    ]),
+    new RetroColumn(0, 'Doing', [
+      new RetroCard(0, 'Nothing', 0),
+    ]),
+    new RetroColumn(0, 'Done', [
+      new RetroCard(0, 'Nothing', 0),
     ])
   ]);
 
