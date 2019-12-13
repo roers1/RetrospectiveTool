@@ -12,7 +12,7 @@ import { RetrospectiveService } from './retrospective.service';
 export class RetrocolumnService {
   private readonly baseUrlRetrospective: string = BASE_URL + 'retrospectives/';
 
-  private readonly baseUrlRetroColumn = BASE_URL + 'retroColumns/';
+  private readonly baseUrlRetroColumn = BASE_URL + 'retrocolumns';
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -30,17 +30,18 @@ export class RetrocolumnService {
     return this.http.get<RetroColumn>(this.baseUrlRetroColumn + id, this.httpOptions);
   }
 
-  createColumn(title): Observable<RetroColumn> {
+  createColumn(title, retrospectiveId): Observable<RetroColumn> {
     if (this.retrospectiveService.getRetrospective) {
-      return this.http.post<RetroColumn>(this.baseUrlRetrospective + this.retrospectiveService.getCurrentRetrospectiveId + '/retrocolumns', {
-        title: title
+      return this.http.post<RetroColumn>(this.baseUrlRetroColumn, {
+        title: title,
+        retrospectiveId: retrospectiveId
       }, this.httpOptions);
     }
   }
 
   removeColumn(columnId): Observable<RetroColumn> {
     if (this.retrospectiveService.getRetrospective) {
-      return this.http.delete<RetroColumn>(this.baseUrlRetrospective + this.retrospectiveService.getCurrentRetrospectiveId + '/retrocolumns/' + columnId, this.httpOptions);
+      return this.http.delete<RetroColumn>(this.baseUrlRetrospective + this.retrospectiveService.getCurrentRetrospectiveId() + '/retrocolumns/' + columnId, this.httpOptions);
     }
   }
 }
