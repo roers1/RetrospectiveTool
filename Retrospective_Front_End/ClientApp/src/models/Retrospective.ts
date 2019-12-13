@@ -7,15 +7,16 @@ export class Retrospective {
     public title: string,
     public description: string,
     public retroColumns: RetroColumn[]
-  ) { };
-
-  addRetroColumn(retrocolumn: RetroColumn) {
-    this.retroColumns.push(retrocolumn);
+  ) {
   }
 
-  removeRetroColumn(retrocolumnId: number) {
-    if (retrocolumnId => 0) {
-      this.retroColumns.filter(rc => rc.id != retrocolumnId);
+  addRetroColumn(column: RetroColumn) {
+    this.retroColumns.push(column);
+  }
+
+  removeRetroColumn(columnId: number) {
+    if (columnId => 0) {
+      this.retroColumns.filter(rc => rc.id !== columnId);
     }
   }
 }

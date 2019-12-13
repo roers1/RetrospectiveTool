@@ -58,7 +58,7 @@ export class RetroBoardComponent implements OnInit {
   }
 
   emptyColumn(column: RetroColumn) {
-    if(confirm("Weet je zeker dat je alle kaarten in deze kolom wilt verwijderen?")) {
+    if (confirm('Weet je zeker dat je alle kaarten in deze kolom wilt verwijderen?')) {
       column.cards = [];
     }
     // TODO: ADD SERVICE!
@@ -73,22 +73,24 @@ export class RetroBoardComponent implements OnInit {
 
     // TODO ADD SERVICE!
   }
+
   deleteColumn(givenColumn: RetroColumn) {
 
-    if(confirm("Weet je zeker dat je deze kolom wilt verwijderen?")) {
-      let index = this.retrospective.retroColumns.indexOf(givenColumn);
+    if (confirm('Weet je zeker dat je deze kolom wilt verwijderen?')) {
+      const index = this.retrospective.retroColumns.indexOf(givenColumn);
       this.retrospective.retroColumns.splice(index, 1);
     }
     // TODO ADD SERVICE!
   }
+
   deleteCard(givenCard: RetroCard) {
 
-    if(confirm("Weet je zeker dat je deze kaart wilt verwijderen?")) {
+    if (confirm('Weet je zeker dat je deze kaart wilt verwijderen?')) {
       this.retrospective.retroColumns.forEach(column => {
         column.cards.forEach(card => {
-          if(card.id == givenCard.id) {
-            let index = column.cards.indexOf(givenCard);
-            column.cards.splice(index, 1)
+          if (card.id === givenCard.id) {
+            const index = column.cards.indexOf(givenCard);
+            column.cards.splice(index, 1);
           }
         });
 
@@ -99,7 +101,7 @@ export class RetroBoardComponent implements OnInit {
 
   updateContent(card: RetroCard, content) {
     card.content = content;
-    this.enableContentEditing(false, card)
+    this.enableContentEditing(false, card);
     // TODO ADD SERVICE!
   }
 
