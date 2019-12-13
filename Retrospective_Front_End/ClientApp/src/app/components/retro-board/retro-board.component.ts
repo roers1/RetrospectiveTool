@@ -5,6 +5,8 @@ import {Retrospective} from '../../../models/Retrospective';
 import {RetroColumn} from '../../../models/RetroColumn';
 import {MatMenuModule} from '@angular/material/menu';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-retro-board',
@@ -22,6 +24,8 @@ export class RetroBoardComponent implements OnInit {
       new RetroCard(0, 'Nothing', 0),
     ])
   ]);
+
+  constructor(public dialog: MatDialog) {}
 
   cardGroup: FormGroup = new FormGroup({
     content: new FormControl('', Validators.required)
@@ -58,10 +62,17 @@ export class RetroBoardComponent implements OnInit {
   }
 
   emptyColumn(column: RetroColumn) {
-    if(confirm("Weet je zeker dat je alle kaarten in deze kolom wilt verwijderen?")) {
-      column.cards = [];
-    }
-    // TODO: ADD SERVICE!
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '500px',
+      data: "Weet je zeker dat je kolom '" + column.title + "' wilt leegmaken?"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        column.cards = [];
+        // TODO: ADD SERVICE!
+      }
+    });
   }
 
   addCard(column: RetroColumn) {
@@ -74,27 +85,38 @@ export class RetroBoardComponent implements OnInit {
     // TODO ADD SERVICE!
   }
   deleteColumn(givenColumn: RetroColumn) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '500px',
+      data: "Weet je zeker dat je kolom '" + givenColumn.title + "' wilt verwijderen?"
+    });
 
-    if(confirm("Weet je zeker dat je deze kolom wilt verwijderen?")) {
-      let index = this.retrospective.retroColumns.indexOf(givenColumn);
-      this.retrospective.retroColumns.splice(index, 1);
-    }
-    // TODO ADD SERVICE!
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        let index = this.retrospective.retroColumns.indexOf(givenColumn);
+        this.retrospective.retroColumns.splice(index, 1);
+      }
+    });
   }
   deleteCard(givenCard: RetroCard) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '500px',
+      data: "Weet je zeker dat je deze kaart wilt verwijderen?"
+    });
 
-    if(confirm("Weet je zeker dat je deze kaart wilt verwijderen?")) {
-      this.retrospective.retroColumns.forEach(column => {
-        column.cards.forEach(card => {
-          if(card.id == givenCard.id) {
-            let index = column.cards.indexOf(givenCard);
-            column.cards.splice(index, 1)
-          }
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.retrospective.retroColumns.forEach(column => {
+          column.cards.forEach(card => {
+            if(card.id == givenCard.id) {
+              let index = column.cards.indexOf(givenCard);
+              column.cards.splice(index, 1)
+            }
+          });
+  
         });
-
-      });
-    }
-    // TODO ADD SERVICE!
+        // TODO ADD SERVICE!
+      }
+    });
   }
 
   updateContent(card: RetroCard, content) {
@@ -126,9 +148,6 @@ export class RetroBoardComponent implements OnInit {
     }
 
     return this.enabledColumn[column.id];
-  }
-
-  constructor() {
   }
 
   ngOnInit() {

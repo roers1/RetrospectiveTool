@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { CreateBoardComponent } from '../boardcreate-dialog/boardcreatedialog.component';
+import { CreateBoardDialogComponent } from '../boardcreate-dialog/boardcreatedialog.component';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit{
   }
 
   opendialog(): void {
-    const dialogRef = this.dialog.open(CreateBoardComponent, {
+    const dialogRef = this.dialog.open(CreateBoardDialogComponent, {
       width: '400px',
       data: {name: this.name, description: this.description}
     });
