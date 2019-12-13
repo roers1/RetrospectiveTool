@@ -52,28 +52,28 @@ namespace Retrospective_Back_End.Controllers
         [HttpPut]
         public IActionResult PutRetroColumn()
         {
-            RetroColumn retroColumn = GetJSONFromBody(Request.Body);
+            //RetroColumn retroColumn = GetJSONFromBody(Request.Body);
 
-            if (retroColumn == null)
-            {
-                return BadRequest();
-            };
+            //if (retroColumn == null)
+            //{
+            //    return BadRequest();
+            //};
 
-            try
-            {
-                _context.SaveRetroColumn(retroColumn);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RetroColumnExists(retroColumn.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            //try
+            //{
+            //    _context.SaveRetroColumn(retroColumn);
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!RetroColumnExists(retroColumn.Id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
 
             return NoContent();
         }
@@ -82,31 +82,12 @@ namespace Retrospective_Back_End.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public ActionResult<RetroColumn> PostRetroColumn()
+        public ActionResult<RetroColumn> PostRetroColumn(RetroColumn retroColumn)
         {
-            RetroColumn retroColumn = GetJSONFromBody(Request.Body);
-
-            if (retroColumn == null)
-            {
-                return BadRequest();
-            };
-
-            try
-            {
-                _context.SaveRetroColumn(retroColumn);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RetroColumnExists(retroColumn.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
+    
+            _context.SaveRetroColumn(retroColumn);
+           return CreatedAtAction("GetRetroColumn", new { id = retroColumn.Id }, retroColumn);
+         
         }
 
         // DELETE: api/RetroColumns/5

@@ -4,17 +4,17 @@ export class RetroColumn {
   constructor(
     public id: number,
     public title: string,
-    public cards: RetroCard[]
+    public retroCards: RetroCard[]
   ) {
   }
 
   addRetroCard(card: RetroCard) {
-    this.cards.push(card);
+    this.retroCards.push(card);
   }
 
   removeRetroCard(cardId: number) {
     if (cardId >= 0) {
-      this.cards.filter(rc => rc.id !== cardId);
+      this.retroCards.filter(rc => rc.id !== cardId);
     }
   }
 }

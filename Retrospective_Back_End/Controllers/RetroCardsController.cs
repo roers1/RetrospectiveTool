@@ -51,28 +51,28 @@ namespace Retrospective_Back_End.Controllers
 		[HttpPut]
 		public IActionResult PutRetroCard()
 		{
-			RetroCard retroCard = GetJSONFromBody(Request.Body);
+			//RetroCard retroCard //GetJSONFromBody(Request.Body);
 
-			if (retroCard == null)
-			{
-				return BadRequest();
-			};
+			//if (retroCard == null)
+			//{
+			//	return BadRequest();
+			//};
 
-			try
-			{
-				_context.SaveRetroCard(retroCard);
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				if (!RetroCardExists(retroCard.Id))
-				{
-					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
-			}
+			//try
+			//{
+			//	_context.SaveRetroCard(retroCard);
+			//}
+			//catch (DbUpdateConcurrencyException)
+			//{
+			//	if (!RetroCardExists(retroCard.Id))
+			//	{
+			//		return NotFound();
+			//	}
+			//	else
+			//	{
+			//		throw;
+			//	}
+			//}
 
 			return NoContent();
 		}
@@ -81,32 +81,10 @@ namespace Retrospective_Back_End.Controllers
 		// To protect from overposting attacks, please enable the specific properties you want to bind to, for
 		// more details see https://aka.ms/RazorPagesCRUD.
 		[HttpPost]
-		public ActionResult<RetroCard> PostRetroCard()
+		public ActionResult<RetroCard> PostRetroCard(RetroCard retroCard)
 		{
-			RetroCard retroCard = GetJSONFromBody(Request.Body);
-
-			if (retroCard == null)
-			{
-				return BadRequest();
-			};
-
-			try
-			{
-				_context.SaveRetroCard(retroCard);
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				if (!RetroCardExists(retroCard.Id))
-				{
-					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
-			}
-
-			return NoContent();
+			_context.SaveRetroCard(retroCard);
+			return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
 		}
 
 		// DELETE: api/RetroCards/5
@@ -127,25 +105,6 @@ namespace Retrospective_Back_End.Controllers
 		private bool RetroCardExists(int id)
         {
             return _context.RetroCards.Any(e => e.Id == id);
-        }
-
-        private RetroCard GetJSONFromBody(Stream req)
-        {
-	        req.Seek(0, System.IO.SeekOrigin.Begin);
-	        string json = new StreamReader(req).ReadToEnd();
-
-	        RetroCard input = null;
-
-	        try
-	        {
-		        input = JsonConvert.DeserializeObject<RetroCard>(json);
-	        }
-	        catch (Exception ex)
-	        {
-		        throw ex;
-	        }
-
-	        return input;
         }
     }
 }

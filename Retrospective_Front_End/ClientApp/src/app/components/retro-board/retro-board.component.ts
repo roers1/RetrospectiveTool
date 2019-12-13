@@ -53,7 +53,7 @@ export class RetroBoardComponent implements OnInit {
 
     const id = params.get(params.keys[0]);
 
-    this.retrospectiveService.getRetrospective(id).subscribe((retrospective) => {
+    this.retrospectiveService.getRetrospective(id, (retrospective) => {
       this.retrospective = retrospective;
     });
   }
@@ -79,14 +79,14 @@ export class RetroBoardComponent implements OnInit {
   // addCard()
 
   addColumn(title) {
-    this.retroColumnService.createColumn(title).subscribe((column) => {
+    this.retroColumnService.createColumn(title, this.retrospective.id).subscribe((column) => {
       this.retrospective.retroColumns.push(column);
     });
   }
 
   emptyColumn(column: RetroColumn) {
     if (confirm('Weet je zeker dat je alle kaarten in deze kolom wilt verwijderen?')) {
-      column.cards = [];
+      column.retroCards = [];
     }
     // TODO: ADD SERVICE!
   }
@@ -95,33 +95,25 @@ export class RetroBoardComponent implements OnInit {
     const value = this.cardGroup.value;
 
     this.retroCardService.createCard(column.id, value.content).subscribe((card) => {
-      column.cards.push(card);
+      column.retroCards.push(card);
     });
   }
 
   deleteColumn(givenColumn: RetroColumn) {
-
     if (confirm('Weet je zeker dat je deze kolom wilt verwijderen?')) {
-      const index = this.retrospective.retroColumns.indexOf(givenColumn);
-      this.retrospective.retroColumns.splice(index, 1);
-    }
-    // TODO ADD SERVICE!
-  }
-
-  deleteCard(givenCard: RetroCard) {
-
-    if (confirm('Weet je zeker dat je deze kaart wilt verwijderen?')) {
-      this.retrospective.retroColumns.forEach(column => {
-        column.cards.forEach(card => {
-          if (card.id === givenCard.id) {
-            const index = column.cards.indexOf(givenCard);
-            column.cards.splice(index, 1);
-          }
-        });
-
+      this.retroColumnService.removeColumn(givenColumn.id).subscribe(() => {
+        this.retrospective.removeRetroColumn(givenColumn.id);
       });
     }
-    // TODO ADD SERVICE!
+  }
+
+  deleteCard(givenCard: RetroCard, givenColumn: RetroColumn) {
+
+    if (confirm('Weet je zeker dat je deze kaart wilt verwijderen?')) {
+      this.retroCardService.deleteRetroCard(givenCard.id).subscribe(() => {
+        givenColumn.removeRetroCard(givenCard.id);
+      });
+    }
   }
 
   updateContent(card: RetroCard, content) {
