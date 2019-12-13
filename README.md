@@ -1,6 +1,6 @@
 RetrospectiveTool
 =================
-![buildStatus](https://dev.azure.com/bckho/EasyMealProject/_apis/build/status/Project-Pipeline-Development)\
+![Build Status](https://dev.azure.com/rvanoers1/TrueLime/_apis/build/status/roers1.RetrospectiveTool?branchName=master)\
 \
 In opdracht voor TrueLime\
 Uitgevoerd door:\
