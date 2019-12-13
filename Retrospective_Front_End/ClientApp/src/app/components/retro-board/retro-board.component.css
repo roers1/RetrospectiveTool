@@ -1,12 +1,3 @@
-/*.body {*/
-/*  !*overflow: auto;*!*/
-/*  !*background-position: initial;*!*/
-/*  background-attachment: fixed;*/
-/*  background-size: cover;*/
-/*  background-repeat: no-repeat;*/
-/*  position: fixed;*/
-
-/*}*/
 .example-container {
   width: 275px;
   max-width: 100%;
@@ -46,6 +37,9 @@
   word-wrap: break-word;
   white-space: initial;
   position: relative;
+}
+.example-box:hover > div > img {
+  opacity: 100;
 }
 
 .cdk-drag-preview {
@@ -97,6 +91,7 @@ body {
 .board_area {
   margin-top: 15%; /*Leave room for the title and description*/
   white-space: nowrap;
+  z-index: 4;
 }
 
 h2 {
@@ -114,6 +109,7 @@ h4 {
 h6 {
   font-size: 16px;
   color: #ED5603;
+  cursor: pointer;
 }
 
 .inputfield {
@@ -128,13 +124,19 @@ h6 {
   background-color: rgba(248, 255, 249, 0.9);
   padding: 8px;
   /*border-radius: 4px;*/
-  cursor: pointer;
   font-size: 12px;
 
   transition-duration: 0.2s;
-  transition-property: background-color;
+  transition-property: color;
+}
+.example-container-toaddcard:hover {
+  color: limegreen;
 }
 
+.TLbtn{
+  padding-left: 10px;
+  padding-right: 10px;
+}
 
 .example-container-toadd {
   width: 275px;
@@ -145,24 +147,25 @@ h6 {
   background-color: rgba(248, 255, 249, 0.4);
   padding: 8px;
   border-radius: 4px;
-  cursor: grab;
 
   transition-duration: 0.2s;
   transition-property: background-color;
 }
 
-.example-container-toadd:hover {
-  /*background-color: rgba(77, 255, 75, 0.4);*/
+.clickable_element {
+  cursor: pointer;
+  transition-duration: 0.2s;
+  transition-property: background-color;
+  border-radius: 5px;
+  padding-bottom: 10px;
+  padding-top: 6px;
+  padding-left: 2px;
+  margin-bottom: 0;
 }
-
-.example-container-toaddcard:hover {
-  /*background-color: rgba(255, 84, 60, 0.6);*/
-  color: limegreen;
+.clickable_element:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  background-size: cover;
 }
-/*.example-container-toaddcard:invalid {*/
-/*  background-color: rgba(255, 84, 60, 0.6);*/
-/*  background-color: rgba(74, 255, 45, 0.6);*/
-/*}*/
 
 .description {
   color: #ffffff;
@@ -171,6 +174,7 @@ h6 {
 
 .locked {
   position: fixed;
+  z-index: 2;
 }
 
 .animated-item {
@@ -205,17 +209,21 @@ h6 {
 .icon {
   height: 24px;
   transition-duration: 0.2s;
+  opacity: 0;
 }
 .icon:hover {
   cursor: pointer;
-  transform: scale(1.1,1.1)
+  /* transform: scale(1.1,1.1) */
 }
 .icon:active {
-  transform: scale(1.0,1.0)
+  transform: scale(0.8,0.8)
 }
 .icon_menu {
   float: right;
   margin-top: 5px;
+}
+#icon_menu {
+  opacity: 100;
 }
 #icon_edit {
   height: 30px;

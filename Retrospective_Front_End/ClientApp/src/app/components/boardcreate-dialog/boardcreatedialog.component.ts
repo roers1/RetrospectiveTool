@@ -20,7 +20,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './boardcreatedialog.component.html',
   styleUrls: ['../home/home.component.css']
 })
-export class CreateBoardComponent {
+export class CreateBoardDialogComponent {
 
   nameFormControl = new FormControl('', [
     Validators.required,
@@ -30,7 +30,7 @@ export class CreateBoardComponent {
   matcher = new MyErrorStateMatcher();
 
   constructor(
-      public dialogRef: MatDialogRef<CreateBoardComponent>,
+      public dialogRef: MatDialogRef<CreateBoardDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public data: DialogData
     ) {}
 
