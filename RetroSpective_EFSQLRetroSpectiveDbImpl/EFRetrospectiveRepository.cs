@@ -62,7 +62,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 
 		public void SaveRetroColumn(RetroColumn retroColumn)
 		{
-			if (retroColumn.Id == 0)
+			if (retroColumn.Id != 0)
 			{
 				_context.RetroColumns.Add(retroColumn);
 			}
@@ -70,6 +70,9 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 			{
 				RetroColumn dbEntry = _context.RetroColumns
 					.FirstOrDefault(c => c.Id == retroColumn.Id);
+
+
+
 				if (dbEntry != null)
 				{
 					dbEntry.Retrospective = retroColumn.Retrospective;

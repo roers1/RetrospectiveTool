@@ -82,31 +82,36 @@ namespace Retrospective_Back_End.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public ActionResult<RetroColumn> PostRetroColumn()
+        public ActionResult<RetroColumn> PostRetroColumn(RetroColumn retroColumn)
         {
-            RetroColumn retroColumn = GetJSONFromBody(Request.Body);
+            System.Diagnostics.Debug.Write(retroColumn);
+            //Retrospective retro = _context.Retrospectives.FirstOrDefault()
+            _context.SaveRetroColumn(retroColumn);
+            return CreatedAtAction("GetRetroColumn", new { id = retroColumn.Id }, retroColumn);
+            //System.Diagnostics.Debug.WriteLine(Request.Body);
+            //RetroColumn retroColumn = GetJSONFromBody(Request.Body);
 
-            if (retroColumn == null)
-            {
-                return BadRequest();
-            };
+            //if (retroColumn == null)
+            //{
+            //    return BadRequest();
+            //};
 
-            try
-            {
-                _context.SaveRetroColumn(retroColumn);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RetroColumnExists(retroColumn.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
+            //try
+            //{
+            //    _context.SaveRetroColumn(retroColumn);
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!RetroColumnExists(retroColumn.Id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+            //return NoContent();
         }
 
         // DELETE: api/RetroColumns/5
