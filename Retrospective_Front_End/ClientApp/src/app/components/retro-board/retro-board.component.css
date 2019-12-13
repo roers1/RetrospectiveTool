@@ -109,6 +109,7 @@ h4 {
 h6 {
   font-size: 16px;
   color: #ED5603;
+  cursor: pointer;
 }
 
 .inputfield {
@@ -123,7 +124,6 @@ h6 {
   background-color: rgba(248, 255, 249, 0.9);
   padding: 8px;
   /*border-radius: 4px;*/
-  cursor: pointer;
   font-size: 12px;
 
   transition-duration: 0.2s;

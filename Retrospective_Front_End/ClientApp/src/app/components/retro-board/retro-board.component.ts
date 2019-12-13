@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material';
 })
 
 export class RetroBoardComponent implements OnInit {
+
   enable = false;
   elements = [];
   enabledColumn = {};
