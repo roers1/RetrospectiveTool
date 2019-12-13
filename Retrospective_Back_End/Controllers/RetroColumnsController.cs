@@ -52,43 +52,6 @@ namespace Retrospective_Back_End.Controllers
         [HttpPut]
         public IActionResult PutRetroColumn()
         {
-            RetroColumn retroColumn = GetJSONFromBody(Request.Body);
-
-            if (retroColumn == null)
-            {
-                return BadRequest();
-            };
-
-            try
-            {
-                _context.SaveRetroColumn(retroColumn);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RetroColumnExists(retroColumn.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/RetroColumns
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public ActionResult<RetroColumn> PostRetroColumn(RetroColumn retroColumn)
-        {
-            System.Diagnostics.Debug.Write(retroColumn);
-            //Retrospective retro = _context.Retrospectives.FirstOrDefault()
-            _context.SaveRetroColumn(retroColumn);
-            return CreatedAtAction("GetRetroColumn", new { id = retroColumn.Id }, retroColumn);
-            //System.Diagnostics.Debug.WriteLine(Request.Body);
             //RetroColumn retroColumn = GetJSONFromBody(Request.Body);
 
             //if (retroColumn == null)
@@ -111,7 +74,20 @@ namespace Retrospective_Back_End.Controllers
             //        throw;
             //    }
             //}
-            //return NoContent();
+
+            return NoContent();
+        }
+
+        // POST: api/RetroColumns
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
+        [HttpPost]
+        public ActionResult<RetroColumn> PostRetroColumn(RetroColumn retroColumn)
+        {
+    
+            _context.SaveRetroColumn(retroColumn);
+           return CreatedAtAction("GetRetroColumn", new { id = retroColumn.Id }, retroColumn);
+         
         }
 
         // DELETE: api/RetroColumns/5

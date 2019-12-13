@@ -30,11 +30,11 @@ export class RetrocolumnService {
     return this.http.get<RetroColumn>(this.baseUrlRetroColumn + id, this.httpOptions);
   }
 
-  createColumn(title, retrospective): Observable<RetroColumn> {
+  createColumn(title, retrospectiveId): Observable<RetroColumn> {
     if (this.retrospectiveService.getRetrospective) {
       return this.http.post<RetroColumn>(this.baseUrlRetroColumn, {
         title: title,
-        retrospective: retrospective
+        retrospectiveId: retrospectiveId
       }, this.httpOptions);
     }
   }

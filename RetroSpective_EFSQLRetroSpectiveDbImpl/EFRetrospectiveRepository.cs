@@ -49,9 +49,10 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 			{
 				RetroCard dbEntry = _context.RetroCards
 					.FirstOrDefault(c => c.Id == retroCard.Id);
+
 				if (dbEntry != null)
 				{
-					dbEntry.RetroColumn = retroCard.RetroColumn;
+					dbEntry.RetroColumnId = retroCard.RetroColumnId;
 					dbEntry.Id = retroCard.Id;
 					dbEntry.Content = retroCard.Content;
 					dbEntry.Position = retroCard.Position;
@@ -62,7 +63,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 
 		public void SaveRetroColumn(RetroColumn retroColumn)
 		{
-			if (retroColumn.Id != 0)
+			if (retroColumn.Id == 0)
 			{
 				_context.RetroColumns.Add(retroColumn);
 			}
@@ -71,15 +72,14 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 				RetroColumn dbEntry = _context.RetroColumns
 					.FirstOrDefault(c => c.Id == retroColumn.Id);
 
-
-
 				if (dbEntry != null)
 				{
-					dbEntry.Retrospective = retroColumn.Retrospective;
+					dbEntry.RetrospectiveId = retroColumn.RetrospectiveId;
 					dbEntry.Id = retroColumn.Id;
 					dbEntry.RetroCards = retroColumn.RetroCards;
 					dbEntry.Title = retroColumn.Title;
 				}
+		
 			}
 			_context.SaveChanges();
 		}

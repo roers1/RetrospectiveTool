@@ -79,7 +79,7 @@ export class RetroBoardComponent implements OnInit {
   // addCard()
 
   addColumn(title) {
-    this.retroColumnService.createColumn(title, this.retrospective).subscribe((column) => {
+    this.retroColumnService.createColumn(title, this.retrospective.id).subscribe((column) => {
       this.retrospective.retroColumns.push(column);
     });
   }

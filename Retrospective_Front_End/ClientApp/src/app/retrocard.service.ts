@@ -9,7 +9,7 @@ import {RetroCard} from '../models/RetroCard';
   providedIn: 'root'
 })
 export class RetrocardService {
-  private readonly baseUrlRetroCards = BASE_URL + 'retrocards/';
+  private readonly baseUrlRetroCards = BASE_URL + 'retrocards';
   private readonly baseUrlRetroColumn = BASE_URL + 'retroColumns/';
 
   private httpOptions = {
@@ -22,8 +22,9 @@ export class RetrocardService {
   }
 
   createCard(columnId, content): Observable<RetroCard> {
-    return this.http.post<RetroCard>(this.baseUrlRetroColumn + columnId + '/retrocards', {
-      content: content
+    return this.http.post<RetroCard>(this.baseUrlRetroCards, {
+      content: content,
+      retrocolumnId: columnId
     }, this.httpOptions);
   }
 
