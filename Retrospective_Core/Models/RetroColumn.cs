@@ -8,7 +8,6 @@ namespace Retrospective_Core.Models {
 
         [Key]
         public int Id { get; set; }
-
         public string Title { get; set; }
         public Retrospective Retrospective { get; set; }
         public ICollection<RetroCard> RetroCards { get; set; }
