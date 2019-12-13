@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { CreateBoardDialogComponent } from '../boardcreate-dialog/boardcreatedialog.component';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {CreateBoardComponent} from '../boardcreate-dialog/boardcreatedialog.component';
 import {RetrospectiveService} from '../../retrospective.service';
 import {Router} from '@angular/router';
 
@@ -22,7 +20,7 @@ export class HomeComponent implements OnInit {
   opendialog(): void {
     const dialogRef = this.dialog.open(CreateBoardDialogComponent, {
       width: '400px',
-      data: {name: this.name, description: this.description}
+      data: {name: '', description: ''}
     });
 
     dialogRef.afterClosed().subscribe(data => {
