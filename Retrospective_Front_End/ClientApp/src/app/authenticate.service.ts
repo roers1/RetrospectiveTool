@@ -33,7 +33,7 @@ export class AuthenticateService {
     return (error: any): Observable<T> => {
       this.message.push(operation, message);
       return of(result as T);
-    }
+    };
   }
 
   isAuthenticated() {
