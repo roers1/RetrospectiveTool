@@ -8,6 +8,10 @@ namespace Retrospective_Core.Services {
 	    IQueryable<Retrospective> Retrospectives { get; }
 	    IQueryable<RetroColumn> RetroColumns { get; }
 	    IQueryable<RetroCard> RetroCards { get; }
+	    void SaveRetroCard(RetroCard retroCard);
+		void RemoveRetroCard(RetroCard retroCard);
+	    void SaveRetroColumn(RetroColumn retroColumn);
+	    void RemoveRetroColumn(RetroColumn retroColumn);
 	    void SaveRetrospective(Retrospective retrospective);
 	    void RemoveRetrospective(Retrospective retrospective);
     }
