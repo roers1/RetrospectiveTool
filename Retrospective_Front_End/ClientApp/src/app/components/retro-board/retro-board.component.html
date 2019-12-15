@@ -6,41 +6,44 @@
       <h1>{{retrospective.title}}</h1>
       <br>
       <h3 class="description">{{retrospective.description}}</h3>
+      <div class="row board-top-content-clean" id="wrapper">
+        <img class="btn-small hover"
+             id="icon-wipe"
+             src="../../../assets/images/broom.png"
+             (click)="cleanRetroBoard()" />
+        <p class="clean-btn-text">Clean Board</p>
+      </div>
     </div>
+
     <div class="board_area">
 
       <div class="example-container" *ngFor="let column of retrospective.retroColumns">
         <div class="board-title-holder">
           <h2 class="testtitle">{{column.title}}</h2>
           <div class="icon_menu">
-              <img class="icon" src="../../../assets/images/icon_dot_menu.png" [matMenuTriggerFor]="menu">
-              <mat-menu #menu="matMenu">
-                <button
-                  mat-menu-item
-                  class="dropdownitem"
-                  (click)="emptyColumn(column)"
-                >
-                  Maak kolom leeg
-                </button>
-                <button
-                  mat-menu-item
-                  class="dropdownitem"
-                  (click)="deleteColumn(column)"
-                >
-                  Verwijder kolom
-                </button>
-              </mat-menu>
+            <img class="icon" src="../../../assets/images/icon_dot_menu.png" [matMenuTriggerFor]="menu">
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item
+                      class="dropdownitem"
+                      (click)="emptyColumn(column)">
+                Maak kolom leeg
+              </button>
+              <button mat-menu-item
+                      class="dropdownitem"
+                      (click)="deleteColumn(column)">
+                Verwijder kolom
+              </button>
+            </mat-menu>
           </div>
         </div>
 
-        <div
-          cdkDropList
-          #element="cdkDropList"
-          [attr.id]="column.title"
-          [cdkDropListData]="column.retroCards"
-          [cdkDropListConnectedTo]="getColumnNames(element)"
-          class="example-list"
-          (cdkDropListDropped)="drop($event)">
+        <div cdkDropList
+             #element="cdkDropList"
+             [attr.id]="column.title"
+             [cdkDropListData]="column.retroCards"
+             [cdkDropListConnectedTo]="getColumnNames(element)"
+             class="example-list"
+             (cdkDropListDropped)="drop($event)">
           <div class="example-box" *ngFor="let item of column.retroCards" cdkDrag>
             <div class="box-content" *ngIf="!hasEnabledContentEditing(item)">
               {{item.content}}
@@ -51,8 +54,8 @@
             </div>
 
             <div class="icons">
-              <img class="icon" id="icon_edit" src="../../../assets/images/icon_edit.png" (click)="enableContentEditing(true, item)"  alt=""/>
-              <img class="icon" id="icon_delete" src="../../../assets/images/icon_delete.png" (click)="deleteCard(item, column)"  alt=""/>
+              <img class="icon" id="icon_edit" src="../../../assets/images/icon_edit.png" (click)="enableContentEditing(true, item)" alt="" />
+              <img class="icon" id="icon_delete" src="../../../assets/images/icon_delete.png" (click)="deleteCard(item, column)" alt="" />
             </div>
           </div>
         </div>
@@ -63,15 +66,19 @@
             <form [formGroup]="cardGroup">
               <div>
                 <mat-form-field [formGroup]="cardGroup">
-                  <input matInput #card placeholder="Voer een beschrijving in" 
-                    formControlName="content" value="">
-                </mat-form-field> 
+                  <input matInput #card placeholder="Voer een beschrijving in"
+                         formControlName="content" value="">
+                </mat-form-field>
               </div>
               <div>
                 <button [disabled]="!cardGroup.valid" mat-button (click)="enableEditing(false, column); addCard(column)"
-                  class="TLbtn btn-small btn-color-primary">Voeg toe</button>
+                        class="TLbtn btn-small btn-color-primary">
+                  Voeg toe
+                </button>
                 <button mat-button (click)="enableEditing(false, column);"
-                  class="TLbtn btn-small btn-color-secondary">Annuleer</button>
+                        class="TLbtn btn-small btn-color-secondary">
+                  Annuleer
+                </button>
               </div>
             </form>
           </div>
@@ -85,14 +92,18 @@
             <div>
               <mat-form-field [formGroup]="listGroup">
                 <input matInput #column placeholder="Voer een titel in"
-                  formControlName="title" value="">
-              </mat-form-field> 
+                       formControlName="title" value="">
+              </mat-form-field>
             </div>
             <div>
               <button [disabled]="!listGroup.valid" mat-button (click)="enable=false; addColumn(column.value)"
-                class="TLbtn btn-small btn-color-primary">Voeg toe</button>
+                      class="TLbtn btn-small btn-color-primary">
+                Voeg toe
+              </button>
               <button mat-button (click)="enable=false"
-                class="TLbtn btn-small btn-color-secondary">Annuleer</button>
+                      class="TLbtn btn-small btn-color-secondary">
+                Annuleer
+              </button>
             </div>
           </form>
         </div>

@@ -89,18 +89,15 @@ body {
 }
 
 .board_area {
-  margin-top: 15%; /*Leave room for the title and description*/
+  margin-top: 20%; /*Leave room for the title and description*/
   white-space: nowrap;
   z-index: 4;
 }
 
-.board-top-content {
-  margin-top: 5%;
-  padding-bottom: 3%;
-}
+
 
 .board-top-content-clean {
-  padding-top: 2%;
+  padding-top: 4%;
   flex-direction: row;
 }
 
@@ -192,11 +189,12 @@ h6 {
 
 .description {
   color: #ffffff;
-  margin-left: 20px;
+  margin-left: 3%;
 }
 
 .locked {
   position: fixed;
+  padding-left: 3%;
   z-index: 2;
 }
 
