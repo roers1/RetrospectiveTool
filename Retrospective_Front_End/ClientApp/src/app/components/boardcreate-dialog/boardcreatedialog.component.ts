@@ -24,8 +24,8 @@ export class CreateBoardDialogComponent {
 
   nameFormControl = new FormControl('', [
     Validators.required,
-    Validators.pattern(new RegExp("^[a-zA-Z0-9 ]{2,50}$"))
-  ]);  
+    Validators.pattern(new RegExp('^[a-zA-Z0-9 ]{2,50}$'))
+  ]);
 
   matcher = new MyErrorStateMatcher();
 
