@@ -70,10 +70,10 @@ describe('RetroBoardComponent', () => {
 
     const testColumn = component.retrospective.retroColumns[0];
 
-    expect(testColumn.cards.length > 0).toBe(true);
-    expect(testColumn.cards.length === 0).toBe(false);
+    expect(testColumn.retroCards.length > 0).toBe(true);
+    expect(testColumn.retroCards.length === 0).toBe(false);
 
-    const card = testColumn.cards[0];
+    const card = testColumn.retroCards[0];
 
     expect(card).toBeTruthy();
     expect(card.content).toBe('TestCard');
