@@ -179,7 +179,9 @@ export class RetroBoardComponent implements OnInit {
 
   cleanRetroBoard() {
     if (confirm('Weet je zeker dat je de retrospective with opschonen? (kan niet ongedaan maken)')) {
-      this.retrospective = new Retrospective(0, 'title', 'description', []);
+      const { title, description } = this.retrospective;
+
+      this.retrospective = new Retrospective(0, title, description, []);
     }
   }
 }
