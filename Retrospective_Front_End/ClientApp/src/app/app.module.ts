@@ -18,9 +18,9 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
 
 import { StylesComponent } from './components/styles/styles.component';
 import { MatSliderModule } from '@angular/material/slider';
-import {MatMenuModule} from '@angular/material/menu';
-import {RetroBoardComponent} from './components/retro-board/retro-board.component';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { MatMenuModule } from '@angular/material/menu';
+import { RetroBoardComponent } from './components/retro-board/retro-board.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +32,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     RetroBoardComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -45,9 +45,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatMenuModule,
     DragDropModule,
     RouterModule.forRoot([
-      {path: '', component: HomeComponent, pathMatch: 'full'},
-      {path: 'styles', component: StylesComponent},
-      {path: 'board/:id', component: RetroBoardComponent}
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'styles', component: StylesComponent },
+      { path: 'board/:id', component: RetroBoardComponent }
     ]),
     BrowserAnimationsModule
   ],
