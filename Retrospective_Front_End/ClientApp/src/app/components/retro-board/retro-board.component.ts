@@ -11,7 +11,8 @@ import {RetrocardService} from '../../retrocard.service';
 import {ActivatedRoute} from '@angular/router';
 import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material';
-import {MatFormField} from '@angular/material';
+import { MatFormField } from '@angular/material';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-retro-board',
@@ -50,7 +51,8 @@ export class RetroBoardComponent implements OnInit {
     public retroColumnService: RetrocolumnService,
     public retroCardService: RetrocardService,
     private route: ActivatedRoute,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    public router: Router) {
   }
 
   ngOnInit(): void {
@@ -179,9 +181,10 @@ export class RetroBoardComponent implements OnInit {
 
   cleanRetroBoard() {
     if (confirm('Weet je zeker dat je de retrospective with opschonen? (kan niet ongedaan maken)')) {
-      const { title, description } = this.retrospective;
+      this.retrospective = null;
+      this.retrospectiveService.removeRetrospective();
 
-      this.retrospective = new Retrospective(0, title, description, []);
+      this.router.navigate(['']);
     }
   }
 }
