@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-
-;
 import {Observable, of} from 'rxjs';
 import {BASE_URL} from '../helpers/urlconstants';
 import {MessageService} from './message.service';
@@ -50,7 +48,7 @@ export class RetrospectiveService {
   }
 
   getCurrentRetrospective(): Retrospective {
-    if (this.retrospective != null && this.retrospective != undefined) {
+    if (this.retrospective != null && this.retrospective !== undefined) {
       return this.retrospective;
     } else {
       return null;
@@ -58,7 +56,7 @@ export class RetrospectiveService {
   }
 
   getCurrentRetrospectiveId(): number {
-    if (this.retrospective != null && this.retrospective != undefined) {
+    if (this.retrospective != null && this.retrospective !== undefined) {
       return this.retrospective.id;
     } else {
       return null;

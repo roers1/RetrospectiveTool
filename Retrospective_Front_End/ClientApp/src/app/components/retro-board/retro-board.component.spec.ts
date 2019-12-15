@@ -4,6 +4,14 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {RetroColumn} from '../../../models/RetroColumn';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Retrospective} from '../../../models/Retrospective';
+import {MatButtonModule, MatDialogModule, MatFormField, MatIconModule} from '@angular/material';
+import { BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import { MatMenuModule} from '@angular/material/menu';
+import { MatFormFieldModule} from '@angular/material';
+import { HttpClientTestingModule} from '@angular/common/http/testing';
+import { RouterModule} from '@angular/router';
+import { RouterTestingModule} from '@angular/router/testing';
+import { MatDialog} from '@angular/material';
 
 describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
@@ -11,8 +19,10 @@ describe('RetroBoardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [DragDropModule, FormsModule, ReactiveFormsModule],
-      declarations: [RetroBoardComponent]
+      // tslint:disable-next-line:max-line-length
+      imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule, HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule],
+      declarations: [RetroBoardComponent],
+      providers: [MatDialog]
     })
       .compileComponents();
   }));

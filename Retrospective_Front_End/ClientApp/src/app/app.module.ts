@@ -43,6 +43,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatInputModule,
     MatSliderModule,
     MatMenuModule,
+    MatDialogModule,
     DragDropModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },

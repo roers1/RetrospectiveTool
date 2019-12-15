@@ -11,6 +11,7 @@ import {RetrocardService} from '../../retrocard.service';
 import {ActivatedRoute} from '@angular/router';
 import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material';
+import {MatFormField} from '@angular/material';
 
 @Component({
   selector: 'app-retro-board',
@@ -54,7 +55,6 @@ export class RetroBoardComponent implements OnInit {
 
   ngOnInit(): void {
     const params = this.route.snapshot.paramMap;
-
     const id = params.get(params.keys[0]);
 
     this.retrospectiveService.getRetrospective(id, (retrospective) => {

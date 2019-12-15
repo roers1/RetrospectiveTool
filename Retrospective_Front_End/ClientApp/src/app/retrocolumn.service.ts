@@ -41,7 +41,8 @@ export class RetrocolumnService {
 
   removeColumn(columnId): Observable<RetroColumn> {
     if (this.retrospectiveService.getRetrospective) {
-      return this.http.delete<RetroColumn>(this.baseUrlRetrospective + this.retrospectiveService.getCurrentRetrospectiveId() + '/retrocolumns/' + columnId, this.httpOptions);
+      return this.http.delete<RetroColumn>(this.baseUrlRetrospective + this.retrospectiveService.getCurrentRetrospectiveId()
+        + '/retrocolumns/' + columnId, this.httpOptions);
     }
   }
 }
