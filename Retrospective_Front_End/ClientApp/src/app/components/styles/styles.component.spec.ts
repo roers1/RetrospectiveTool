@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule} from '@angular/material';
-import { MatDialog} from '@angular/material';
+import { MatDialogModule } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { StylesComponent } from './styles.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {HttpClient} from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClient } from '@angular/common/http';
 describe('StylesComponent', () => {
   let component: StylesComponent;
   let fixture: ComponentFixture<StylesComponent>;
@@ -11,11 +11,11 @@ describe('StylesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MatDialogModule, HttpClientTestingModule],
-      declarations: [ StylesComponent ],
+      declarations: [StylesComponent],
       providers: [MatDialog, HttpClient]
 
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
