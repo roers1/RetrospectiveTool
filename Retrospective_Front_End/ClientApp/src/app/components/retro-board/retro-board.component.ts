@@ -126,6 +126,11 @@ export class RetroBoardComponent implements OnInit {
     });
   }
 
+    editColumnTitle(givenColumn: RetroColumn) {
+    // this method should be edited.
+    }
+
+
   deleteCard(givenCard: RetroCard) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',

@@ -5,7 +5,7 @@
       <br>
         <div class="row">
           <h1>{{retrospective.title}}</h1>
-          <img class="icon" 
+          <img class="icon"
             id="icon_wipe"
             src="../../../assets/images/broom.png"
             (click)="cleanRetroBoard()" />
@@ -32,6 +32,11 @@
                       (click)="deleteColumn(column)">
                 Verwijder kolom
               </button>
+              <button mat-menu-item
+                      class="dropdownitem"
+                      (click)="editColumnTitle(column)">
+                Bewerk kolomnaam
+              </button>
             </mat-menu>
           </div>
         </div>
@@ -54,7 +59,7 @@
 
             <div class="icons">
               <img class="icon" id="icon_edit" src="../../../assets/images/icon_edit.png" (click)="enableContentEditing(true, item)" alt="" />
-              <img class="icon" id="icon_delete" src="../../../assets/images/icon_delete.png" (click)="deleteCard(item, column)" alt="" />
+              <img class="icon" id="icon_delete" src="../../../assets/images/icon_delete.png" (click)="deleteCard(item)" alt="" />
             </div>
           </div>
         </div>
