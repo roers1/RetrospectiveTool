@@ -40,8 +40,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: PublishTestResults@1
-- script: cd Retrospective_Front_end/ClientApp
-- script: npm test
+- script: cd Retrospective_Front_end/ClientApp/ &amp;&amp; npm test
   displayName: 'Angular Karma unit test'
 
 - task: PublishBuildArtifacts@1
