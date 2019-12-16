@@ -39,14 +39,6 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: PublishTestResults@1
-  displayName: 'Angular Karma unit test'
-- script: |
-          cd Retrospective_Front_end/ClientApp/ 
-          npm test
-          
- 
-
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
