@@ -39,6 +39,8 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- script: cd client/ &amp;&amp; npm test
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
