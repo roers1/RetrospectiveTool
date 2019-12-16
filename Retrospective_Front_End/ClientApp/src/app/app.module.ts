@@ -12,7 +12,9 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
-import { CreateBoardComponent } from './components/boardcreate-dialog/boardcreatedialog.component';
+
+import { CreateBoardDialogComponent } from './components/boardcreate-dialog/boardcreatedialog.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 import { StylesComponent } from './components/styles/styles.component';
 import { MatSliderModule } from '@angular/material/slider';
@@ -25,7 +27,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     NavMenuComponent,
     HomeComponent,
     StylesComponent,
-    CreateBoardComponent,
+    CreateBoardDialogComponent,
+    ConfirmationDialogComponent,
     RetroBoardComponent
   ],
   imports: [
@@ -40,16 +43,19 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatInputModule,
     MatSliderModule,
     MatMenuModule,
+    MatDialogModule,
     DragDropModule,
     RouterModule.forRoot([
       {path: '', component: HomeComponent, pathMatch: 'full'},
       {path: 'styles', component: StylesComponent},
-      {path: 'board/:id', component: RetroBoardComponent}
+      {path: 'board/:id', component: RetroBoardComponent},
+      {path: ''}
     ]),
     BrowserAnimationsModule
   ],
   entryComponents: [
-    CreateBoardComponent
+    CreateBoardDialogComponent,
+    ConfirmationDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
