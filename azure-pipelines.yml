@@ -41,7 +41,7 @@ steps:
 
 - task: PublishTestResults@1
 - script: cd client/ npm test
-  displayName: 'Angular Karma unit tests'
+  displayName: 'Angular Karma unit test'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
