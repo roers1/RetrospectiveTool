@@ -39,7 +39,9 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: NodeTool@0
 - script: cd client/ &amp;&amp; npm test
+  displayName: 'Angular Karma unit tests'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
