@@ -18,7 +18,11 @@
 
       <div class="example-container" *ngFor="let column of retrospective.retroColumns">
         <div class="board-title-holder">
-          <h2 class="testtitle">{{column.title}}</h2>
+          <h2 class="testtitle" *ngIf="!hasEnabledColumnTitleEditing(column)">{{column.title}}</h2>
+
+
+
+
           <div class="icon_menu">
             <img class="icon" id="icon_menu" src="../../../assets/images/icon_dot_menu.png" [matMenuTriggerFor]="menu">
             <mat-menu #menu="matMenu">
@@ -34,11 +38,17 @@
               </button>
               <button mat-menu-item
                       class="dropdownitem"
-                      (click)="editColumnTitle(column)">
+                      (click)="enableColumnTitleEditing(true, column)">
                 Bewerk kolomnaam
               </button>
             </mat-menu>
           </div>
+        </div>
+
+        <div class="box-content" *ngIf="hasEnabledColumnTitleEditing(column)">
+          <input type="text" #newtitle value="{{column.title}}">
+          <br>
+          <button class="TLbtn btn-small btn-color-primary" (click)="updateColumnTitle(column, newtitle.value)">Aanpassen</button>
         </div>
 
         <div cdkDropList
