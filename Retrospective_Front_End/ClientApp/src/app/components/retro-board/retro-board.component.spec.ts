@@ -138,7 +138,7 @@ describe('RetroBoardComponent', () => {
 
     component.cleanRetroBoard();
 
-    expect(component.retrospective).toBe(null);
+    expect(component.retrospective.retroColumns.length === 0).toBe(true);
   });
 
   // it('should trigger variable when add  button is clicked should close menu', () => {
