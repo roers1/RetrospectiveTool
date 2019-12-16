@@ -4,6 +4,14 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {RetroColumn} from '../../../models/RetroColumn';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Retrospective} from '../../../models/Retrospective';
+import {MatButtonModule, MatDialogModule, MatFormField, MatIconModule} from '@angular/material';
+import { BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import { MatMenuModule} from '@angular/material/menu';
+import { MatFormFieldModule} from '@angular/material';
+import { HttpClientTestingModule} from '@angular/common/http/testing';
+import { RouterModule} from '@angular/router';
+import { RouterTestingModule} from '@angular/router/testing';
+import { MatDialog} from '@angular/material';
 
 describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
@@ -11,8 +19,10 @@ describe('RetroBoardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [DragDropModule, FormsModule, ReactiveFormsModule],
-      declarations: [RetroBoardComponent]
+      // tslint:disable-next-line:max-line-length
+      imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule, HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule],
+      declarations: [RetroBoardComponent],
+      providers: [MatDialog]
     })
       .compileComponents();
   }));
@@ -70,10 +80,10 @@ describe('RetroBoardComponent', () => {
 
     const testColumn = component.retrospective.retroColumns[0];
 
-    expect(testColumn.cards.length > 0).toBe(true);
-    expect(testColumn.cards.length === 0).toBe(false);
+    expect(testColumn.retroCards.length > 0).toBe(true);
+    expect(testColumn.retroCards.length === 0).toBe(false);
 
-    const card = testColumn.cards[0];
+    const card = testColumn.retroCards[0];
 
     expect(card).toBeTruthy();
     expect(card.content).toBe('TestCard');
@@ -109,12 +119,26 @@ describe('RetroBoardComponent', () => {
   it('should instantiate', () => {
     expect(component).toBeDefined();
   });
+
   it('should trigger variable when add button is clicked', () => {
     const button = fixture.debugElement.nativeElement.querySelector('.clickable_element');
 
     button.click();
 
     expect(component.enable).toEqual(true);
+  });
+
+  it('should clean Retro Board', () => {
+    component.retrospective = new Retrospective(1000, "title", "description", [
+      new RetroColumn(11, "rc1", []),
+      new RetroColumn(22, "rc2", [])
+    ]);
+
+    fixture.detectChanges();
+
+    component.cleanRetroBoard();
+
+    expect(component.retrospective).toBe(null);
   });
 
   // it('should trigger variable when add  button is clicked should close menu', () => {
