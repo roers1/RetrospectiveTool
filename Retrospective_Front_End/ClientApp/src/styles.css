@@ -14,7 +14,7 @@ h1 {
   font-family: "din";
   font-size: 5em;
 }
-.center-content{
+.center-content {
   text-align: center;
 }
 .center-self {
@@ -23,13 +23,13 @@ h1 {
 
 /* backgrounds */
 .background-color-primary {
-  background-color: #6FAD02;
+  background-color: #6fad02;
 }
 .background-color-secondary {
-  background-color: #8BD300;
+  background-color: #8bd300;
 }
 .background-color-tertiary {
-  background-color: #C4F206;
+  background-color: #c4f206;
 }
 .background-color-accent {
   background-color: #595959;
@@ -68,10 +68,10 @@ h1 {
   height: 80px;
 }
 .btn-color-primary {
-  background-color: #ED5603;
+  background-color: #ed5603;
 }
 .btn-color-secondary {
-  background-color: #F47A00;
+  background-color: #f47a00;
 }
 
 /* input fields */
@@ -88,17 +88,31 @@ input {
   transition-duration: 0.2s;
   transition-property: background-color, border, color;
 }
-input:focus, input:active, input:hover {
+input:focus,
+input:active,
+input:hover {
   outline: 0;
   background-color: #fff;
-  border: #ED5603 solid 2px;
+  border: #ed5603 solid 2px;
   color: #595959;
 }
 input:not(:placeholder-shown) {
   color: #595959;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

@@ -2,6 +2,7 @@
   width: 275px;
   max-width: 100%;
   margin: 0 25px 25px 0;
+  margin-left: 10px;
   display: inline-block;
   vertical-align: top;
   background-color: rgba(248, 255, 249, 0.6);
@@ -85,13 +86,19 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-
 }
 
 .board_area {
-  margin-top: 15%; /*Leave room for the title and description*/
+  margin-top: 20%; /*Leave room for the title and description*/
   white-space: nowrap;
   z-index: 4;
+}
+
+
+
+.board-top-content-clean {
+  padding-top: 4%;
+  flex-direction: row;
 }
 
 h2 {
@@ -167,13 +174,27 @@ h6 {
   background-size: cover;
 }
 
+#wrapper .clean-btn-text {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  visibility: hidden;
+  color: red;
+}
+
+#wrapper:hover .clean-btn-text {
+  visibility: visible;
+}
+
 .description {
   color: #ffffff;
-  margin-left: 20px;
+  margin-left: 3%;
 }
 
 .locked {
   position: fixed;
+  padding-left: 3%;
   z-index: 2;
 }
 
@@ -231,6 +252,9 @@ h6 {
 #icon_delete {
   height: 30px;
 }
+#icon_wipe {
+  transition-duration: 0.2s;
+}
 .dropdownitem:focus {
   outline: 0;
 }
@@ -238,10 +262,13 @@ h6 {
 .inputfield {
   width: 200px;
 }
-
+#icon-wipe:hover {
+  cursor: pointer;
+  transform: scale(1.1, 1.1);
+}
 
 ng-valid.ng-touched {
-  border: 5px solid #42A948;
+  border: 5px solid #42a948;
   background-color: rgba(104, 255, 95, 0.6);
 }
 
