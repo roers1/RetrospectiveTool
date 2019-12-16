@@ -39,7 +39,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: NodeTool@0
+- task: PublishTestResults@1
 - script: cd client/ &amp;&amp; npm test
   displayName: 'Angular Karma unit tests'
 
