@@ -19,7 +19,6 @@ import { Router } from '@angular/router';
   templateUrl: './retro-board.component.html',
   styleUrls: ['./retro-board.component.css']
 })
-
 export class RetroBoardComponent implements OnInit {
 
   enable = false;
