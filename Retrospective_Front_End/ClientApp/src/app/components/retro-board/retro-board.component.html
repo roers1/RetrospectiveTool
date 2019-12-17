@@ -3,25 +3,23 @@
   <div class="scrollable">
     <div class="locked">
       <br>
-      <h1>{{retrospective.title}}</h1>
+        <div class="row">
+          <h1>{{retrospective.title}}</h1>
+          <img class="icon" 
+            id="icon_wipe"
+            src="../../../assets/images/broom.png"
+            (click)="cleanRetroBoard()" />
+        </div>
       <br>
       <h3 class="description">{{retrospective.description}}</h3>
-      <div class="row board-top-content-clean" id="wrapper">
-        <img class="btn-small hover"
-             id="icon-wipe"
-             src="../../../assets/images/broom.png"
-             (click)="cleanRetroBoard()"/>
-        <p class="clean-btn-text">Clean Board</p>
-      </div>
     </div>
 
     <div class="board_area">
-
       <div class="example-container" *ngFor="let column of retrospective.retroColumns">
         <div class="board-title-holder">
           <h2 class="testtitle">{{column.title}}</h2>
           <div class="icon_menu">
-            <img class="icon" src="../../../assets/images/icon_dot_menu.png" [matMenuTriggerFor]="menu">
+            <img class="icon" id="icon_menu" src="../../../assets/images/icon_dot_menu.png" [matMenuTriggerFor]="menu">
             <mat-menu #menu="matMenu">
               <button mat-menu-item
                       class="dropdownitem"
