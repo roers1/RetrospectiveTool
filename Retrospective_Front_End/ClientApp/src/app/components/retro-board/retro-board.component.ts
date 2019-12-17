@@ -212,22 +212,13 @@ export class RetroBoardComponent implements OnInit {
     return this.enabledColumn[column.id];
   }
 
+  cleanRetroBoardDialog() {
+    this.openDialog(RETROBOARD_CLEAN_ACTION_CONFIRM, () => {
+      this.cleanRetroBoard();
+    });
+  }
+
   cleanRetroBoard() {
-    if (this.retrospective.retroColumns.length === 0) {
-      alert(RETROBOARD_CLEAN_ERROR_ALREADY);
-
-    } else {
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        width: '600px',
-        data: RETROBOARD_CLEAN_ACTION_CONFIRM
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.router.navigate([`/`]);
-        }
-      });
-
-    }
+    this.router.navigate([`/`]);
   }
 }
