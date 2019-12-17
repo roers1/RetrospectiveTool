@@ -124,17 +124,7 @@ export class RetroBoardComponent implements OnInit {
         this.retrospective.retroColumns.splice(index, 1);
       }
     });
-  }
-
-//   editColumnTitle(givenColumn: RetroColumn) {
-//     // this method should be edited.
-//     })
-// }
-    editColumnTitle(givenColumn: RetroColumn) {
-    // this method should be edited.
-    }
-
-
+  }ss
   deleteCard(givenCard: RetroCard) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
