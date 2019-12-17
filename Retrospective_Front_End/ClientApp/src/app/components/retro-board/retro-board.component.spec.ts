@@ -136,6 +136,7 @@ describe('RetroBoardComponent', () => {
     expect(component.enable).toEqual(true);
   });
 
+  // TODO: 
   it('should clean Retro Board & create a new Retro Board', () => {
     component.retrospective = new Retrospective(1000, 'title', 'description', [
       new RetroColumn(11, "rc1", []),
