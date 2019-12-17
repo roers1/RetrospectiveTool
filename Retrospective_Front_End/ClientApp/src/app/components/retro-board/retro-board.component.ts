@@ -11,20 +11,20 @@ import {RetrocardService} from '../../retrocard.service';
 import {ActivatedRoute} from '@angular/router';
 import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material';
-import {MatFormField} from '@angular/material';
-import {Router} from '@angular/router';
+import { MatFormField } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-retro-board',
   templateUrl: './retro-board.component.html',
   styleUrls: ['./retro-board.component.css']
 })
-
 export class RetroBoardComponent implements OnInit {
 
   enable = false;
   elements = [];
   enabledColumn = {};
+  enabledColumnTitles = {};
   editedContent = {};
   retrospective: Retrospective = new Retrospective(0, 'Title', 'Description', [
     new RetroColumn(0, 'Todo', [
@@ -137,8 +137,7 @@ export class RetroBoardComponent implements OnInit {
         cd();
       }
     });
-  }
-
+  }ss
   deleteCard(givenCard: RetroCard) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
@@ -167,6 +166,12 @@ export class RetroBoardComponent implements OnInit {
     // TODO ADD SERVICE!
   }
 
+  updateColumnTitle(column: RetroColumn, newtitle) {
+    column.title = newtitle
+    this.enableColumnTitleEditing(false, column);
+    // TODO ADD SERVICE!
+  }
+
   enableContentEditing(bool: boolean, card: RetroCard) {
     this.editedContent[card.id] = bool;
   }
@@ -177,6 +182,19 @@ export class RetroBoardComponent implements OnInit {
     }
 
     return this.editedContent[card.id];
+  }
+
+  enableColumnTitleEditing(bool: boolean, column: RetroColumn) {
+    this.enabledColumnTitles = {};
+    this.enabledColumnTitles[column.id] = bool;
+  }
+
+  hasEnabledColumnTitleEditing(column: RetroColumn) {
+    if (!this.enabledColumnTitles[column.id]) {
+      this.enabledColumnTitles[column.id] = false;
+    }
+
+    return this.enabledColumnTitles[column.id];
   }
 
   enableEditing(bool: boolean, column: RetroColumn) {
