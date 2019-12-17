@@ -98,5 +98,19 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 			_context.Retrospectives.Add(retrospective);
 			_context.SaveChanges();
 		}
+
+        public RetroColumn UpdateRetroColumn(RetroColumn retroColumn)
+        {
+            var dbe = _context.RetroColumns.FirstOrDefault(rc => rc.Id == retroColumn.Id);
+
+            if (dbe != null)
+            {
+                dbe.Title = retroColumn.Title;
+
+                _context.SaveChanges();
+            }
+
+            return dbe;
+        }
 	}
 }
