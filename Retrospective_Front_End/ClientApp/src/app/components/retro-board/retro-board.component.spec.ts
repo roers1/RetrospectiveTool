@@ -23,16 +23,19 @@ describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
   let fixture: ComponentFixture<RetroBoardComponent>;
   let removeColumnSpy;
+  let createColumnSpy;
   let addCardSpy;
   let createBoardSpy;
   let mockCard = new RetroCard(-1, 'this is card content', 0);
+  let mockColumn = new RetroColumn(-1, 'test', []);
 
   beforeEach(async(() => {
     const retrospectiveService = jasmine.createSpyObj('RetrospectiveService', ['createRetrospective']);
-    const retrocolumnService = jasmine.createSpyObj('RetrocolumnService', ['removeColumn', 'addColumn']);
+    const retrocolumnService = jasmine.createSpyObj('RetrocolumnService', ['removeColumn', 'addColumn', 'createColumn']);
     const retrocartService = jasmine.createSpyObj('RetrocardService', ['createCard'])
 
     removeColumnSpy = retrocolumnService.removeColumn.and.returnValue(of());
+    createColumnSpy = retrocolumnService.createColumn.and.returnValue(of(mockColumn));
     addCardSpy = retrocartService.createCard.and.returnValue(of(mockCard))
 
     createBoardSpy = retrospectiveService.createRetrospective.and.returnValue(of());
@@ -69,7 +72,7 @@ describe('RetroBoardComponent', () => {
     );
     fixture.detectChanges();
 
-    component.addColumn('TestColumn');
+    component.addColumn(mockColumn.title);
 
     const columns = component.retrospective.retroColumns;
 
@@ -79,7 +82,7 @@ describe('RetroBoardComponent', () => {
     const column = columns[0];
 
     expect(column).toBeTruthy();
-    expect(column.title).toBe('TestColumn');
+    expect(column.title).toBe(mockColumn.title);
   });
 
   it('should add card', () => {
