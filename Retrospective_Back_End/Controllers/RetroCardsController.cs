@@ -31,78 +31,89 @@ namespace Retrospective_Back_End.Controllers
             return await _context.RetroCards.ToListAsync();
         }
 
-		// GET: api/RetroCards/5
-		[HttpGet("{id}")]
-		public ActionResult<RetroCard> GetRetroCard(int id)
-		{
-			var retroCard = _context.RetroCards.FirstOrDefault(r => r.Id == id);
+        // GET: api/RetroCards/5
+        [HttpGet("{id}")]
+        public ActionResult<RetroCard> GetRetroCard(int id)
+        {
+            var retroCard = _context.RetroCards.FirstOrDefault(r => r.Id == id);
 
-			if (retroCard == null)
-			{
-				return NotFound();
-			}
+            if (retroCard == null)
+            {
+                return NotFound();
+            }
 
-			return retroCard;
-		}
+            return retroCard;
+        }
 
-		// PUT: api/RetroCards/5
-		// To protect from overposting attacks, please enable the specific properties you want to bind to, for
-		// more details see https://aka.ms/RazorPagesCRUD.
-		[HttpPut]
-		public IActionResult PutRetroCard()
-		{
-			//RetroCard retroCard //GetJSONFromBody(Request.Body);
+        // PUT: api/RetroCards/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
+        [HttpPut]
+        public IActionResult PutRetroCard()
+        {
+            //RetroCard retroCard //GetJSONFromBody(Request.Body);
 
-			//if (retroCard == null)
-			//{
-			//	return BadRequest();
-			//};
+            //if (retroCard == null)
+            //{
+            //	return BadRequest();
+            //};
 
-			//try
-			//{
-			//	_context.SaveRetroCard(retroCard);
-			//}
-			//catch (DbUpdateConcurrencyException)
-			//{
-			//	if (!RetroCardExists(retroCard.Id))
-			//	{
-			//		return NotFound();
-			//	}
-			//	else
-			//	{
-			//		throw;
-			//	}
-			//}
+            //try
+            //{
+            //	_context.SaveRetroCard(retroCard);
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //	if (!RetroCardExists(retroCard.Id))
+            //	{
+            //		return NotFound();
+            //	}
+            //	else
+            //	{
+            //		throw;
+            //	}
+            //}
 
-			return NoContent();
-		}
+            return NoContent();
+        }
 
-		// POST: api/RetroCards
-		// To protect from overposting attacks, please enable the specific properties you want to bind to, for
-		// more details see https://aka.ms/RazorPagesCRUD.
-		[HttpPost]
-		public ActionResult<RetroCard> PostRetroCard(RetroCard retroCard)
-		{
-			_context.SaveRetroCard(retroCard);
-			return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
-		}
+        // PUT: api/RetroCards/:id
+        [HttpPut("{cardId}", Name = "UpdatePositionOfCard")]
+        public ActionResult<RetroCard> UpdatePositionOfCard(int cardId, RetroCard retroCard)
+        {
+            var rc = retroCard;
+            rc.Id = cardId;
 
-		// DELETE: api/RetroCards/5
-		[HttpDelete("{id}")]
-		public ActionResult<RetroCard> DeleteRetroCard(int id)
-		{
-			RetroCard retroCard = _context.RetroCards.FirstOrDefault(r => r.Id == id);
-			if (retroCard == null)
-			{
-				return NotFound();
-			}
+            var retroCardDbe = _context.UpdateRetroCard(rc);
+            return retroCardDbe;
+        }
 
-			_context.RemoveRetroCard(retroCard);
+        // POST: api/RetroCards
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
+        [HttpPost]
+        public ActionResult<RetroCard> PostRetroCard(RetroCard retroCard)
+        {
+            _context.SaveRetroCard(retroCard);
+            return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
+        }
 
-			return retroCard;
-		}
+        // DELETE: api/RetroCards/5
+        [HttpDelete("{id}")]
+        public ActionResult<RetroCard> DeleteRetroCard(int id)
+        {
+            RetroCard retroCard = _context.RetroCards.FirstOrDefault(r => r.Id == id);
+            if (retroCard == null)
+            {
+                return NotFound();
+            }
 
-		private bool RetroCardExists(int id)
+            _context.RemoveRetroCard(retroCard);
+
+            return retroCard;
+        }
+
+        private bool RetroCardExists(int id)
         {
             return _context.RetroCards.Any(e => e.Id == id);
         }
