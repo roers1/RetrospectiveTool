@@ -17,6 +17,6 @@
 
 <div mat-dialog-action class="font">
     <button mat-button (click)="onNoClick()" class="font">Terug</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="font"
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="font" id=""
         [disabled]="nameFormControl.hasError('name') || nameFormControl.hasError('required')">Aanmaken</button>
 </div>

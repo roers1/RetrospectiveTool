@@ -1,4 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule} from '@angular/common/http/testing';
+import { RouterModule, Router} from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule} from '@angular/material';
 import { HomeComponent } from './home.component';
 
@@ -8,7 +11,7 @@ describe('StylesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatDialogModule],
+      imports: [MatDialogModule, HttpClientTestingModule, RouterModule, RouterTestingModule],
       declarations: [ HomeComponent ]
     })
     .compileComponents();
