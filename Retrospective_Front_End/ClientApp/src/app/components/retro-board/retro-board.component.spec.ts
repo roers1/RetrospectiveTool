@@ -13,23 +13,31 @@ import {RouterModule} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MatDialog} from '@angular/material';
 import {RetrocolumnService} from '../../retrocolumn.service';
+import {RetrocardService} from '../../retrocard.service';
+import {RetroCard} from '../../../models/RetroCard';
 import {of} from 'rxjs';
 
 describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
   let fixture: ComponentFixture<RetroBoardComponent>;
   let removeColumnSpy;
+  let addCardSpy;
+  let mockCard = new RetroCard(-1, 'this is card content', 0);
 
   beforeEach(async(() => {
-    const retrocolumnService = jasmine.createSpyObj('RetrocolumnService', ['removeColumn']);
+    const retrocolumnService = jasmine.createSpyObj('RetrocolumnService', ['removeColumn', 'addColumn']);
+    const retrocartService = jasmine.createSpyObj('RetrocardService', ['createCard'])
 
     removeColumnSpy = retrocolumnService.removeColumn.and.returnValue(of());
+    addCardSpy = retrocartService.createCard.and.returnValue(of(mockCard))
 
     TestBed.configureTestingModule({
       // tslint:disable-next-line:max-line-length
       imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule, HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule],
       declarations: [RetroBoardComponent],
-      providers: [MatDialog, {provide: RetrocolumnService, useValue: retrocolumnService}]
+      providers: [MatDialog,
+        {provide: RetrocolumnService, useValue: retrocolumnService},
+        {provide: RetrocardService, useValue: retrocartService}]
     })
       .compileComponents();
   }));
@@ -83,6 +91,7 @@ describe('RetroBoardComponent', () => {
 
     fixture.detectChanges();
 
+    component.cardGroup.get('content').setValue(mockCard.content)
     component.addCard(column);
 
     const testColumn = component.retrospective.retroColumns[0];
@@ -93,7 +102,7 @@ describe('RetroBoardComponent', () => {
     const card = testColumn.retroCards[0];
 
     expect(card).toBeTruthy();
-    expect(card.content).toBe('TestCard');
+    expect(card.content).toBe(mockCard.content);
   });
 
   it('should enable editing', () => {
