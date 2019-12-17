@@ -15,7 +15,6 @@
     </div>
 
     <div class="board_area">
-
       <div class="example-container" *ngFor="let column of retrospective.retroColumns">
         <div class="board-title-holder">
           <h2 class="testtitle" *ngIf="!hasEnabledColumnTitleEditing(column)">{{column.title}}</h2>
@@ -33,7 +32,7 @@
               </button>
               <button mat-menu-item
                       class="dropdownitem"
-                      (click)="deleteColumn(column)">
+                      (click)="deleteColumnDialog(column)">
                 Verwijder kolom
               </button>
               <button mat-menu-item
@@ -64,12 +63,15 @@
             </div>
             <div class="box-content" *ngIf="hasEnabledContentEditing(item)">
               <textarea type="text" class="editContentInput" #content value="{{item.content}}"></textarea>
-              <button class="TLbtn btn-small btn-color-primary" (click)="updateContent(item, content.value)">Aanpassen</button>
+              <button class="TLbtn btn-small btn-color-primary" (click)="updateContent(item, content.value)">Aanpassen
+              </button>
             </div>
 
             <div class="icons">
-              <img class="icon" id="icon_edit" src="../../../assets/images/icon_edit.png" (click)="enableContentEditing(true, item)" alt="" />
-              <img class="icon" id="icon_delete" src="../../../assets/images/icon_delete.png" (click)="deleteCard(item)" alt="" />
+              <img class="icon" id="icon_edit" src="../../../assets/images/icon_edit.png"
+                   (click)="enableContentEditing(true, item)" alt=""/>
+              <img class="icon" id="icon_delete" src="../../../assets/images/icon_delete.png" (click)="deleteCard(item)"
+                   alt=""/>
             </div>
           </div>
         </div>
@@ -80,8 +82,10 @@
             <form [formGroup]="cardGroup">
               <div>
                 <mat-form-field [formGroup]="cardGroup">
-                  <input matInput #card placeholder="Voer een beschrijving in"
-                         formControlName="content" value="">
+                  <label>
+                    <input matInput #card placeholder="Voer een beschrijving in"
+                           formControlName="content" value="">
+                  </label>
                 </mat-form-field>
               </div>
               <div>

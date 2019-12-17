@@ -112,16 +112,29 @@ export class RetroBoardComponent implements OnInit {
     });
   }
 
-  deleteColumn(givenColumn: RetroColumn) {
+  deleteColumnDialog(column: RetroColumn) {
+    this.openDialog('Weet u zeker dat u \'' + column.title + '\' wilt verwijderen', () => {
+      this.deleteColumn(column);
+    });
+  }
+
+  deleteColumn(givenColumn) {
+    const index = this.retrospective.retroColumns.indexOf(givenColumn);
+    this.retrospective.retroColumns.splice(index, 1);
+
+    this.retroColumnService.removeColumn(givenColumn.id).subscribe(_ => {
+    });
+  }
+
+  openDialog(data, cd) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
-      data: 'Weet je zeker dat je kolom \'' + givenColumn.title + '\' wilt verwijderen?'
+      data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const index = this.retrospective.retroColumns.indexOf(givenColumn);
-        this.retrospective.retroColumns.splice(index, 1);
+        cd();
       }
     });
   }ss
