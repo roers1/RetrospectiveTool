@@ -5,24 +5,31 @@ import {RetroColumn} from '../../../models/RetroColumn';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Retrospective} from '../../../models/Retrospective';
 import {MatButtonModule, MatDialogModule, MatFormField, MatIconModule} from '@angular/material';
-import { BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import { MatMenuModule} from '@angular/material/menu';
-import { MatFormFieldModule} from '@angular/material';
-import { HttpClientTestingModule} from '@angular/common/http/testing';
-import { RouterModule} from '@angular/router';
-import { RouterTestingModule} from '@angular/router/testing';
-import { MatDialog} from '@angular/material';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatFormFieldModule} from '@angular/material';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterModule} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
+import {MatDialog} from '@angular/material';
+import {RetrocolumnService} from '../../retrocolumn.service';
+import {of} from 'rxjs';
 
 describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
   let fixture: ComponentFixture<RetroBoardComponent>;
+  let removeColumnSpy;
 
   beforeEach(async(() => {
+    const retrocolumnService = jasmine.createSpyObj('RetrocolumnService', ['removeColumn']);
+
+    removeColumnSpy = retrocolumnService.removeColumn.and.returnValue(of());
+
     TestBed.configureTestingModule({
       // tslint:disable-next-line:max-line-length
       imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule, HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule],
       declarations: [RetroBoardComponent],
-      providers: [MatDialog]
+      providers: [MatDialog, {provide: RetrocolumnService, useValue: retrocolumnService}]
     })
       .compileComponents();
   }));
@@ -101,7 +108,7 @@ describe('RetroBoardComponent', () => {
       'Cool board',
       'Wow',
       [column]
-  );
+    );
 
     fixture.detectChanges();
 
@@ -129,9 +136,9 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should clean Retro Board', () => {
-    component.retrospective = new Retrospective(1000, "title", "description", [
-      new RetroColumn(11, "rc1", []),
-      new RetroColumn(22, "rc2", [])
+    component.retrospective = new Retrospective(1000, 'title', 'description', [
+      new RetroColumn(11, 'rc1', []),
+      new RetroColumn(22, 'rc2', [])
     ]);
 
     fixture.detectChanges();
@@ -164,4 +171,24 @@ describe('RetroBoardComponent', () => {
   // });
 
 
+  it('should be able to delete column', () => {
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      []
+    );
+
+    component.retrospective = new Retrospective(
+      0,
+      'Cool board',
+      'Wow',
+      [column]
+    );
+
+    fixture.detectChanges();
+
+    component.deleteColumn(column);
+
+    expect(component.retrospective.retroColumns.length === 0).toBe(true);
+  });
 });
