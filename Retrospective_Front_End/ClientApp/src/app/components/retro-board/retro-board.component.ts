@@ -10,6 +10,7 @@ import { RetrocolumnService } from '../../retrocolumn.service';
 import { RetrocardService } from '../../retrocard.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { CreateBoardDialogComponent } from '../boardcreate-dialog/boardcreatedialog.component';
 import { MatDialog } from '@angular/material';
 import { MatFormField } from '@angular/material';
 import { Router } from '@angular/router';
@@ -186,18 +187,37 @@ export class RetroBoardComponent implements OnInit {
 
     } else {
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        width: '500px',
+        width: '600px',
         data: RETROBOARD_CLEAN_ACTION_CONFIRM
       });
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          // TODO: Add service CleanRetroboard
-
-          this.retrospective.retroColumns = [];
+          this.opendialog();
         }
       });
 
     }
+  }
+
+  opendialog(): void {
+    const dialogRef = this.dialog.open(CreateBoardDialogComponent, {
+      width: '400px',
+      data: { name: '', description: '' }
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      console.log('result: ' + JSON.stringify(data));
+      if (data) {
+        this.retrospectiveService.createRetrospective(data.name, data.description).subscribe((retrospectiveRes) => {
+          if (retrospectiveRes) {
+            this.router.navigate([`/board/${retrospectiveRes.id}`]);
+            this.retrospective = retrospectiveRes;
+          } else {
+            alert('Something went wrong!');
+          }
+        });
+      }
+    });
   }
 }
