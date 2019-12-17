@@ -23,7 +23,7 @@ namespace Retrospective_Back_End.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Retrospective>>> GetRetrospectives()
         {
-            return await _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards).ToListAsync();
+            return await Task.FromResult(_context.getAll().ToList());
         }
 
         // GET: api/Retrospectives/5
