@@ -1,18 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {RetroCard} from '../../../models/RetroCard';
-import {Retrospective} from '../../../models/Retrospective';
-import {RetroColumn} from '../../../models/RetroColumn';
-import {MatMenuModule} from '@angular/material/menu';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {RetrospectiveService} from '../../retrospective.service';
-import {RetrocolumnService} from '../../retrocolumn.service';
-import {RetrocardService} from '../../retrocard.service';
-import {ActivatedRoute} from '@angular/router';
-import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
-import {MatDialog} from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { RetroCard } from '../../../models/RetroCard';
+import { Retrospective } from '../../../models/Retrospective';
+import { RetroColumn } from '../../../models/RetroColumn';
+import { MatMenuModule } from '@angular/material/menu';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RetrospectiveService } from '../../retrospective.service';
+import { RetrocolumnService } from '../../retrocolumn.service';
+import { RetrocardService } from '../../retrocard.service';
+import { ActivatedRoute } from '@angular/router';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { CreateBoardDialogComponent } from '../boardcreate-dialog/boardcreatedialog.component';
+import { MatDialog } from '@angular/material';
 import { MatFormField } from '@angular/material';
 import { Router } from '@angular/router';
+import { RETROBOARD_CLEAN_ACTION_CONFIRM, RETROBOARD_CLEAN_ERROR_ALREADY } from '../../../helpers/messageconstants'
 
 @Component({
   selector: 'app-retro-board',
@@ -137,7 +139,7 @@ export class RetroBoardComponent implements OnInit {
         cd();
       }
     });
-  }ss
+  }
   deleteCard(givenCard: RetroCard) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
@@ -210,12 +212,13 @@ export class RetroBoardComponent implements OnInit {
     return this.enabledColumn[column.id];
   }
 
-  cleanRetroBoard() {
-    if (confirm('Weet je zeker dat je de retrospective with opschonen? (kan niet ongedaan maken)')) {
-      this.retrospective = null;
-      this.retrospectiveService.removeRetrospective();
+  cleanRetroBoardDialog() {
+    this.openDialog(RETROBOARD_CLEAN_ACTION_CONFIRM, () => {
+      this.cleanRetroBoard();
+    });
+  }
 
-      this.router.navigate(['']);
-    }
+  cleanRetroBoard() {
+    this.router.navigate([`/`]);
   }
 }
