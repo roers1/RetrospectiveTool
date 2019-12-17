@@ -48,7 +48,7 @@
         <div class="box-content" *ngIf="hasEnabledColumnTitleEditing(column)">
           <input type="text" #newtitle value="{{column.title}}">
           <br>
-          <button class="TLbtn btn-small btn-color-primary" (click)="updateColumnTitle(column, newtitle.value)">Aanpassen</button>
+          <button class="TLbtn btn-small btn-color-primary editTitleBtn" (click)="updateColumnTitle(column, newtitle.value)">Aanpassen</button>
         </div>
 
         <div cdkDropList
@@ -111,11 +111,11 @@
             </div>
             <div>
               <button [disabled]="!listGroup.valid" mat-button (click)="enable=false; addColumn(column.value)"
-                      class="TLbtn btn-small btn-color-primary">
+                      class="TLbtn btn-small btn-color-primary click_should_disable">
                 Voeg toe
               </button>
               <button mat-button (click)="enable=false"
-                      class="TLbtn btn-small btn-color-secondary">
+                      class="TLbtn btn-small btn-color-secondary clickable_element_closed">
                 Annuleer
               </button>
             </div>

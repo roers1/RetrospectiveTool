@@ -129,9 +129,9 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should clean Retro Board', () => {
-    component.retrospective = new Retrospective(1000, "title", "description", [
-      new RetroColumn(11, "rc1", []),
-      new RetroColumn(22, "rc2", [])
+    component.retrospective = new Retrospective(1000, 'title', 'description', [
+      new RetroColumn(11, 'rc1', []),
+      new RetroColumn(22, 'rc2', [])
     ]);
 
     fixture.detectChanges();
@@ -141,27 +141,28 @@ describe('RetroBoardComponent', () => {
     expect(component.retrospective).toBe(null);
   });
 
-  // it('should trigger variable when add  button is clicked should close menu', () => {
-  //   const button = fixture.debugElement.nativeElement.querySelector('.clickable_element');
-  //   const button2 = fixture.debugElement.nativeElement.querySelector('.clickable_element_close');
-  //   console.log(button);
-  //   console.log(button2);
-  //   button.click();
-  //   button2.click();
-  //   expect(component.enable).toEqual(false);
-  // });
-  //
-  // it('should trigger variable when close button is clicked should close menu', () => {
-  //   const button = fixture.debugElement.nativeElement.querySelector('.clickable_element');
-  //
-  //   button.click();
-  //
-  //   const button2 = fixture.debugElement.nativeElement.querySelector('.clickable_element_close_alt');
-  //
-  //   button2.click();
-  //
-  //   expect(component.enable).toEqual(false);
-  // });
+  it('Should edit title when edit title is called', () => {
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      []
+    );
 
+    component.retrospective = new Retrospective(
+      0,
+      'Cool board',
+      'Wow',
+      [column]
+    );
+    const testTitle = 'new';
+    component.updateColumnTitle(column, testTitle);
+    expect(column.title).toEqual(testTitle);
 
+  });
+  it('Should trigger variable when add button is clicked should enable open menu', () => {
+    component.enable = false;
+    const button = fixture.debugElement.nativeElement.querySelector('.clickable_element');
+    button.click();
+    expect(component.enable).toEqual(true);
+  });
 });
