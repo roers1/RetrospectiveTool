@@ -65,9 +65,10 @@ namespace Retrospective_Back_End_Test
            var result = await controller.GetRetrospectives();
 
             //Assert
-           Console.WriteLine(result);
-           var test = result.Value.FirstOrDefault().Title;
-           Assert.True(test.Equals("Board 1"));
+            Console.WriteLine(result);
+            var test = result.Value.FirstOrDefault().Title;
+            Assert.True(test.Equals("Board 1"));
+            Assert.Equal(2, retrospectives.Count());
 
         }
     }
