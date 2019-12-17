@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RetroSpective.Core\RetroSpective_Core.csproj" />
     <ProjectReference Include="..\Retrospective_Back_End\Retrospective_Back_End.csproj" />
     <ProjectReference Include="..\Retrospective_Core\Retrospective_Core.csproj" />
     <ProjectReference Include="..\RetroSpective_EFSQLRetroSpectiveDbImpl\RetroSpective_EFSQLRetroSpectiveDbImpl.csproj" />
