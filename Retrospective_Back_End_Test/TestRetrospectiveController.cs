@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+//using System.Data.Entity;
 using System.Text;
 using Moq;
 using Retrospective_Core.Services;
@@ -7,6 +8,7 @@ using Retrospective_Core.Models;
 using System.Linq;
 using Retrospective_Back_End.Controllers;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
@@ -15,12 +17,12 @@ namespace Retrospective_Back_End_Test
     public class TestRetrospectiveController
     {
         [Fact]
-        public void getAllRetrospectives()
+        public async void getAllRetrospectives()
         {
             //Arrange
             String testTitle = "Board 1";
             Mock<IRetroRespectiveRepository> mockRetrospectiveRepo = new Mock<IRetroRespectiveRepository>();
-            var retrospectives = new QueryableList<Retrospective, Retrospective>()
+            var retrospectives = new List<Retrospective>()
             {
                 new Retrospective { 
                     Title = testTitle,
@@ -49,28 +51,16 @@ namespace Retrospective_Back_End_Test
                     Description = "Dit is board 2"
                 }
             };
-
-            mockRetrospectiveRepo.Setup(m => m.Retrospectives).Returns(retrospectives);
-            RetrospectivesController controller = new RetrospectivesController(mockRetrospectiveRepo.Object);
-            IList<Retrospective> list = new List<Retrospective>();
-
-
-
-
+            
+            mockRetrospectiveRepo.Setup(m => m.getAll()).Returns(retrospectives.AsQueryable());
+            var controller = new RetrospectivesController(mockRetrospectiveRepo.Object);
 
             //Act
-            Task<ActionResult<IEnumerable<Retrospective>>> result = controller.GetRetrospectives();
-            IList<Retrospective> oneRetrospective = list.Where(d => d.Title == testTitle).ToList<Retrospective>();
+           var result = await controller.GetRetrospectives();
 
-            foreach (var r in result.Result.Value)
-            {
-                
-            }
-
-                //Assert.True(result.IsCompleted, "Task should be completed");
-                Console.WriteLine(oneRetrospective.Select(r => r.Title));
-            string test = oneRetrospective.FirstOrDefault().Title;
-            Assert.True(oneRetrospective.Select(r => r.Title).ToString().Equals("Board 1"));
+           Console.WriteLine(result);
+           var test = result.Value.FirstOrDefault().Title;
+           Assert.True(test.Equals("Board 1"));
 
         }
     }
