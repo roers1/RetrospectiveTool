@@ -139,7 +139,7 @@ export class RetroBoardComponent implements OnInit {
         cd();
       }
     });
-  }ss
+  }
   deleteCard(givenCard: RetroCard) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
@@ -224,31 +224,10 @@ export class RetroBoardComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.opendialog();
+          this.router.navigate([`/`]);
         }
       });
 
     }
-  }
-
-  opendialog(): void {
-    const dialogRef = this.dialog.open(CreateBoardDialogComponent, {
-      width: '400px',
-      data: { name: '', description: '' }
-    });
-
-    dialogRef.afterClosed().subscribe(data => {
-      console.log('result: ' + JSON.stringify(data));
-      if (data) {
-        this.retrospectiveService.createRetrospective(data.name, data.description).subscribe((retrospectiveRes) => {
-          if (retrospectiveRes) {
-            this.router.navigate([`/board/${retrospectiveRes.id}`]);
-            this.retrospective = retrospectiveRes;
-          } else {
-            alert('Something went wrong!');
-          }
-        });
-      }
-    });
   }
 }

@@ -4,14 +4,13 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {RetroColumn} from '../../../models/RetroColumn';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Retrospective} from '../../../models/Retrospective';
-import {MatButtonModule, MatDialogModule, MatFormField, MatIconModule} from '@angular/material';
+import {MatButtonModule, MatDialogModule, MatFormField, MatIconModule, MatDialog} from '@angular/material';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatFormFieldModule} from '@angular/material';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterModule} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
-import {MatDialog} from '@angular/material';
 import {RetrocolumnService} from '../../retrocolumn.service';
 import {RetrocardService} from '../../retrocard.service';
 import {RetroCard} from '../../../models/RetroCard';
@@ -144,13 +143,17 @@ describe('RetroBoardComponent', () => {
     expect(component.enable).toEqual(true);
   });
 
-  it('should clean Retro Board', () => {
+  it('should return to homepage on clean retroboard', () => {
     component.retrospective = new Retrospective(1000, 'title', 'description', [
       new RetroColumn(11, 'rc1', []),
       new RetroColumn(22, 'rc2', [])
     ]);
 
     fixture.detectChanges();
+
+    // const button = fixture.debugElement.nativeElement.querySelector('#btn-confirm');
+    // button.click();
+
 
     component.cleanRetroBoard();
 
@@ -174,6 +177,7 @@ describe('RetroBoardComponent', () => {
     component.updateColumnTitle(column, testTitle);
     expect(column.title).toEqual(testTitle);
     });
+    
   it('should be able to delete column', () => {
     const column: RetroColumn = new RetroColumn(
       0,
