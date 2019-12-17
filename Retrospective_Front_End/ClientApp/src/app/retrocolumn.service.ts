@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { BASE_URL } from '../helpers/urlconstants';
-import { MessageService } from './message.service';
-import { RetroColumn } from '../models/retroColumn';
-import { RetrospectiveService } from './retrospective.service';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, of} from 'rxjs';
+import {BASE_URL} from '../helpers/urlconstants';
+import {MessageService} from './message.service';
+import {RetroColumn} from '../models/retroColumn';
+import {RetrospectiveService} from './retrospective.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,8 @@ export class RetrocolumnService {
     })
   };
 
-  constructor(private http: HttpClient, private retrospectiveService: RetrospectiveService) { }
+  constructor(private http: HttpClient, private retrospectiveService: RetrospectiveService) {
+  }
 
   getRetroColumns(): Observable<RetroColumn[]> {
     return this.http.get<RetroColumn[]>(this.baseUrlRetroColumn, this.httpOptions);
@@ -31,7 +32,7 @@ export class RetrocolumnService {
   }
 
   createColumn(title, retrospectiveId): Observable<RetroColumn> {
-    if (this.retrospectiveService.getRetrospective) {
+    if (this.retrospectiveService.getCurrentRetrospective()) {
       return this.http.post<RetroColumn>(this.baseUrlRetroColumn, {
         title: title,
         retrospectiveId: retrospectiveId
@@ -40,9 +41,8 @@ export class RetrocolumnService {
   }
 
   removeColumn(columnId): Observable<RetroColumn> {
-    if (this.retrospectiveService.getRetrospective) {
-      return this.http.delete<RetroColumn>(this.baseUrlRetrospective + this.retrospectiveService.getCurrentRetrospectiveId()
-        + '/retrocolumns/' + columnId, this.httpOptions);
+    if (this.retrospectiveService.getCurrentRetrospective()) {
+      return this.http.delete<RetroColumn>(this.baseUrlRetroColumn + '/' + columnId, this.httpOptions);
     }
   }
 }
