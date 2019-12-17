@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RetroBoardComponent} from './retro-board.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {RetroColumn} from '../../../models/RetroColumn';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule, COMPOSITION_BUFFER_MODE} from '@angular/forms';
 import {Retrospective} from '../../../models/Retrospective';
 import {MatButtonModule, MatDialogModule, MatFormField, MatIconModule} from '@angular/material';
 import { BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
@@ -10,19 +10,28 @@ import { MatMenuModule} from '@angular/material/menu';
 import { MatFormFieldModule} from '@angular/material';
 import { HttpClientTestingModule} from '@angular/common/http/testing';
 import { RouterModule} from '@angular/router';
-import { RouterTestingModule} from '@angular/router/testing';
-import { MatDialog} from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { RetrospectiveService } from '../../retrospective.service';
+import { RetrocolumnService } from '../../retrocolumn.service';
+import { MatDialog } from '@angular/material';
+import { of } from 'rxjs';
 
 describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
   let fixture: ComponentFixture<RetroBoardComponent>;
+  let removeColumnSpy;
+  let createBoardSpy;
 
   beforeEach(async(() => {
+    const retrospectiveService = jasmine.createSpyObj('RetrospectiveService', ['createRetrospective']);
+
+    createBoardSpy = retrospectiveService.createRetrospective.and.returnValue(of());
+
     TestBed.configureTestingModule({
       // tslint:disable-next-line:max-line-length
       imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule, HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule],
       declarations: [RetroBoardComponent],
-      providers: [MatDialog]
+      providers: [MatDialog, { provide: RetrospectiveService, useValue: retrospectiveService }]
     })
       .compileComponents();
   }));
@@ -52,7 +61,6 @@ describe('RetroBoardComponent', () => {
 
     expect(columns.length > 0).toBe(true);
     expect(columns.length === 0).toBe(false);
-
 
     const column = columns[0];
 
@@ -128,15 +136,23 @@ describe('RetroBoardComponent', () => {
     expect(component.enable).toEqual(true);
   });
 
-  it('should clean Retro Board', () => {
-    component.retrospective = new Retrospective(1000, "title", "description", [
+  it('should clean Retro Board & create a new Retro Board', () => {
+    component.retrospective = new Retrospective(1000, 'title', 'description', [
       new RetroColumn(11, "rc1", []),
       new RetroColumn(22, "rc2", [])
     ]);
 
+    component.cleanRetroBoard();
+
     fixture.detectChanges();
 
-    component.cleanRetroBoard();
+    let confirmModal = fixture.debugElement.nativeElement.querySelector('#confirm-dialogue');
+
+    let wipeBtn = fixture.debugElement.nativeElement.querySelector('#wipe_btn');
+    wipeBtn.click();
+
+    let okBtn = fixture.debugElement.nativeElement.querySelector('.TLbtn btn-size-small btn-color-primary');
+    okBtn.click();
 
     expect(component.retrospective.retroColumns.length === 0).toBe(true);
   });
