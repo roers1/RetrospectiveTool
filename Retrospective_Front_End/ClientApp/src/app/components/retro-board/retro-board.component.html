@@ -3,15 +3,14 @@
   <div class="scrollable">
     <div class="locked">
       <br>
-        <div class="row">
-          <h1>{{retrospective.title}}</h1>
+        <div class="row title-background">
+          <h1 matTooltip="{{retrospective.description}}">{{retrospective.title}}</h1>
           <img class="icon"
             id="icon_wipe"
             src="../../../assets/images/broom.png"
             (click)="cleanRetroBoardDialog()" />
         </div>
       <br>
-      <h3 class="description">{{retrospective.description}}</h3>
     </div>
 
     <div class="board_area">
@@ -74,24 +73,24 @@
         </div>
 
         <div class="example-container-toaddcard">
-          <h6 (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ Voeg een kaart toe</h6>
+          <h6 (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ {{dict.CREATE_NEW_CARD_BTN}}</h6>
           <div class="animated-item" *ngIf="hasEnabledEditing(column)">
             <form [formGroup]="cardGroup">
               <div>
-                <mat-form-field [formGroup]="cardGroup">
-                  <label>
-                    <input matInput #card placeholder="{{dict.FILL_IN_DESC_FORM}}"
+                <mat-form-field [formGroup]="cardGroup" class="inputfield">
+                  <label class="inputfield">
+                    <input class="inputfield" matInput #card placeholder="{{dict.FILL_IN_DESC_FORM}}"
                            formControlName="content" value="">
                   </label>
                 </mat-form-field>
               </div>
               <div>
-                <button [disabled]="!cardGroup.valid" mat-button (click)="enableEditing(false, column); addCard(column)"
+                <button [disabled]="!cardGroup.valid" mat-button (click)="enableEditing(false, column); addCard(column); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
                         class="TLbtn btn-small btn-color-primary">
                   {{dict.ADD_BTN}}
                 </button>
                 <button mat-button (click)="enableEditing(false, column);"
-                        class="TLbtn btn-small btn-color-secondary">
+                        class="TLbtn btn-small btn-color-secondary btn-margin-left">
                   {{dict.CANCEL_BTN}}
                 </button>
               </div>
@@ -101,22 +100,22 @@
       </div>
 
       <div class="example-container-toadd">
-        <h4 class="clickable_element" (click)="enable=true">+ Voeg een lijst toe</h4>
+        <h4 class="clickable_element" (click)="enable=true">+ {{dict.CREATE_NEW_COLUMN_BTN}}</h4>
         <div class="animated-item" *ngIf="enable">
           <form [formGroup]="listGroup">
             <div>
-              <mat-form-field [formGroup]="listGroup">
-                <input matInput #column placeholder="{{dict.FILL_IN_TITLE_FORM}}"
+              <mat-form-field [formGroup]="listGroup" class="inputfield">
+                <input matInput #column placeholder="{{dict.FILL_IN_TITLE_FORM}}" class="inputfield"
                        formControlName="title" value="">
               </mat-form-field>
             </div>
             <div>
-              <button [disabled]="!listGroup.valid" mat-button (click)="enable=false; addColumn(column.value)"
+              <button [disabled]="!listGroup.valid" mat-button (click)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
                       class="TLbtn btn-small btn-color-primary click_should_disable">
                 {{dict.ADD_BTN}}
               </button>
               <button mat-button (click)="enable=false"
-                      class="TLbtn btn-small btn-color-secondary clickable_element_closed">
+                      class="TLbtn btn-small btn-color-secondary clickable_element_closed btn-margin-left">
                 {{dict.CANCEL_BTN}}
               </button>
             </div>

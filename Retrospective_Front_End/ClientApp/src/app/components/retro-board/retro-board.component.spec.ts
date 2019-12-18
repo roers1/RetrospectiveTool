@@ -7,16 +7,16 @@ import { Retrospective } from '../../../models/Retrospective';
 import { RetroCardService } from '../../services/retro-card.service';
 import { RetroCard } from '../../../models/RetroCard';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatButtonModule, MatDialogModule, MatFormField, MatIconModule } from '@angular/material';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatFormFieldModule } from '@angular/material';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterModule, Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { MatDialog } from '@angular/material';
-import { RetrocolumnService } from '../../services/retro-column.service';
-import { of } from 'rxjs';
+import {MatButtonModule, MatDialogModule, MatFormField, MatIconModule, MatSnackBar, MatTooltipModule} from '@angular/material';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatFormFieldModule} from '@angular/material';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterModule, Router} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
+import {MatDialog} from '@angular/material';
+import {RetrocolumnService} from '../../services/retro-column.service';
+import {of} from 'rxjs';
 
 describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
@@ -42,13 +42,13 @@ describe('RetroBoardComponent', () => {
     createBoardSpy = retrospectiveService.createRetrospective.and.returnValue(of());
 
     TestBed.configureTestingModule({
-      imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule,
-        MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule,
+        imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule,
+        MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule, MatTooltipModule,
         HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule, BrowserAnimationsModule],
       declarations: [RetroBoardComponent],
-      providers: [MatDialog,
-        { provide: RetrocolumnService, useValue: retroColumnService },
-        { provide: RetroCardService, useValue: retroCardService }]
+      providers: [MatDialog, MatSnackBar,
+        {provide: RetrocolumnService, useValue: retroColumnService},
+        {provide: RetroCardService, useValue: retroCardService}]
     })
       .compileComponents();
   }));

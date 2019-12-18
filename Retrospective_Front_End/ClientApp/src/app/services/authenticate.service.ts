@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { baseUrl } from '../../helpers/url-constants';
+
 import { MessageService } from './message.service';
 import { Facilitator } from '../../models/Facilitator';
 import { Participant } from '../../models/Participant';
