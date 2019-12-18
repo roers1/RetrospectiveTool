@@ -57,5 +57,35 @@ namespace Retrospective_Back_End_Test {
 
             Assert.NotNull(createdColumn);
         }
+
+        [Fact]
+        public void DeletionOfAColumn() {
+            //Arrange
+            RetroColumn column = new RetroColumn {
+                Id = 0,
+                Title = "Column 1"
+            };
+
+            IList<RetroColumn> columns = new List<RetroColumn> {
+                column
+            };
+
+            Action<RetroColumn> action = (RetroColumn) => {
+                columns.Remove(RetroColumn);
+            };
+
+
+            mockRetrospectiveRepo.Setup(m => m.RetroColumns).Returns(columns.AsQueryable());
+            mockRetrospectiveRepo.Setup(m => m.RemoveRetroColumn(It.IsAny<RetroColumn>())).Callback(action);
+
+            IRetroRespectiveRepository repo = mockRetrospectiveRepo.Object;
+            var controller = new RetroColumnsController(repo);
+
+            //Act
+            controller.DeleteRetroColumn(0);
+
+            //Assert
+            Assert.True(columns.Count() == 0);
+        }
     }
 }
