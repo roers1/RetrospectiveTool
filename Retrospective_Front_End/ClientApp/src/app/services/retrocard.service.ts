@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {BASE_URL} from '../helpers/urlconstants';
+import {BASE_URL} from '../../helpers/urlconstants';
 import {MessageService} from './message.service';
-import {RetroCard} from '../models/RetroCard';
+import {RetroCard} from '../../models/RetroCard';
 
 @Injectable({
   providedIn: 'root'
