@@ -5,52 +5,51 @@ using Retrospective_Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace Retrospective_Back_End_Test
 {
     public class TestRetroCardController
     {
-        Mock<IRetroRespectiveRepository> mockRetrospectiveRepo;
-        IList<RetroCard> retrocards;
-        public TestRetroCardController() {
-            this.mockRetrospectiveRepo = new Mock<IRetroRespectiveRepository>();
-            this.retrocards = new List<RetroCard>() {
-                 new RetroCard 
-                 {
-                     Content = "Test RetroCard",
-                     Position = 2
-                 },
-                 new RetroCard
-                 {
-                     Content = "Test RetroCard 2",
-                     Position = 5
-                 },
-                 new RetroCard
-                 {
-                     Content = "Last test RetroCard",
-                     Position = 6
-                 }
+	    readonly Mock<IRetroRespectiveRepository> _mockRetrospectiveRepo;
 
-            };
-        }
+	    public TestRetroCardController() {
+            this._mockRetrospectiveRepo = new Mock<IRetroRespectiveRepository>();
+            //var retroCards = new List<RetroCard>() {
+	           // new RetroCard 
+	           // {
+		          //  Content = "Test RetroCard",
+		          //  Position = 2
+	           // },
+	           // new RetroCard
+	           // {
+		          //  Content = "Test RetroCard 2",
+		          //  Position = 5
+	           // },
+	           // new RetroCard
+	           // {
+		          //  Content = "Last test RetroCard",
+		          //  Position = 6
+	           // }
+
+            //};
+	    }
 
         [Fact]
         public void AdditionOfARetroCard()
         {
             //Arrange
-            IRetroRespectiveRepository repo = mockRetrospectiveRepo.Object;
+            IRetroRespectiveRepository repo = _mockRetrospectiveRepo.Object;
             var controller = new RetroCardsController(repo);
 
             IList<RetroCard> retroCards = new List<RetroCard>();
 
-            Action<RetroCard> action = (RetroCard) =>
+            void Action(RetroCard retroCard)
             {
-                retroCards.Add(RetroCard);
-            };
+	            retroCards.Add(retroCard);
+            }
 
-            mockRetrospectiveRepo.Setup(m => m.SaveRetroCard(It.IsAny<RetroCard>())).Callback(action);
+            _mockRetrospectiveRepo.Setup(m => m.SaveRetroCard(It.IsAny<RetroCard>())).Callback((Action<RetroCard>) Action);
 
             //Act
             controller.PostRetroCard(new RetroCard
@@ -60,7 +59,7 @@ namespace Retrospective_Back_End_Test
             });
 
             //Assert
-            Assert.True(retroCards.Count() > 0);
+            Assert.True(retroCards.Any());
             RetroCard createdRetroCard = retroCards.FirstOrDefault(r => r.Content.Equals("RetroCard 1"));
             Assert.NotNull(createdRetroCard);
         }
