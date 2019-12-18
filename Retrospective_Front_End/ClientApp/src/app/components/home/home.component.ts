@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { CreateBoardDialogComponent } from '../boardcreate-dialog/boardcreatedialog.component';
 import {RetrospectiveService} from '../../services/retrospective.service';
 import {Router} from '@angular/router';
+import { dictionary } from '../../../helpers/messageconstants';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,8 @@ import {Router} from '@angular/router';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+
+  dict = dictionary;
 
   constructor(public dialog: MatDialog, private retrospectiveService: RetrospectiveService, private router: Router) {
   }

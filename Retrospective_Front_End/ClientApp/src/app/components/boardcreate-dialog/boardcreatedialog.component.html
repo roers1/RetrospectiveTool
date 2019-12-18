@@ -1,17 +1,15 @@
 <div mat-dialog-content class="font">
     <mat-form-field class="full-width">
-        <input matInput placeholder="Voer een naam in*" [(ngModel)]="data.name"
+        <input matInput placeholder="{{dict.FILL_IN_NAME_FORM}}" [(ngModel)]="data.name"
         [formControl]="nameFormControl" [errorStateMatcher]="matcher">
         <mat-error *ngIf="nameFormControl.hasError('name') && !nameFormControl.hasError('required')">
-            Deze naam is niet geldig.
+            {{dict.FAULTY_NAME_ERROR}}
         </mat-error>
-        <mat-error *ngIf="nameFormControl.hasError('required')">
-            Naam is <strong>verplicht</strong>
-        </mat-error>
+        <mat-error *ngIf="nameFormControl.hasError('required')" [innerHTML]="dict.REQUIRES_NAME_ERROR"></mat-error>
     </mat-form-field>
 
     <mat-form-field class="full-width">
-        <textarea matInput placeholder="Voer een descripte in (optioneel)" [(ngModel)]="data.description"></textarea>
+        <textarea matInput placeholder="{{dict.FILL_IN_DESC_FORM}}" [(ngModel)]="data.description"></textarea>
     </mat-form-field>
 </div>
 
