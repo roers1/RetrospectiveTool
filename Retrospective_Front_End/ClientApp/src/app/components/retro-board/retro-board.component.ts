@@ -3,8 +3,6 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { RetroCard } from '../../../models/RetroCard';
 import { Retrospective } from '../../../models/Retrospective';
 import { RetroColumn } from '../../../models/RetroColumn';
-import { MatMenuModule } from '@angular/material/menu';
-import {MatTooltipModule} from '@angular/material/tooltip';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RetrospectiveService } from '../../services/retrospective.service';
 import { RetroColumnService } from '../../services/retro-column.service';

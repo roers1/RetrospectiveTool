@@ -7,7 +7,7 @@ import {Retrospective} from '../../../models/Retrospective';
 import {RetroCardService} from '../../services/retro-card.service';
 import {RetroCard} from '../../../models/RetroCard';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import {MatButtonModule, MatDialogModule, MatFormField, MatIconModule} from '@angular/material';
+import {MatButtonModule, MatDialogModule, MatFormField, MatIconModule, MatSnackBar, MatTooltipModule} from '@angular/material';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatFormFieldModule} from '@angular/material';
@@ -41,10 +41,10 @@ describe('RetroBoardComponent', () => {
 
     TestBed.configureTestingModule({
         imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule,
-        MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule,
+        MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule, MatTooltipModule,
         HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule, BrowserAnimationsModule],
       declarations: [RetroBoardComponent],
-      providers: [MatDialog,
+      providers: [MatDialog, MatSnackBar,
         {provide: RetroColumnService, useValue: retroColumnService},
         {provide: RetroCardService, useValue: retroCardService}]
     })
