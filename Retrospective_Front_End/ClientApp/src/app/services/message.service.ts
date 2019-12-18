@@ -7,8 +7,6 @@ export class MessageService {
 
   messages = {};
 
-  constructor() { }
-
   push(key: string, message: string) {
     this.messages[key] = message;
   }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Retrospective_Core.Services;
 using Retrospective_EFSQLRetrospectiveDbImpl;
 using Retrospective_EFSQLRetrospectiveDbImpl.Seeds;
@@ -30,17 +31,16 @@ namespace Retrospective_Back_End
 			        .AllowAnyMethod()
 			        .AllowAnyHeader());
 	        });
-            _ = services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            _ = services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddDbContext<RetroSpectiveDbContext>(options =>
 	            options.UseSqlServer(
 		            Configuration["Data:ConnectionString"]));
-            services.AddTransient<IRetroRespectiveRepository, EFRetrospectiveRepository>();
+            services.AddTransient<IRetroRespectiveRepository, EfRetrospectiveRepository>();
             services.AddControllersWithViews().AddNewtonsoftJson(options =>options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider service)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider service)
         {
             if (env.IsDevelopment())
             {
@@ -48,8 +48,7 @@ namespace Retrospective_Back_End
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+	            app.UseHsts();
             }
 
             app.UseHttpsRedirection();

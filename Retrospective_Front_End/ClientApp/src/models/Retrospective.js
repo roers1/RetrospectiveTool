@@ -7,14 +7,11 @@ var Retrospective = /** @class */ (function () {
         this.description = description;
         this.retroColumns = retroColumns;
     }
-    ;
-    Retrospective.prototype.addRetroColumn = function (retrocolumn) {
-        this.retroColumns.push(retrocolumn);
+    Retrospective.prototype.addRetroColumn = function (column) {
+        this.retroColumns.push(column);
     };
-    Retrospective.prototype.removeRetroColumn = function (retrocolumnId) {
-        if (function (retrocolumnId) { return 0; }) {
-            this.retroColumns.filter(function (rc) { return rc.id != retrocolumnId; });
-        }
+    Retrospective.prototype.removeRetroColumn = function (columnId) {
+        this.retroColumns.filter(function (rc) { return rc.id !== columnId; });
     };
     return Retrospective;
 }());
