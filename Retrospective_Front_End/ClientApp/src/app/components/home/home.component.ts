@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { CreateBoardDialogComponent } from '../boardcreate-dialog/boardcreatedialog.component';
-import {RetrospectiveService} from '../../retrospective.service';
+import {RetrospectiveService} from '../../services/retrospective.service';
 import {Router} from '@angular/router';
 
 @Component({
