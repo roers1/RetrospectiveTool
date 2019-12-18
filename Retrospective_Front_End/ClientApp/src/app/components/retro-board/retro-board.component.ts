@@ -6,7 +6,7 @@ import { RetroColumn } from '../../../models/RetroColumn';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RetrospectiveService } from '../../services/retrospective.service';
-import { RetroColumnService } from '../../services/retro-column.service';
+import { RetrocolumnService } from '../../services/retro-column.service';
 import { RetroCardService } from '../../services/retro-card.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
@@ -49,7 +49,7 @@ export class RetroBoardComponent implements OnInit {
 
   constructor(
     public retrospectiveService: RetrospectiveService,
-    public retroColumnService: RetroColumnService,
+    public retroColumnService: RetrocolumnService,
     public retroCardService: RetroCardService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
@@ -169,7 +169,7 @@ export class RetroBoardComponent implements OnInit {
     column.title = newTitle;
     this.enableColumnTitleEditing(false, column);
 
-    this.retroColumnService.updateColumn(column.id, newtitle).subscribe(_ => {
+    this.retroColumnService.updateColumn(column.id, newTitle).subscribe(_ => {
     });
   }
 
