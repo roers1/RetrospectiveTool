@@ -5,7 +5,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
-describe('RetrocolumnService', () => {
+describe('RetroColumnService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [DragDropModule, FormsModule, ReactiveFormsModule, HttpClientTestingModule]
   }));

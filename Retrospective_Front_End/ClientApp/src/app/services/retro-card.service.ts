@@ -8,9 +8,8 @@ import {RetroCard} from '../../models/RetroCard';
 @Injectable({
   providedIn: 'root'
 })
-export class RetrocardService {
+export class RetroCardService {
   private readonly baseUrlRetroCards = baseUrl + 'retrocards';
-  private readonly baseUrlRetroColumn = baseUrl + 'retroColumns/';
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -29,7 +28,7 @@ export class RetrocardService {
   }
 
   removeCard(cardId, columnId) {
-    return this.http.delete<RetroCard>(this.baseUrlRetroColumn + columnId + '/retrocards/' + cardId, this.httpOptions);
+    // return this.http.delete<RetroCard>(this.baseUrlRetroColumn + columnId + '/retrocards/' + cardId, this.httpOptions);
   }
 
   getRetroCard(id): Observable<RetroCard> {

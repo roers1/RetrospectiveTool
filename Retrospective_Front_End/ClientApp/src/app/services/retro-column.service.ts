@@ -9,9 +9,7 @@ import {RetrospectiveService} from './retrospective.service';
 @Injectable({
   providedIn: 'root'
 })
-export class RetrocolumnService {
-  private readonly baseUrlRetrospective: string = baseUrl + 'retrospectives/';
-
+export class RetroColumnService {
   private readonly baseUrlRetroColumn = baseUrl + 'retrocolumns';
 
   private httpOptions = {
