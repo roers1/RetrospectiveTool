@@ -8,16 +8,16 @@ import {RetrocardService} from '../../retrocard.service';
 import {RetroCard} from '../../../models/RetroCard';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {MatButtonModule, MatDialogModule, MatFormField, MatIconModule} from '@angular/material';
-import { BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import { MatMenuModule} from '@angular/material/menu';
-import { MatFormFieldModule} from '@angular/material';
-import { HttpClientTestingModule} from '@angular/common/http/testing';
-import { RouterModule, Router} from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { RetrospectiveService } from '../../retrospective.service';
-import { RetrocolumnService } from '../../retrocolumn.service';
-import { MatDialog } from '@angular/material';
-import { of } from 'rxjs';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatFormFieldModule} from '@angular/material';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterModule, Router} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
+import {MatDialog} from '@angular/material';
+import {RetrospectiveService} from '../../retrospective.service';
+import {RetrocolumnService} from '../../retrocolumn.service';
+import {of} from 'rxjs';
 
 describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
@@ -154,6 +154,7 @@ describe('RetroBoardComponent', () => {
     expect(component.enable).toEqual(true);
   });
 
+
   it('should return to homepage on clean retroboard', () => {
     component.retrospective = new Retrospective(1000, 'title', 'description', [
       new RetroColumn(11, 'rc1', []),
@@ -206,10 +207,24 @@ describe('RetroBoardComponent', () => {
     expect(component.retrospective.retroColumns.length === 0).toBe(true);
   });
 
-  it('Should trigger variable when add button is clicked should enable open menu', () => {
-    component.enable = false;
-    const button = fixture.debugElement.nativeElement.querySelector('.clickable_element');
-    button.click();
-    expect(component.enable).toEqual(true);
+  it('should be able to delete column', () => {
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      []
+    );
+
+    component.retrospective = new Retrospective(
+      0,
+      'Cool board',
+      'Wow',
+      [column]
+    );
+
+    fixture.detectChanges();
+
+    component.deleteColumn(column);
+
+    expect(component.retrospective.retroColumns.length === 0).toBe(true);
   });
 });

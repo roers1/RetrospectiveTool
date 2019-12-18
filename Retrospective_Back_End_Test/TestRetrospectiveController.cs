@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.Data.Entity;
-using System.Text;
+
 using Moq;
-using Retrospective_Core.Services;
-using Retrospective_Core.Models;
 using System.Linq;
 using Retrospective_Back_End.Controllers;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using Xunit;
+using Retrospective_Core.Services;
+using Retrospective_Core.Models;
 
-namespace Retrospective_Back_End_Test
-{
+namespace Retrospective_Back_End_Test {
     public class TestRetrospectiveController
     {
         Mock<IRetroRespectiveRepository> mockRetrospectiveRepo;
@@ -57,7 +52,7 @@ namespace Retrospective_Back_End_Test
         {
             //Arrange
             String testTitle = "Board 1";
-            
+
             mockRetrospectiveRepo.Setup(m => m.getAll()).Returns(retrospectives.AsQueryable());
             var controller = new RetrospectivesController(mockRetrospectiveRepo.Object);
 
