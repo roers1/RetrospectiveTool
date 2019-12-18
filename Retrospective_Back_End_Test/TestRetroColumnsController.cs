@@ -9,13 +9,16 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Retrospective_Back_End_Test {
-    public class TestRetroColumnsController {
+namespace Retrospective_Back_End_Test
+{
+    public class TestRetroColumnsController
+    {
 
         Mock<IRetroRespectiveRepository> mockRetrospectiveRepo;
         IList<RetroColumn> retroColumns;
-   
-        public TestRetroColumnsController() {
+
+        public TestRetroColumnsController()
+        {
             this.mockRetrospectiveRepo = new Mock<IRetroRespectiveRepository>();
             this.retroColumns = new List<RetroColumn>() {
                  new RetroColumn {
@@ -27,25 +30,28 @@ namespace Retrospective_Back_End_Test {
                     Id = 1
                 }
             };
-    
+
         }
 
         [Fact]
-        public void AdditionOfAColumn() {
+        public void AdditionOfAColumn()
+        {
             //Arrange
             IRetroRespectiveRepository repo = mockRetrospectiveRepo.Object;
             var controller = new RetroColumnsController(repo);
 
             IList<RetroColumn> columns = new List<RetroColumn>();
 
-            Action<RetroColumn> action = (RetroColumn) => {
+            Action<RetroColumn> action = (RetroColumn) =>
+            {
                 columns.Add(RetroColumn);
             };
 
             mockRetrospectiveRepo.Setup(m => m.SaveRetroColumn(It.IsAny<RetroColumn>())).Callback(action);
 
             //Act
-            controller.PostRetroColumn(new RetroColumn {
+            controller.PostRetroColumn(new RetroColumn
+            {
                 Id = 2,
                 Title = "Column 3"
             });
@@ -59,9 +65,11 @@ namespace Retrospective_Back_End_Test {
         }
 
         [Fact]
-        public void DeletionOfAColumn() {
+        public void DeletionOfAColumn()
+        {
             //Arrange
-            RetroColumn column = new RetroColumn {
+            RetroColumn column = new RetroColumn
+            {
                 Id = 0,
                 Title = "Column 1"
             };
@@ -70,7 +78,8 @@ namespace Retrospective_Back_End_Test {
                 column
             };
 
-            Action<RetroColumn> action = (RetroColumn) => {
+            Action<RetroColumn> action = (RetroColumn) =>
+            {
                 columns.Remove(RetroColumn);
             };
 
@@ -86,6 +95,42 @@ namespace Retrospective_Back_End_Test {
 
             //Assert
             Assert.True(columns.Count() == 0);
+        }
+
+        [Fact]
+        public void EditingOfAColumn()
+        {
+            //Arrange
+
+
+            RetroColumn column = new RetroColumn
+            {
+                Id = 0,
+                Title = "Column 1"
+            };
+
+            IList<RetroColumn> columns = new List<RetroColumn> {
+                column
+            };
+
+            Action<RetroColumn> action = (RetroColumn) =>
+            {
+                RetroColumn retroColumnAction = columns.Where(r => r.Id == 0).Select(rc => rc).SingleOrDefault();
+                retroColumnAction.Title = "Column 2";
+            };
+
+            mockRetrospectiveRepo.Setup(m => m.UpdateRetroColumn(It.IsAny<RetroColumn>())).Callback(action);
+
+            IRetroRespectiveRepository repo = mockRetrospectiveRepo.Object;
+
+            var controller = new RetroColumnsController(repo);
+
+            //Act
+            controller.PutRetroColumn(0, column);
+
+            //Assert
+            Assert.Equal("Column 2", columns.Where(r => r.Id == 0).Select(rc => rc).SingleOrDefault().Title);
+
         }
     }
 }
