@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Moq;
 using System.Linq;
 using Retrospective_Back_End.Controllers;
 using Xunit;
 using Retrospective_Core.Services;
 using Retrospective_Core.Models;
+using Xunit.Abstractions;
 
 namespace Retrospective_Back_End_Test {
     public class TestRetrospectiveController
     {
-        Mock<IRetroRespectiveRepository> mockRetrospectiveRepo;
-        IList<Retrospective> retrospectives;
-        public TestRetrospectiveController()
+	    private readonly ITestOutputHelper _testOutputHelper;
+	    readonly Mock<IRetroRespectiveRepository> _mockRetrospectiveRepo;
+	    readonly IList<Retrospective> _retrospectives;
+        public TestRetrospectiveController(ITestOutputHelper testOutputHelper)
         {
-           this.mockRetrospectiveRepo = new Mock<IRetroRespectiveRepository>();
-            this.retrospectives = new List<Retrospective>()
+	        _testOutputHelper = testOutputHelper;
+	        this._mockRetrospectiveRepo = new Mock<IRetroRespectiveRepository>();
+            this._retrospectives = new List<Retrospective>()
             {
                 new Retrospective {
                     Title = "Board 1",
@@ -48,23 +50,20 @@ namespace Retrospective_Back_End_Test {
         }
 
         [Fact]
-        public async void getAllRetrospectives()
+        public async void GetAllRetrospectives()
         {
             //Arrange
-            String testTitle = "Board 1";
 
-            mockRetrospectiveRepo.Setup(m => m.getAll()).Returns(retrospectives.AsQueryable());
-            var controller = new RetrospectivesController(mockRetrospectiveRepo.Object);
+            _mockRetrospectiveRepo.Setup(m => m.getAll()).Returns(_retrospectives.AsQueryable());
+            var controller = new RetrospectivesController(_mockRetrospectiveRepo.Object);
 
             //Act
            var result = await controller.GetRetrospectives();
 
             //Assert
-            Console.WriteLine(result);
-            var test = result.Value.FirstOrDefault().Title;
-            Assert.True(test.Equals("Board 1"));
-            Assert.Equal(2, retrospectives.Count());
-
+            var test = result.Value.FirstOrDefault()?.Title;
+            Assert.True(test != null && test.Equals("Board 1"));
+            Assert.Equal(2, _retrospectives.Count());
         }
     }
 }
