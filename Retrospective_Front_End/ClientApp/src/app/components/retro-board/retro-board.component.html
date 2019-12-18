@@ -73,7 +73,7 @@
         </div>
 
         <div class="example-container-toaddcard">
-          <h6 (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ Voeg een kaart toe</h6>
+          <h6 (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ {{dict.CREATE_NEW_CARD_BTN}}</h6>
           <div class="animated-item" *ngIf="hasEnabledEditing(column)">
             <form [formGroup]="cardGroup">
               <div>
@@ -100,12 +100,12 @@
       </div>
 
       <div class="example-container-toadd">
-        <h4 class="clickable_element" (click)="enable=true">+ Voeg een lijst toe</h4>
+        <h4 class="clickable_element" (click)="enable=true">+ {{dict.CREATE_NEW_COLUMN_BTN}}</h4>
         <div class="animated-item" *ngIf="enable">
           <form [formGroup]="listGroup">
             <div>
-              <mat-form-field [formGroup]="listGroup">
-                <input matInput #column placeholder="{{dict.FILL_IN_TITLE_FORM}}"
+              <mat-form-field [formGroup]="listGroup" class="inputfield">
+                <input matInput #column placeholder="{{dict.FILL_IN_TITLE_FORM}}" class="inputfield"
                        formControlName="title" value="">
               </mat-form-field>
             </div>

@@ -101,6 +101,7 @@ export class RetroBoardComponent implements OnInit {
       if (result) {
         column.retroCards = [];
         // TODO: ADD SERVICE!
+        this.openSnackBar('Succesvol geleegd', 'Ok')
       }
     });
   }
