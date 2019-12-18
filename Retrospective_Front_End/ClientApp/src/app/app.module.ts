@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material';
@@ -13,7 +15,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 
-import { CreateBoardDialogComponent } from './components/boardcreate-dialog/boardcreatedialog.component';
+import { CreateBoardDialogComponent } from './components/board-create-dialog/board-create-dialog.component';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 import { StylesComponent } from './components/styles/styles.component';
@@ -37,7 +39,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatTooltipModule,
     MatFormFieldModule,
+    MatSnackBarModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,

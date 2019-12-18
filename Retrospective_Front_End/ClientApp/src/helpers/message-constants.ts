@@ -5,6 +5,9 @@ export const dictionary = {
     'RETROBOARD_EMPTY_COLUMN_NOTI' : (title) => `Weet u zeker dat u ${title} wilt verwijderen`,
     'RETROBOARD_DELETE_COLUMN_NOTI' : (title) => `Weet u zeker dat u kolom ${title} wilt leegmaken?`,
     'RETROBOARD_DELETE_CARD_NOTI' : 'Weet u zeker dat u deze kaart wilt verwijderen?',
+    'SNACKBAR_SUCCES_EMPTY' : 'Succesvol geleegd',
+    'SNACKBAR_SUCCES_DELETE' : 'Succesvol verwijdert',
+    'SNACKBAR_SUCCESS_ADD' : 'Succesvol toegevoegd',
 
     //titles
     'WELCOME_TITLE' : 'Welkom',

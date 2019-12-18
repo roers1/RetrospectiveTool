@@ -3,16 +3,15 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { RetroCard } from '../../../models/RetroCard';
 import { Retrospective } from '../../../models/Retrospective';
 import { RetroColumn } from '../../../models/RetroColumn';
-import { MatMenuModule } from '@angular/material/menu';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RetrospectiveService } from '../../services/retrospective.service';
-import { RetrocolumnService } from '../../services/retrocolumn.service';
-import { RetrocardService } from '../../services/retrocard.service';
+import { RetrocolumnService } from '../../services/retro-column.service';
+import { RetroCardService } from '../../services/retro-card.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { dictionary } from '../../../helpers/messageconstants';
+import { dictionary } from '../../../helpers/message-constants';
 
 @Component({
   selector: 'app-retro-board',
@@ -50,9 +49,10 @@ export class RetroBoardComponent implements OnInit {
   constructor(
     public retrospectiveService: RetrospectiveService,
     public retroColumnService: RetrocolumnService,
-    public retroCardService: RetrocardService,
+    public retroCardService: RetroCardService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
     public router: Router) {
   }
 
@@ -81,10 +81,10 @@ export class RetroBoardComponent implements OnInit {
 
     return this.elements;
   }
-  // addCard()
 
   addColumn(title) {
     this.retroColumnService.createColumn(title, this.retrospective.id).subscribe((column) => {
+      this.listGroup.get('title').setValue('');
       this.retrospective.retroColumns.push(column);
     });
   }
@@ -99,6 +99,7 @@ export class RetroBoardComponent implements OnInit {
       if (result) {
         column.retroCards = [];
         // TODO: ADD SERVICE!
+        this.openSnackBar(this.dict.SNACKBAR_SUCCES_EMPTY, 'Ok')
       }
     });
   }
@@ -107,6 +108,7 @@ export class RetroBoardComponent implements OnInit {
     const value = this.cardGroup.value;
 
     this.retroCardService.createCard(column.id, value.content).subscribe((card) => {
+      this.cardGroup.get('content').setValue('');
       column.retroCards.push(card);
     });
   }
@@ -114,6 +116,7 @@ export class RetroBoardComponent implements OnInit {
   deleteColumnDialog(column: RetroColumn) {
     this.openDialog(this.dict.RETROBOARD_DELETE_COLUMN_NOTI(column.title), () => {
       this.deleteColumn(column);
+      this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok')
     });
   }
 
@@ -154,6 +157,7 @@ export class RetroBoardComponent implements OnInit {
           });
 
         });
+        this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok')
         // TODO ADD SERVICE!
       }
     });
@@ -165,10 +169,12 @@ export class RetroBoardComponent implements OnInit {
     // TODO ADD SERVICE!
   }
 
-  updateColumnTitle(column: RetroColumn, newtitle) {
-    column.title = newtitle
+  updateColumnTitle(column: RetroColumn, newTitle) {
+    column.title = newTitle;
     this.enableColumnTitleEditing(false, column);
-    // TODO ADD SERVICE!
+
+    this.retroColumnService.updateColumn(column.id, newTitle).subscribe(_ => {
+    });
   }
 
   enableContentEditing(bool: boolean, card: RetroCard) {
@@ -217,5 +223,11 @@ export class RetroBoardComponent implements OnInit {
 
   cleanRetroBoard() {
     this.router.navigate([`/`]);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }
