@@ -5,10 +5,10 @@
       <br>
         <div class="row">
           <h1>{{retrospective.title}}</h1>
-          <img class="icon" 
+          <img class="icon"
             id="icon_wipe"
             src="../../../assets/images/broom.png"
-            (click)="cleanRetroBoard()" />
+            (click)="cleanRetroBoardDialog()" />
         </div>
       <br>
       <h3 class="description">{{retrospective.description}}</h3>
@@ -17,7 +17,11 @@
     <div class="board_area">
       <div class="example-container" *ngFor="let column of retrospective.retroColumns">
         <div class="board-title-holder">
-          <h2 class="testtitle">{{column.title}}</h2>
+          <h2 class="testtitle" *ngIf="!hasEnabledColumnTitleEditing(column)">{{column.title}}</h2>
+
+
+
+
           <div class="icon_menu">
             <img class="icon" id="icon_menu" src="../../../assets/images/icon_dot_menu.png" [matMenuTriggerFor]="menu">
             <mat-menu #menu="matMenu">
@@ -31,8 +35,19 @@
                       (click)="deleteColumnDialog(column)">
                 Verwijder kolom
               </button>
+              <button mat-menu-item
+                      class="dropdownitem"
+                      (click)="enableColumnTitleEditing(true, column)">
+                Bewerk kolomnaam
+              </button>
             </mat-menu>
           </div>
+        </div>
+
+        <div class="box-content" *ngIf="hasEnabledColumnTitleEditing(column)">
+          <input type="text" #newtitle value="{{column.title}}">
+          <br>
+          <button class="TLbtn btn-small btn-color-primary editTitleBtn" (click)="updateColumnTitle(column, newtitle.value)">Aanpassen</button>
         </div>
 
         <div cdkDropList
@@ -100,11 +115,11 @@
             </div>
             <div>
               <button [disabled]="!listGroup.valid" mat-button (click)="enable=false; addColumn(column.value)"
-                      class="TLbtn btn-small btn-color-primary">
+                      class="TLbtn btn-small btn-color-primary click_should_disable">
                 Voeg toe
               </button>
               <button mat-button (click)="enable=false"
-                      class="TLbtn btn-small btn-color-secondary">
+                      class="TLbtn btn-small btn-color-secondary clickable_element_closed">
                 Annuleer
               </button>
             </div>
