@@ -1,17 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RetrocardService } from './retrocard.service';
+import { RetroColumnService } from './retro-column.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
-describe('RetrocardService', () => {
+describe('RetroColumnService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [DragDropModule, FormsModule, ReactiveFormsModule, HttpClientTestingModule]
   }));
 
   it('should be created', () => {
-    const service: RetrocardService = TestBed.get(RetrocardService);
+    const service: RetroColumnService = TestBed.get(RetroColumnService);
     expect(service).toBeTruthy();
   });
 });

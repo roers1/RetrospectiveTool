@@ -4,7 +4,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {RetroColumn} from '../../../models/RetroColumn';
 import {FormsModule, ReactiveFormsModule, COMPOSITION_BUFFER_MODE} from '@angular/forms';
 import {Retrospective} from '../../../models/Retrospective';
-import {RetrocardService} from '../../services/retrocard.service';
+import {RetroCardService} from '../../services/retro-card.service';
 import {RetroCard} from '../../../models/RetroCard';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {MatButtonModule, MatDialogModule, MatFormField, MatIconModule} from '@angular/material';
@@ -15,8 +15,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterModule, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MatDialog} from '@angular/material';
-import {RetrospectiveService} from '../../services/retrospective.service';
-import {RetrocolumnService} from '../../services/retrocolumn.service';
+import {RetroColumnService} from '../../services/retro-column.service';
 import {of} from 'rxjs';
 
 describe('RetroBoardComponent', () => {
@@ -31,24 +30,23 @@ describe('RetroBoardComponent', () => {
 
   beforeEach(async(() => {
     const retrospectiveService = jasmine.createSpyObj('RetrospectiveService', ['createRetrospective']);
-    const retrocolumnService = jasmine.createSpyObj('RetrocolumnService', ['removeColumn', 'addColumn', 'createColumn']);
-    const retrocartService = jasmine.createSpyObj('RetrocardService', ['createCard'])
+    const retroColumnService = jasmine.createSpyObj('RetrocolumnService', ['removeColumn', 'addColumn', 'createColumn']);
+    const retroCardService = jasmine.createSpyObj('RetrocardService', ['createCard']);
 
-    removeColumnSpy = retrocolumnService.removeColumn.and.returnValue(of());
-    createColumnSpy = retrocolumnService.createColumn.and.returnValue(of(mockColumn));
-    addCardSpy = retrocartService.createCard.and.returnValue(of(mockCard))
+    removeColumnSpy = retroColumnService.removeColumn.and.returnValue(of());
+    createColumnSpy = retroColumnService.createColumn.and.returnValue(of(mockColumn));
+    addCardSpy = retroCardService.createCard.and.returnValue(of(mockCard));
 
     createBoardSpy = retrospectiveService.createRetrospective.and.returnValue(of());
 
     TestBed.configureTestingModule({
-      // tslint:disable-next-line:max-line-length
-      imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule,
+        imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule,
         MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule,
         HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule, BrowserAnimationsModule],
       declarations: [RetroBoardComponent],
       providers: [MatDialog,
-        {provide: RetrocolumnService, useValue: retrocolumnService},
-        {provide: RetrocardService, useValue: retrocartService}]
+        {provide: RetroColumnService, useValue: retroColumnService},
+        {provide: RetroCardService, useValue: retroCardService}]
     })
       .compileComponents();
   }));
@@ -101,7 +99,7 @@ describe('RetroBoardComponent', () => {
 
     fixture.detectChanges();
 
-    component.cardGroup.get('content').setValue(mockCard.content)
+    component.cardGroup.get('content').setValue(mockCard.content);
     component.addCard(column);
 
     const testColumn = component.retrospective.retroColumns[0];
@@ -155,7 +153,7 @@ describe('RetroBoardComponent', () => {
   });
 
 
-  it('should return to homepage on clean retroboard', () => {
+  it('should return to homepage on clean retroBoard', () => {
     component.retrospective = new Retrospective(1000, 'title', 'description', [
       new RetroColumn(11, 'rc1', []),
       new RetroColumn(22, 'rc2', [])
@@ -164,7 +162,7 @@ describe('RetroBoardComponent', () => {
     component.cleanRetroBoard();
     fixture.detectChanges();
 
-    let router = TestBed.get(Router)
+    let router = TestBed.get(Router);
     expect(router.url).toBe('/');
   });
 

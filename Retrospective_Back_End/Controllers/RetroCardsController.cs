@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Retrospective_Core.Models;
 using Retrospective_Core.Services;
-using Retrospective_EFSQLRetrospectiveDbImpl;
 
 namespace Retrospective_Back_End.Controllers
 {
@@ -46,40 +41,13 @@ namespace Retrospective_Back_End.Controllers
 		}
 
 		// PUT: api/RetroCards/5
-		// To protect from overposting attacks, please enable the specific properties you want to bind to, for
-		// more details see https://aka.ms/RazorPagesCRUD.
 		[HttpPut]
 		public IActionResult PutRetroCard()
 		{
-			//RetroCard retroCard //GetJSONFromBody(Request.Body);
-
-			//if (retroCard == null)
-			//{
-			//	return BadRequest();
-			//};
-
-			//try
-			//{
-			//	_context.SaveRetroCard(retroCard);
-			//}
-			//catch (DbUpdateConcurrencyException)
-			//{
-			//	if (!RetroCardExists(retroCard.Id))
-			//	{
-			//		return NotFound();
-			//	}
-			//	else
-			//	{
-			//		throw;
-			//	}
-			//}
-
 			return NoContent();
 		}
 
 		// POST: api/RetroCards
-		// To protect from overposting attacks, please enable the specific properties you want to bind to, for
-		// more details see https://aka.ms/RazorPagesCRUD.
 		[HttpPost]
 		public ActionResult<RetroCard> PostRetroCard(RetroCard retroCard)
 		{

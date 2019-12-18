@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Retrospective_Core.Models;
 using Retrospective_Core.Services;
-using Retrospective_EFSQLRetrospectiveDbImpl;
 
 namespace Retrospective_Back_End.Controllers
 {
@@ -65,8 +62,6 @@ namespace Retrospective_Back_End.Controllers
         }
 
         // POST: api/RetroColumns
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
         public ActionResult<RetroColumn> PostRetroColumn(RetroColumn retroColumn)
         {
@@ -94,25 +89,6 @@ namespace Retrospective_Back_End.Controllers
         private bool RetroColumnExists(int id)
         {
             return _context.RetroColumns.Any(e => e.Id == id);
-        }
-
-        private RetroColumn GetJSONFromBody(Stream req)
-        {
-            req.Seek(0, System.IO.SeekOrigin.Begin);
-            string json = new StreamReader(req).ReadToEnd();
-
-            RetroColumn input = null;
-
-            try
-            {
-                input = JsonConvert.DeserializeObject<RetroColumn>(json);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return input;
         }
     }
 }
