@@ -171,7 +171,8 @@ export class RetroBoardComponent implements OnInit {
   updateColumnTitle(column: RetroColumn, newtitle) {
     column.title = newtitle
     this.enableColumnTitleEditing(false, column);
-    // TODO ADD SERVICE!
+
+    this.retroColumnService.updateColumn(column.id, newtitle).subscribe(_ => { });
   }
 
   enableContentEditing(bool: boolean, card: RetroCard) {
