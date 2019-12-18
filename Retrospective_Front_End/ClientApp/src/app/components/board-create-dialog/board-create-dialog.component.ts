@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { dictionary } from '../../../helpers/messageconstants';
+import { dictionary } from '../../../helpers/message-constants';
 
 export interface DialogData {
   name: string;
@@ -18,7 +18,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 @Component({
   selector: 'app-create-board',
-  templateUrl: './boardcreatedialog.component.html',
+  templateUrl: './board-create-dialog.component.html',
   styleUrls: ['../home/home.component.css']
 })
 export class CreateBoardDialogComponent {

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { BASE_URL } from '../../helpers/urlconstants';
+import { baseUrl } from '../../helpers/url-constants';
 import { MessageService } from './message.service';
 import { Facilitator } from '../../models/Facilitator';
 import { Participant } from '../../models/Participant';

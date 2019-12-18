@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {BASE_URL} from '../../helpers/urlconstants';
+import {baseUrl} from '../../helpers/url-constants';
 import {MessageService} from './message.service';
 import {RetroColumn} from '../../models/retroColumn';
 import {RetrospectiveService} from './retrospective.service';
@@ -9,10 +9,8 @@ import {RetrospectiveService} from './retrospective.service';
 @Injectable({
   providedIn: 'root'
 })
-export class RetrocolumnService {
-  private readonly baseUrlRetrospective: string = BASE_URL + 'retrospectives/';
-
-  private readonly baseUrlRetroColumn = BASE_URL + 'retrocolumns';
+export class RetroColumnService {
+  private readonly baseUrlRetroColumn = baseUrl + 'retrocolumns';
 
   private httpOptions = {
     headers: new HttpHeaders({

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { CreateBoardDialogComponent } from '../boardcreate-dialog/boardcreatedialog.component';
+import { CreateBoardDialogComponent } from '../board-create-dialog/board-create-dialog.component';
 import {RetrospectiveService} from '../../services/retrospective.service';
 import {Router} from '@angular/router';
-import { dictionary } from '../../../helpers/messageconstants';
+import { dictionary } from '../../../helpers/message-constants';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  opendialog(): void {
+  openDialog(): void {
     const dialogRef = this.dialog.open(CreateBoardDialogComponent, {
       width: '400px',
       data: {name: '', description: ''}
