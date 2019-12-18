@@ -15,7 +15,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterModule, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MatDialog} from '@angular/material';
-import {RetroColumnService} from '../../services/retro-column.service';
+import {RetrocolumnService} from '../../services/retro-column.service';
 import {of} from 'rxjs';
 
 describe('RetroBoardComponent', () => {
@@ -47,7 +47,7 @@ describe('RetroBoardComponent', () => {
         HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule, BrowserAnimationsModule],
       declarations: [RetroBoardComponent],
       providers: [MatDialog, MatSnackBar,
-        {provide: RetroColumnService, useValue: retroColumnService},
+        {provide: RetrocolumnService, useValue: retroColumnService},
         {provide: RetroCardService, useValue: retroCardService}]
     })
       .compileComponents();
