@@ -22,15 +22,10 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl {
 		        .OnDelete(DeleteBehavior.Cascade);
         }
 
+        public virtual DbSet<Retrospective> Retrospectives { get; set; }
 
-        //public DbSet<Participant> Participants { get; set; }
+        public virtual DbSet<RetroColumn> RetroColumns { get; set; }
 
-        //public DbSet<Facilitator> Facilitators { get; set; }
-
-        public DbSet<Retrospective> Retrospectives { get; set; }
-
-        public DbSet<RetroColumn> RetroColumns { get; set; }
-
-        public DbSet<RetroCard> RetroCards { get; set; }
+        public virtual DbSet<RetroCard> RetroCards { get; set; }
     }
 }
