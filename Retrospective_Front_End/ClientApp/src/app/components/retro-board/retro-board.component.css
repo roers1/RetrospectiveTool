@@ -2,7 +2,6 @@
   width: 275px;
   max-width: 100%;
   margin: 0 25px 25px 0;
-  margin-left: 10px;
   display: inline-block;
   vertical-align: top;
   background-color: rgba(248, 255, 249, 0.6);
@@ -89,9 +88,10 @@ body {
 }
 
 .board_area {
-  margin-top: 220px; /*Leave room for the title and description*/
+  margin-top: 100px; /*Leave room for the title and description*/
   white-space: nowrap;
   z-index: 4;
+  margin-left: 10px;
 }
 
 .board-top-content-clean {
@@ -106,6 +106,15 @@ h2 {
 }
 h1 {
   color: #ffffff;
+  font-size: 5vh;
+  margin-left: 17px;
+  max-width: 75vw;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+h1:hover {
+  cursor: pointer;
 }
 h4 {
   font-size: 20px;
@@ -118,7 +127,7 @@ h6 {
 }
 
 .inputfield {
-  width: 300px;
+  width: 100% !important; 
 }
 .example-container-toaddcard {
   width: 275px;
@@ -179,7 +188,7 @@ h6 {
 
 .locked {
   position: fixed;
-  padding-left: 3%;
+  padding-left: 7px;
   z-index: 2;
 }
 
@@ -244,7 +253,6 @@ h6 {
 #icon_wipe {
   opacity: 100;
   height: 50px;
-  margin-top: 20px;
   margin-left: 20px;
 }
 .dropdownitem:focus {
@@ -263,4 +271,8 @@ ng-valid.ng-touched {
 ng-invalid.ng-touched {
   border: 5px solid red;
   background-color: rgba(255, 84, 60, 0.6);
+}
+
+.btn-margin-left {
+  float: right;
 }

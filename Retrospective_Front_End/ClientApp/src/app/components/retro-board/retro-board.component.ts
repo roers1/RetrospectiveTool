@@ -4,13 +4,14 @@ import { RetroCard } from '../../../models/RetroCard';
 import { Retrospective } from '../../../models/Retrospective';
 import { RetroColumn } from '../../../models/RetroColumn';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RetrospectiveService } from '../../services/retrospective.service';
 import { RetrocolumnService } from '../../services/retrocolumn.service';
 import { RetrocardService } from '../../services/retrocard.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { dictionary } from '../../../helpers/messageconstants';
 
@@ -53,6 +54,7 @@ export class RetroBoardComponent implements OnInit {
     public retroCardService: RetrocardService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
     public router: Router) {
   }
 
@@ -81,10 +83,10 @@ export class RetroBoardComponent implements OnInit {
 
     return this.elements;
   }
-  // addCard()
 
   addColumn(title) {
     this.retroColumnService.createColumn(title, this.retrospective.id).subscribe((column) => {
+      this.listGroup.get('title').setValue('');
       this.retrospective.retroColumns.push(column);
     });
   }
@@ -107,6 +109,7 @@ export class RetroBoardComponent implements OnInit {
     const value = this.cardGroup.value;
 
     this.retroCardService.createCard(column.id, value.content).subscribe((card) => {
+      this.cardGroup.get('content').setValue('');
       column.retroCards.push(card);
     });
   }
@@ -114,6 +117,7 @@ export class RetroBoardComponent implements OnInit {
   deleteColumnDialog(column: RetroColumn) {
     this.openDialog(this.dict.RETROBOARD_DELETE_COLUMN_NOTI(column.title), () => {
       this.deleteColumn(column);
+      this.openSnackBar('Succesvol verwijdert', 'Ok')
     });
   }
 
@@ -154,6 +158,7 @@ export class RetroBoardComponent implements OnInit {
           });
 
         });
+        this.openSnackBar('Succesvol verwijdert', 'Ok')
         // TODO ADD SERVICE!
       }
     });
@@ -217,5 +222,11 @@ export class RetroBoardComponent implements OnInit {
 
   cleanRetroBoard() {
     this.router.navigate([`/`]);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }
