@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Retrospective_Core.Models;
 using Retrospective_Core.Services;
 
@@ -20,6 +22,11 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 		public IQueryable<RetroColumn> RetroColumns => _context.RetroColumns;
 
 		public IQueryable<RetroCard> RetroCards => _context.RetroCards;
+		public IQueryable<Retrospective> getAll()
+		{
+			return _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards);
+
+		}
 
 		public void RemoveRetroCard(RetroCard retroCard)
 		{
@@ -98,5 +105,19 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 			_context.Retrospectives.Add(retrospective);
 			_context.SaveChanges();
 		}
+
+        public RetroColumn UpdateRetroColumn(RetroColumn retroColumn)
+        {
+            var dbe = _context.RetroColumns.FirstOrDefault(rc => rc.Id == retroColumn.Id);
+
+            if (dbe != null)
+            {
+                dbe.Title = retroColumn.Title;
+
+                _context.SaveChanges();
+            }
+
+            return dbe;
+        }
 	}
 }
