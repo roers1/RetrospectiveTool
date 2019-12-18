@@ -3,7 +3,7 @@
   <div class="scrollable">
     <div class="locked">
       <br>
-        <div class="row">
+        <div class="row title-background">
           <h1 matTooltip="{{retrospective.description}}">{{retrospective.title}}</h1>
           <img class="icon"
             id="icon_wipe"
@@ -85,7 +85,7 @@
                 </mat-form-field>
               </div>
               <div>
-                <button [disabled]="!cardGroup.valid" mat-button (click)="enableEditing(false, column); addCard(column); openSnackBar('Succesvol toegevoegd', 'Ok')"
+                <button [disabled]="!cardGroup.valid" mat-button (click)="enableEditing(false, column); addCard(column); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
                         class="TLbtn btn-small btn-color-primary">
                   {{dict.ADD_BTN}}
                 </button>
@@ -110,7 +110,7 @@
               </mat-form-field>
             </div>
             <div>
-              <button [disabled]="!listGroup.valid" mat-button (click)="enable=false; addColumn(column.value); openSnackBar('Succesvol toegevoegd', 'Ok')"
+              <button [disabled]="!listGroup.valid" mat-button (click)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
                       class="TLbtn btn-small btn-color-primary click_should_disable">
                 {{dict.ADD_BTN}}
               </button>

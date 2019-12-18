@@ -20,6 +20,15 @@
   display: block;
 }
 
+.title-background {
+  padding-top: 10px;
+  background-color: #595959;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
 .example-box {
   padding: 20px 10px;
   border-bottom: solid 1px #ccc;

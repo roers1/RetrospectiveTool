@@ -101,7 +101,7 @@ export class RetroBoardComponent implements OnInit {
       if (result) {
         column.retroCards = [];
         // TODO: ADD SERVICE!
-        this.openSnackBar('Succesvol geleegd', 'Ok')
+        this.openSnackBar(this.dict.SNACKBAR_SUCCES_EMPTY, 'Ok')
       }
     });
   }
@@ -118,7 +118,7 @@ export class RetroBoardComponent implements OnInit {
   deleteColumnDialog(column: RetroColumn) {
     this.openDialog(this.dict.RETROBOARD_DELETE_COLUMN_NOTI(column.title), () => {
       this.deleteColumn(column);
-      this.openSnackBar('Succesvol verwijdert', 'Ok')
+      this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok')
     });
   }
 
@@ -159,7 +159,7 @@ export class RetroBoardComponent implements OnInit {
           });
 
         });
-        this.openSnackBar('Succesvol verwijdert', 'Ok')
+        this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok')
         // TODO ADD SERVICE!
       }
     });
