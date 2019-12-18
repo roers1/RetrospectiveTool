@@ -1,29 +1,30 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {RetroBoardComponent} from './retro-board.component';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {RetroColumn} from '../../../models/RetroColumn';
-import {FormsModule, ReactiveFormsModule, COMPOSITION_BUFFER_MODE} from '@angular/forms';
-import {Retrospective} from '../../../models/Retrospective';
-import {RetrocardService} from '../../services/retrocard.service';
-import {RetroCard} from '../../../models/RetroCard';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RetroBoardComponent } from './retro-board.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { RetroColumn } from '../../../models/RetroColumn';
+import { FormsModule, ReactiveFormsModule, COMPOSITION_BUFFER_MODE } from '@angular/forms';
+import { Retrospective } from '../../../models/Retrospective';
+import { RetrocardService } from '../../services/retrocard.service';
+import { RetroCard } from '../../../models/RetroCard';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import {MatButtonModule, MatDialogModule, MatFormField, MatIconModule} from '@angular/material';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatFormFieldModule} from '@angular/material';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterModule, Router} from '@angular/router';
-import {RouterTestingModule} from '@angular/router/testing';
-import {MatDialog} from '@angular/material';
-import {RetrospectiveService} from '../../services/retrospective.service';
-import {RetrocolumnService} from '../../services/retrocolumn.service';
-import {of} from 'rxjs';
+import { MatButtonModule, MatDialogModule, MatFormField, MatIconModule } from '@angular/material';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterModule, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialog } from '@angular/material';
+import { RetrospectiveService } from '../../services/retrospective.service';
+import { RetrocolumnService } from '../../services/retrocolumn.service';
+import { of } from 'rxjs';
 
 describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
   let fixture: ComponentFixture<RetroBoardComponent>;
   let removeColumnSpy;
   let createColumnSpy;
+  let updateColumnSpy;
   let addCardSpy;
   let createBoardSpy;
   let mockCard = new RetroCard(-1, 'this is card content', 0);
@@ -31,12 +32,13 @@ describe('RetroBoardComponent', () => {
 
   beforeEach(async(() => {
     const retrospectiveService = jasmine.createSpyObj('RetrospectiveService', ['createRetrospective']);
-    const retrocolumnService = jasmine.createSpyObj('RetrocolumnService', ['removeColumn', 'addColumn', 'createColumn']);
+    const retrocolumnService = jasmine.createSpyObj('RetrocolumnService', ['removeColumn', 'addColumn', 'createColumn', 'updateColumn']);
     const retrocartService = jasmine.createSpyObj('RetrocardService', ['createCard'])
 
     removeColumnSpy = retrocolumnService.removeColumn.and.returnValue(of());
     createColumnSpy = retrocolumnService.createColumn.and.returnValue(of(mockColumn));
-    addCardSpy = retrocartService.createCard.and.returnValue(of(mockCard))
+    updateColumnSpy = retrocolumnService.updateColumn.and.returnValue(of());
+    addCardSpy = retrocartService.createCard.and.returnValue(of(mockCard));
 
     createBoardSpy = retrospectiveService.createRetrospective.and.returnValue(of());
 
@@ -47,8 +49,8 @@ describe('RetroBoardComponent', () => {
         HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule, BrowserAnimationsModule],
       declarations: [RetroBoardComponent],
       providers: [MatDialog,
-        {provide: RetrocolumnService, useValue: retrocolumnService},
-        {provide: RetrocardService, useValue: retrocartService}]
+        { provide: RetrocolumnService, useValue: retrocolumnService },
+        { provide: RetrocardService, useValue: retrocartService }]
     })
       .compileComponents();
   }));
@@ -70,19 +72,20 @@ describe('RetroBoardComponent', () => {
       'Wow',
       []
     );
-    fixture.detectChanges();
 
-    component.addColumn(mockColumn.title);
+    fixture.autoDetectChanges();
 
-    const columns = component.retrospective.retroColumns;
+    const columnTitle = mockColumn.title;
+    component.addColumn(columnTitle);
+
+    let columns = component.retrospective.retroColumns;
 
     expect(columns.length > 0).toBe(true);
-    expect(columns.length === 0).toBe(false);
 
     const column = columns[0];
 
     expect(column).toBeTruthy();
-    expect(column.title).toBe(mockColumn.title);
+    expect(column.title).toEqual(columnTitle);
   });
 
   it('should add card', () => {
@@ -181,30 +184,14 @@ describe('RetroBoardComponent', () => {
       'Wow',
       [column]
     );
-    const testTitle = 'new';
-    component.updateColumnTitle(column, testTitle);
-    expect(column.title).toEqual(testTitle);
-  });
-
-  it('should be able to delete column', () => {
-    const column: RetroColumn = new RetroColumn(
-      0,
-      'TestColumn',
-      []
-    );
-
-    component.retrospective = new Retrospective(
-      0,
-      'Cool board',
-      'Wow',
-      [column]
-    );
 
     fixture.detectChanges();
 
-    component.deleteColumn(column);
+    const testTitle = 'newTitle';
 
-    expect(component.retrospective.retroColumns.length === 0).toBe(true);
+    component.updateColumnTitle(column, testTitle);
+
+    expect(column.title).toEqual(testTitle);
   });
 
   it('should be able to delete column', () => {
