@@ -57,7 +57,7 @@ namespace Retrospective_Back_End_Test
         {
             //Arrange
             String testTitle = "Board 1";
-            
+
             mockRetrospectiveRepo.Setup(m => m.getAll()).Returns(retrospectives.AsQueryable());
             var controller = new RetrospectivesController(mockRetrospectiveRepo.Object);
 
