@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {BASE_URL} from '../helpers/urlconstants';
+import {BASE_URL} from '../../helpers/urlconstants';
 import {MessageService} from './message.service';
-import {RetroColumn} from '../models/retroColumn';
+import {RetroColumn} from '../../models/retroColumn';
 import {RetrospectiveService} from './retrospective.service';
 
 @Injectable({

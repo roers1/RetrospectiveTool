@@ -5,16 +5,14 @@ import { Retrospective } from '../../../models/Retrospective';
 import { RetroColumn } from '../../../models/RetroColumn';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RetrospectiveService } from '../../retrospective.service';
-import { RetrocolumnService } from '../../retrocolumn.service';
-import { RetrocardService } from '../../retrocard.service';
+import { RetrospectiveService } from '../../services/retrospective.service';
+import { RetrocolumnService } from '../../services/retrocolumn.service';
+import { RetrocardService } from '../../services/retrocard.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { CreateBoardDialogComponent } from '../boardcreate-dialog/boardcreatedialog.component';
 import { MatDialog } from '@angular/material';
-import { MatFormField } from '@angular/material';
 import { Router } from '@angular/router';
-import { RETROBOARD_CLEAN_ACTION_CONFIRM, RETROBOARD_CLEAN_ERROR_ALREADY } from '../../../helpers/messageconstants'
+import { dictionary } from '../../../helpers/messageconstants';
 
 @Component({
   selector: 'app-retro-board',
@@ -23,6 +21,7 @@ import { RETROBOARD_CLEAN_ACTION_CONFIRM, RETROBOARD_CLEAN_ERROR_ALREADY } from 
 })
 export class RetroBoardComponent implements OnInit {
 
+  dict = dictionary;
   enable = false;
   elements = [];
   enabledColumn = {};
@@ -82,8 +81,6 @@ export class RetroBoardComponent implements OnInit {
 
     return this.elements;
   }
-
-
   // addCard()
 
   addColumn(title) {
@@ -95,7 +92,7 @@ export class RetroBoardComponent implements OnInit {
   emptyColumn(column: RetroColumn) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
-      data: 'Weet je zeker dat je kolom \'' + column.title + '\' wilt leegmaken?'
+      data: this.dict.RETROBOARD_EMPTY_COLUMN_NOTI(column.title)
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -115,7 +112,7 @@ export class RetroBoardComponent implements OnInit {
   }
 
   deleteColumnDialog(column: RetroColumn) {
-    this.openDialog('Weet u zeker dat u \'' + column.title + '\' wilt verwijderen', () => {
+    this.openDialog(this.dict.RETROBOARD_DELETE_COLUMN_NOTI(column.title), () => {
       this.deleteColumn(column);
     });
   }
@@ -143,7 +140,7 @@ export class RetroBoardComponent implements OnInit {
   deleteCard(givenCard: RetroCard) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
-      data: 'Weet je zeker dat je deze kaart wilt verwijderen?'
+      data: this.dict.RETROBOARD_DELETE_CARD_NOTI
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -213,7 +210,7 @@ export class RetroBoardComponent implements OnInit {
   }
 
   cleanRetroBoardDialog() {
-    this.openDialog(RETROBOARD_CLEAN_ACTION_CONFIRM, () => {
+    this.openDialog(this.dict.RETROBOARD_CLEAN_ACTION_CONFIRM_NOTI, () => {
       this.cleanRetroBoard();
     });
   }

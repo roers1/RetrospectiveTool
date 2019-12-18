@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { dictionary } from '../../../helpers/messageconstants';
 
 export interface DialogData {
   name: string;
@@ -21,6 +22,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['../home/home.component.css']
 })
 export class CreateBoardDialogComponent {
+
+  dict = dictionary;
 
   nameFormControl = new FormControl('', [
     Validators.required,
