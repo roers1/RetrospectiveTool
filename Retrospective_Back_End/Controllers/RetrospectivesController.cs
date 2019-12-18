@@ -72,6 +72,28 @@ namespace Retrospective_Back_End.Controllers
         [HttpPost]
         public ActionResult<Retrospective> PostRetrospective(Retrospective retrospective)
         {
+	        var columns = new List<RetroColumn>
+	        {
+		        new RetroColumn
+		        {
+			        Title = "To do"
+		        },
+		        new RetroColumn
+		        {
+			        Title = "Doing"
+		        },
+
+		        new RetroColumn
+		        {
+			        Title = "Done"
+		        }
+	        };
+
+	        foreach (RetroColumn r in columns)
+	        {
+		        retrospective.RetroColumns.Add(r);
+	        }
+
             _context.SaveRetrospective(retrospective);
 
             return CreatedAtAction("GetRetrospective", new { id = retrospective.Id }, retrospective);
