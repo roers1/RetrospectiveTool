@@ -13,8 +13,6 @@ export class RetrospectiveService {
 
   private readonly baseUrlRetrospective: string = BASE_URL + 'retrospectives/';
 
-  private readonly baseUrlRetroColumn: string = BASE_URL + 'retroColumns/';
-
   private retrospective: Retrospective;
 
   private httpOptions = {

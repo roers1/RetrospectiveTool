@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\helpers\messageconstants.ts" />
     <None Remove="ClientApp\src\helpers\urlconstants.ts" />
     <None Remove="ClientApp\src\models\Facilitator.ts" />
     <None Remove="ClientApp\src\models\Participant.ts" />
@@ -32,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\helpers\messageconstants.ts" />
     <TypeScriptCompile Include="ClientApp\src\helpers\urlconstants.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\retrospective.ts">
       <SubType>Code</SubType>
