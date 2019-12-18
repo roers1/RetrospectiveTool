@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {BASE_URL} from '../helpers/urlconstants';
+import {BASE_URL} from '../../helpers/urlconstants';
 import {MessageService} from './message.service';
-import {Retrospective} from '../models/Retrospective';
-import {RetroColumn} from '../models/retroColumn';
+import {Retrospective} from '../../models/Retrospective';
+import {RetroColumn} from '../../models/retroColumn';
 
 @Injectable({
   providedIn: 'root'

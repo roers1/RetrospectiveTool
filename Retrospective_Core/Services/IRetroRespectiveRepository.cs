@@ -12,6 +12,7 @@ namespace Retrospective_Core.Services {
 	    void SaveRetroCard(RetroCard retroCard);
 		void RemoveRetroCard(RetroCard retroCard);
 	    void SaveRetroColumn(RetroColumn retroColumn);
+        RetroColumn UpdateRetroColumn(RetroColumn retroColumn);
 	    void RemoveRetroColumn(RetroColumn retroColumn);
 	    void SaveRetrospective(Retrospective retrospective);
 	    void RemoveRetrospective(Retrospective retrospective);

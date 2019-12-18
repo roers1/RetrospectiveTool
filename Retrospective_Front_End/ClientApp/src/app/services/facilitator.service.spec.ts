@@ -4,7 +4,7 @@ import { FacilitatorService } from './facilitator.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RetroBoardComponent} from './components/retro-board/retro-board.component';
+import {RetroBoardComponent} from '../components/retro-board/retro-board.component';
 
 describe('FacilitatorService', () => {
   beforeEach(() => TestBed.configureTestingModule({

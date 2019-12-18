@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { dictionary } from '../../../helpers/messageconstants';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -7,6 +8,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./confirmation-dialog.component.css']
 })
 export class ConfirmationDialogComponent {
+
+  dict = dictionary
 
   constructor(
     public dialogRef: MatDialogRef<ConfirmationDialogComponent>,

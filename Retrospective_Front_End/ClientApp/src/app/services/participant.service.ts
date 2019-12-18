@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { BASE_URL } from '../helpers/urlconstants';
+import { BASE_URL } from '../../helpers/urlconstants';
 import { MessageService } from './message.service';
-import { Participant } from '../models/Participant';
+import { Participant } from '../../models/Participant';
 
 @Injectable({
   providedIn: 'root'

@@ -47,35 +47,21 @@ namespace Retrospective_Back_End.Controllers
         }
 
         // PUT: api/RetroColumns/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut]
-        public IActionResult PutRetroColumn()
+        [HttpPut("{id}")]
+        public ActionResult<RetroColumn> PutRetroColumn(int id, RetroColumn retroColumn)
         {
-            //RetroColumn retroColumn = GetJSONFromBody(Request.Body);
+            var rc = retroColumn;
 
-            //if (retroColumn == null)
-            //{
-            //    return BadRequest();
-            //};
+            rc.Id = id;
 
-            //try
-            //{
-            //    _context.SaveRetroColumn(retroColumn);
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!RetroColumnExists(retroColumn.Id))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
+            var dbe = _context.UpdateRetroColumn(retroColumn);
 
-            return NoContent();
+            if (dbe == null)
+            {
+                return BadRequest();
+            }
+
+            return dbe;
         }
 
         // POST: api/RetroColumns
@@ -84,10 +70,10 @@ namespace Retrospective_Back_End.Controllers
         [HttpPost]
         public ActionResult<RetroColumn> PostRetroColumn(RetroColumn retroColumn)
         {
-    
+
             _context.SaveRetroColumn(retroColumn);
-           return CreatedAtAction("GetRetroColumn", new { id = retroColumn.Id }, retroColumn);
-         
+            return CreatedAtAction("GetRetroColumn", new { id = retroColumn.Id }, retroColumn);
+
         }
 
         // DELETE: api/RetroColumns/5
