@@ -81,40 +81,5 @@ namespace Retrospective_Back_End_Test
             //Assert
             Assert.True(!columns.Any());
         }
-
-        [Fact]
-        public void EditingOfAColumn()
-        {
-            //Arrange
-
-
-            RetroColumn column = new RetroColumn
-            {
-                Id = 0,
-                Title = "Column 1"
-            };
-
-            IList<RetroColumn> columns = new List<RetroColumn> {
-                column
-            };
-
-            void Action(RetroColumn retroColumn)
-            {
-	            RetroColumn retroColumnAction = columns.Where(r => r.Id == 0).Select(rc => rc).SingleOrDefault();
-	            if (retroColumnAction != null) retroColumnAction.Title = "Column 2";
-            }
-
-            _mockRetrospectiveRepo.Setup(m => m.UpdateRetroColumn(It.IsAny<RetroColumn>())).Callback((Action<RetroColumn>)Action);
-
-            IRetroRespectiveRepository repo = _mockRetrospectiveRepo.Object;
-
-            var controller = new RetroColumnsController(repo);
-
-            //Act
-            controller.PutRetroColumn(0, column);
-
-            //Assert
-            Assert.Equal("Column 2", columns.Where(r => r.Id == 0).Select(rc => rc).SingleOrDefault()?.Title);
-        }
     }
 }
