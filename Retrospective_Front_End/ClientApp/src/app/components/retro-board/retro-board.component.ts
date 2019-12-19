@@ -5,7 +5,7 @@ import { Retrospective } from '../../../models/Retrospective';
 import { RetroColumn } from '../../../models/RetroColumn';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RetrospectiveService } from '../../services/retrospective.service';
-import { RetrocolumnService } from '../../services/retro-column.service';
+import { RetroColumnService } from '../../services/retro-column.service';
 import { RetroCardService } from '../../services/retro-card.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
@@ -38,7 +38,7 @@ export class RetroBoardComponent implements OnInit {
 
   constructor(
     public retrospectiveService: RetrospectiveService,
-    public retroColumnService: RetrocolumnService,
+    public retroColumnService: RetroColumnService,
     public retroCardService: RetroCardService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
@@ -114,7 +114,7 @@ export class RetroBoardComponent implements OnInit {
       if (result) {
         column.retroCards = [];
         // TODO: ADD SERVICE!
-        this.openSnackBar(this.dict.SNACKBAR_SUCCES_EMPTY, 'Ok')
+        this.openSnackBar(this.dict.SNACKBAR_SUCCES_EMPTY, 'Ok');
       }
     });
   }
