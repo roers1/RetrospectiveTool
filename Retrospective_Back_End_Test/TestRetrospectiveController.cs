@@ -2,22 +2,26 @@
 using System.Collections.Generic;
 using Moq;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Retrospective_Back_End.Controllers;
 using Xunit;
 using Retrospective_Core.Services;
 using Retrospective_Core.Models;
 using Xunit.Abstractions;
+using Assert = Xunit.Assert;
 
-namespace Retrospective_Back_End_Test {
+namespace Retrospective_Back_End_Test
+{
     public class TestRetrospectiveController
     {
-	    private readonly ITestOutputHelper _testOutputHelper;
-	    readonly Mock<IRetroRespectiveRepository> _mockRetrospectiveRepo;
-	    readonly IList<Retrospective> _retrospectives;
+        private readonly ITestOutputHelper _testOutputHelper;
+        readonly Mock<IRetroRespectiveRepository> _mockRetrospectiveRepo;
+        readonly IList<Retrospective> _retrospectives;
         public TestRetrospectiveController(ITestOutputHelper testOutputHelper)
         {
-	        _testOutputHelper = testOutputHelper;
-	        this._mockRetrospectiveRepo = new Mock<IRetroRespectiveRepository>();
+            _testOutputHelper = testOutputHelper;
+            this._mockRetrospectiveRepo = new Mock<IRetroRespectiveRepository>();
             this._retrospectives = new List<Retrospective>()
             {
                 new Retrospective {
@@ -53,17 +57,52 @@ namespace Retrospective_Back_End_Test {
         public async void GetAllRetrospectives()
         {
             //Arrange
-
             _mockRetrospectiveRepo.Setup(m => m.getAll()).Returns(_retrospectives.AsQueryable());
             var controller = new RetrospectivesController(_mockRetrospectiveRepo.Object);
 
             //Act
-           var result = await controller.GetRetrospectives();
+            var result = await controller.GetRetrospectives();
 
             //Assert
             var test = result.Value.FirstOrDefault()?.Title;
             Assert.True(test != null && test.Equals("Board 1"));
             Assert.Equal(2, _retrospectives.Count());
+        }
+
+        [Fact]
+        public void PostRetrospective_ShouldCreateThreeColumns()
+        {
+            //arrange
+            var controller = new RetrospectivesController(_mockRetrospectiveRepo.Object);
+
+            var retrospective = new Retrospective
+            {
+                Title = "Custom title",
+                Description = "Custom description"
+            };
+
+            //act
+            var response = controller.PostRetrospective(retrospective);
+
+            //assert
+            CreatedAtActionResult result = response.Result as CreatedAtActionResult;
+
+            Assert.True(result?.Value is Retrospective);
+
+            if (result?.Value is Retrospective retroResult)
+            {
+	            Assert.Equal(retrospective.Title, retroResult.Title);
+	            Assert.Equal(3, retroResult.RetroColumns.Count);
+
+	            RetroColumn retroColumn = retroResult.RetroColumns.FirstOrDefault(r => r.Title == "To do");
+	            Assert.Equal("To do", retroColumn.Title);
+
+	            retroColumn = retroResult.RetroColumns.FirstOrDefault(r => r.Title == "Doing");
+	            Assert.Equal("Doing", retroColumn.Title);
+
+                retroColumn = retroResult.RetroColumns.FirstOrDefault(r => r.Title == "Done");
+	            Assert.Equal("Done", retroColumn.Title);
+            }
         }
     }
 }
