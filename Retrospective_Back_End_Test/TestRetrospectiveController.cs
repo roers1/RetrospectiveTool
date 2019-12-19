@@ -1,45 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Moq;
 using System.Linq;
 using Retrospective_Back_End.Controllers;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Xunit;
 using Retrospective_Core.Services;
 using Retrospective_Core.Models;
+using Xunit.Abstractions;
 
-namespace Retrospective_Back_End_Test
-{
+namespace Retrospective_Back_End_Test {
     public class TestRetrospectiveController
     {
-        [Fact]
-        public void getAllRetrospectives()
+	    private readonly ITestOutputHelper _testOutputHelper;
+	    readonly Mock<IRetroRespectiveRepository> _mockRetrospectiveRepo;
+	    readonly IList<Retrospective> _retrospectives;
+        public TestRetrospectiveController(ITestOutputHelper testOutputHelper)
         {
-            //Arrange
-            String testTitle = "Board 1";
-            Mock<IRetroRespectiveRepository> mockRetrospectiveRepo = new Mock<IRetroRespectiveRepository>();
-            var retrospectives = new QueryableList<Retrospective, Retrospective>()
+	        _testOutputHelper = testOutputHelper;
+	        this._mockRetrospectiveRepo = new Mock<IRetroRespectiveRepository>();
+            this._retrospectives = new List<Retrospective>()
             {
-                new Retrospective { 
-                    Title = testTitle,
+                new Retrospective {
+                    Title = "Board 1",
                     Description = "Dit is board 1",
                     CreatedDate = DateTime.Now,
                     RetroColumns = new List<RetroColumn>()
                     {
                         new RetroColumn
-                        { 
+                        {
                             Title = "Kolom 1",
                             RetroCards = new List<RetroCard>()
                             {
-                                new RetroCard 
+                                new RetroCard
                                 {
                                     Content = "Dit is kaart 1",
                                     Position = 1
                                 }
                             }
-                        } 
+                        }
                     }
 
                 },
@@ -49,29 +47,23 @@ namespace Retrospective_Back_End_Test
                     Description = "Dit is board 2"
                 }
             };
+        }
 
-            mockRetrospectiveRepo.Setup(m => m.Retrospectives).Returns(retrospectives);
-            RetrospectivesController controller = new RetrospectivesController(mockRetrospectiveRepo.Object);
-            IList<Retrospective> list = new List<Retrospective>();
+        [Fact]
+        public async void GetAllRetrospectives()
+        {
+            //Arrange
 
-
-
-
+            _mockRetrospectiveRepo.Setup(m => m.getAll()).Returns(_retrospectives.AsQueryable());
+            var controller = new RetrospectivesController(_mockRetrospectiveRepo.Object);
 
             //Act
-            Task<ActionResult<IEnumerable<Retrospective>>> result = controller.GetRetrospectives();
-            IList<Retrospective> oneRetrospective = list.Where(d => d.Title == testTitle).ToList<Retrospective>();
+           var result = await controller.GetRetrospectives();
 
-            foreach (var r in result.Result.Value)
-            {
-                
-            }
-
-                //Assert.True(result.IsCompleted, "Task should be completed");
-                Console.WriteLine(oneRetrospective.Select(r => r.Title));
-            string test = oneRetrospective.FirstOrDefault().Title;
-            Assert.True(oneRetrospective.Select(r => r.Title).ToString().Equals("Board 1"));
-
+            //Assert
+            var test = result.Value.FirstOrDefault()?.Title;
+            Assert.True(test != null && test.Equals("Board 1"));
+            Assert.Equal(2, _retrospectives.Count());
         }
     }
 }

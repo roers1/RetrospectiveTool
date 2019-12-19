@@ -15,10 +15,7 @@ export class Retrospective {
   }
 
   removeRetroColumn(columnId: number) {
-    // tslint:disable-next-line:no-shadowed-variable
-    if (columnId => 0) {
-      this.retroColumns.filter(rc => rc.id !== columnId);
-    }
+    this.retroColumns.filter(rc => rc.id !== columnId);
   }
 }
 

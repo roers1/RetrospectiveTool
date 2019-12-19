@@ -23,12 +23,12 @@ namespace Retrospective_Back_End.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Retrospective>>> GetRetrospectives()
         {
-            return await _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards).ToListAsync();
+            return await Task.FromResult(_context.getAll().ToList());
         }
 
         // GET: api/Retrospectives/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Retrospective>> GetRetrospective(int id)
+        public ActionResult<Retrospective> GetRetrospective(int id)
         {
             var retrospective = _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards).FirstOrDefault(r => r.Id == id);
 
@@ -41,10 +41,8 @@ namespace Retrospective_Back_End.Controllers
         }
 
         // PUT: api/Retrospectives/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRetrospective(int id, Retrospective retrospective)
+        public IActionResult PutRetrospective(int id, Retrospective retrospective)
         {
             if (id != retrospective.Id)
             {
@@ -71,10 +69,8 @@ namespace Retrospective_Back_End.Controllers
         }
 
         // POST: api/Retrospectives
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Retrospective>> PostRetrospective(Retrospective retrospective)
+        public ActionResult<Retrospective> PostRetrospective(Retrospective retrospective)
         {
             _context.SaveRetrospective(retrospective);
 
@@ -83,7 +79,7 @@ namespace Retrospective_Back_End.Controllers
 
         // DELETE: api/Retrospectives/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Retrospective>> DeleteRetrospective(int id)
+        public ActionResult<Retrospective> DeleteRetrospective(int id)
         {
             var retrospective = _context.Retrospectives.First(r => r.Id == id);
             if (retrospective == null)
@@ -92,7 +88,7 @@ namespace Retrospective_Back_End.Controllers
             }
 
             _context.RemoveRetrospective(retrospective);
-      
+
             return retrospective;
         }
 

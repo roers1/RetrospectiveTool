@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 
-import { CreateBoardDialogComponent } from './components/boardcreate-dialog/boardcreatedialog.component';
+import { CreateBoardDialogComponent } from './components/board-create-dialog/board-create-dialog.component';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 import { StylesComponent } from './components/styles/styles.component';

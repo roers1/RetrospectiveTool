@@ -8,7 +8,7 @@
           <img class="icon"
             id="icon_wipe"
             src="../../../assets/images/broom.png"
-            (click)="cleanRetroBoard()" />
+            (click)="cleanRetroBoardDialog()" />
         </div>
       <br>
       <h3 class="description">{{retrospective.description}}</h3>
@@ -19,26 +19,23 @@
         <div class="board-title-holder">
           <h2 class="testtitle" *ngIf="!hasEnabledColumnTitleEditing(column)">{{column.title}}</h2>
 
-
-
-
           <div class="icon_menu">
             <img class="icon" id="icon_menu" src="../../../assets/images/icon_dot_menu.png" [matMenuTriggerFor]="menu">
             <mat-menu #menu="matMenu">
               <button mat-menu-item
                       class="dropdownitem"
                       (click)="emptyColumn(column)">
-                Maak kolom leeg
+                {{dict.EMPTY_COLUMN_BTN}}
               </button>
               <button mat-menu-item
                       class="dropdownitem"
                       (click)="deleteColumnDialog(column)">
-                Verwijder kolom
+                {{dict.DELETE_COLUMN_BTN}}
               </button>
               <button mat-menu-item
                       class="dropdownitem"
                       (click)="enableColumnTitleEditing(true, column)">
-                Bewerk kolomnaam
+                {{dict.EDIT_COLUMN_BTN}}
               </button>
             </mat-menu>
           </div>
@@ -83,7 +80,7 @@
               <div>
                 <mat-form-field [formGroup]="cardGroup">
                   <label>
-                    <input matInput #card placeholder="Voer een beschrijving in"
+                    <input matInput #card placeholder="{{dict.FILL_IN_DESC_FORM}}"
                            formControlName="content" value="">
                   </label>
                 </mat-form-field>
@@ -91,11 +88,11 @@
               <div>
                 <button [disabled]="!cardGroup.valid" mat-button (click)="enableEditing(false, column); addCard(column)"
                         class="TLbtn btn-small btn-color-primary">
-                  Voeg toe
+                  {{dict.ADD_BTN}}
                 </button>
                 <button mat-button (click)="enableEditing(false, column);"
                         class="TLbtn btn-small btn-color-secondary">
-                  Annuleer
+                  {{dict.CANCEL_BTN}}
                 </button>
               </div>
             </form>
@@ -109,18 +106,18 @@
           <form [formGroup]="listGroup">
             <div>
               <mat-form-field [formGroup]="listGroup">
-                <input matInput #column placeholder="Voer een titel in"
+                <input matInput #column placeholder="{{dict.FILL_IN_TITLE_FORM}}"
                        formControlName="title" value="">
               </mat-form-field>
             </div>
             <div>
               <button [disabled]="!listGroup.valid" mat-button (click)="enable=false; addColumn(column.value)"
                       class="TLbtn btn-small btn-color-primary click_should_disable">
-                Voeg toe
+                {{dict.ADD_BTN}}
               </button>
               <button mat-button (click)="enable=false"
                       class="TLbtn btn-small btn-color-secondary clickable_element_closed">
-                Annuleer
+                {{dict.CANCEL_BTN}}
               </button>
             </div>
           </form>

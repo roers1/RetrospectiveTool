@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Retrospective_Core.Models;
 using Retrospective_Core.Services;
-using Retrospective_EFSQLRetrospectiveDbImpl;
 
 namespace Retrospective_Back_End.Controllers
 {
@@ -57,15 +52,13 @@ namespace Retrospective_Back_End.Controllers
             return retroCard;
         }
 
-        // POST: api/RetroCards
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public ActionResult<RetroCard> PostRetroCard(RetroCard retroCard)
-        {
-            _context.SaveRetroCard(retroCard);
-            return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
-        }
+		// POST: api/RetroCards
+		[HttpPost]
+		public ActionResult<RetroCard> PostRetroCard(RetroCard retroCard)
+		{
+			_context.SaveRetroCard(retroCard);
+			return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
+		}
 
         // DELETE: api/RetroCards/5
         [HttpDelete("{id}")]

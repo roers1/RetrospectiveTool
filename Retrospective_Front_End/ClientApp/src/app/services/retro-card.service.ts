@@ -1,16 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {BASE_URL} from '../helpers/urlconstants';
+import {baseUrl} from '../../helpers/url-constants';
 import {MessageService} from './message.service';
-import {RetroCard} from '../models/RetroCard';
+import {RetroCard} from '../../models/RetroCard';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RetrocardService {
-  private readonly baseUrlRetroCards = BASE_URL + 'retrocards';
-  private readonly baseUrlRetroColumn = BASE_URL + 'retroColumns/';
+export class RetroCardService {
+  private readonly baseUrlRetroCards = baseUrl + 'retrocards';
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -29,7 +28,7 @@ export class RetrocardService {
   }
 
   removeCard(cardId, columnId) {
-    return this.http.delete<RetroCard>(this.baseUrlRetroColumn + columnId + '/retrocards/' + cardId, this.httpOptions);
+    // return this.http.delete<RetroCard>(this.baseUrlRetroColumn + columnId + '/retrocards/' + cardId, this.httpOptions);
   }
 
   getRetroCard(id): Observable<RetroCard> {

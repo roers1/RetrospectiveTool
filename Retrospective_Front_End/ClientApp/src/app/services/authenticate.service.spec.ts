@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { BASE_URL } from '../helpers/urlconstants';
+import { baseUrl } from '../../helpers/url-constants';
 import { MessageService } from './message.service';
-import { Facilitator } from '../models/Facilitator';
-import { Participant } from '../models/Participant';
+import { Facilitator } from '../../models/Facilitator';
+import { Participant } from '../../models/Participant';
 import { AuthenticateService } from './authenticate.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RetroBoardComponent} from './components/retro-board/retro-board.component';
+import {RetroBoardComponent} from '../components/retro-board/retro-board.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AuthenticateService', () => {

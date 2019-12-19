@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { BASE_URL } from '../helpers/urlconstants';
+import { baseUrl } from '../../helpers/url-constants';
 import { MessageService } from './message.service';
-import { Participant } from '../models/Participant';
+import { Participant } from '../../models/Participant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParticipantService {
 
-  private readonly baseUrlParticipant = BASE_URL + 'participants/';
-  private readonly baseUrlFacilitator = BASE_URL + 'facilitators/';
+  private readonly baseUrlParticipant = baseUrl + 'participants/';
+  private readonly baseUrlFacilitator = baseUrl + 'facilitators/';
 
   private httpOptions = {
     headers: new HttpHeaders({

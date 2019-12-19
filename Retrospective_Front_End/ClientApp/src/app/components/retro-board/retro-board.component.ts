@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {RetroCard} from '../../../models/RetroCard';
-import {Retrospective} from '../../../models/Retrospective';
-import {RetroColumn} from '../../../models/RetroColumn';
-import {MatMenuModule} from '@angular/material/menu';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {RetrospectiveService} from '../../retrospective.service';
-import {RetrocolumnService} from '../../retrocolumn.service';
-import {RetrocardService} from '../../retrocard.service';
-import {ActivatedRoute} from '@angular/router';
-import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
-import {MatDialog} from '@angular/material';
-import {MatFormField} from '@angular/material';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { RetroCard } from '../../../models/RetroCard';
+import { Retrospective } from '../../../models/Retrospective';
+import { RetroColumn } from '../../../models/RetroColumn';
+import { MatMenuModule } from '@angular/material/menu';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RetrospectiveService } from '../../services/retrospective.service';
+import { RetroColumnService } from '../../services/retro-column.service';
+import { RetroCardService } from '../../services/retro-card.service';
+import { ActivatedRoute } from '@angular/router';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { dictionary } from '../../../helpers/message-constants';
 
 @Component({
   selector: 'app-retro-board',
@@ -21,6 +21,7 @@ import {Router} from '@angular/router';
 })
 export class RetroBoardComponent implements OnInit {
 
+  dict = dictionary;
   enable = false;
   elements = [];
   enabledColumn = {};
@@ -38,8 +39,8 @@ export class RetroBoardComponent implements OnInit {
 
   constructor(
     public retrospectiveService: RetrospectiveService,
-    public retroColumnService: RetrocolumnService,
-    public retroCardService: RetrocardService,
+    public retroColumnService: RetroColumnService,
+    public retroCardService: RetroCardService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     public router: Router) {
@@ -95,8 +96,6 @@ export class RetroBoardComponent implements OnInit {
 
     return this.elements;
   }
-
-
   // addCard()
 
   addColumn(title) {
@@ -108,7 +107,7 @@ export class RetroBoardComponent implements OnInit {
   emptyColumn(column: RetroColumn) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
-      data: 'Weet je zeker dat je kolom \'' + column.title + '\' wilt leegmaken?'
+      data: this.dict.RETROBOARD_EMPTY_COLUMN_NOTI(column.title)
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -128,7 +127,7 @@ export class RetroBoardComponent implements OnInit {
   }
 
   deleteColumnDialog(column: RetroColumn) {
-    this.openDialog('Weet u zeker dat u \'' + column.title + '\' wilt verwijderen', () => {
+    this.openDialog(this.dict.RETROBOARD_DELETE_COLUMN_NOTI(column.title), () => {
       this.deleteColumn(column);
     });
   }
@@ -157,7 +156,7 @@ export class RetroBoardComponent implements OnInit {
   deleteCard(givenCard: RetroCard) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
-      data: 'Weet je zeker dat je deze kaart wilt verwijderen?'
+      data: this.dict.RETROBOARD_DELETE_CARD_NOTI
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -182,8 +181,8 @@ export class RetroBoardComponent implements OnInit {
     // TODO ADD SERVICE!
   }
 
-  updateColumnTitle(column: RetroColumn, newtitle) {
-    column.title = newtitle;
+  updateColumnTitle(column: RetroColumn, newTitle) {
+    column.title = newTitle;
     this.enableColumnTitleEditing(false, column);
     // TODO ADD SERVICE!
   }
@@ -226,12 +225,13 @@ export class RetroBoardComponent implements OnInit {
     return this.enabledColumn[column.id];
   }
 
-  cleanRetroBoard() {
-    if (confirm('Weet je zeker dat je de retrospective with opschonen? (kan niet ongedaan maken)')) {
-      this.retrospective = null;
-      this.retrospectiveService.removeRetrospective();
+  cleanRetroBoardDialog() {
+    this.openDialog(this.dict.RETROBOARD_CLEAN_ACTION_CONFIRM_NOTI, () => {
+      this.cleanRetroBoard();
+    });
+  }
 
-      this.router.navigate(['']);
-    }
+  cleanRetroBoard() {
+    this.router.navigate([`/`]);
   }
 }
