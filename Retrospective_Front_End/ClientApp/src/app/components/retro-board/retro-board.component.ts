@@ -5,7 +5,7 @@ import { Retrospective } from '../../../models/Retrospective';
 import { RetroColumn } from '../../../models/RetroColumn';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RetrospectiveService } from '../../services/retrospective.service';
-import { RetrocolumnService } from '../../services/retro-column.service';
+import { RetroColumnService } from '../../services/retro-column.service';
 import { RetroCardService } from '../../services/retro-card.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
@@ -26,17 +26,7 @@ export class RetroBoardComponent implements OnInit {
   enabledColumn = {};
   enabledColumnTitles = {};
   editedContent = {};
-  retrospective: Retrospective = new Retrospective(0, 'Title', 'Description', [
-    new RetroColumn(0, 'Todo', [
-      new RetroCard(0, 'Nothing', 0),
-    ]),
-    new RetroColumn(1, 'Doing', [
-      new RetroCard(1, 'Nothing', 0),
-    ]),
-    new RetroColumn(2, 'Done', [
-      new RetroCard(2, 'Nothing', 0),
-    ])
-  ]);
+  retrospective: Retrospective;
 
   cardGroup: FormGroup = new FormGroup({
     content: new FormControl('', Validators.required)
@@ -48,7 +38,7 @@ export class RetroBoardComponent implements OnInit {
 
   constructor(
     public retrospectiveService: RetrospectiveService,
-    public retroColumnService: RetrocolumnService,
+    public retroColumnService: RetroColumnService,
     public retroCardService: RetroCardService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
@@ -60,19 +50,44 @@ export class RetroBoardComponent implements OnInit {
     const params = this.route.snapshot.paramMap;
     const id = params.get(params.keys[0]);
 
-    this.retrospectiveService.getRetrospective(id, (retrospective) => {
+    this.retrospectiveService.getRetrospective(id, (retrospective: Retrospective) => {
       this.retrospective = retrospective;
+
+      this.retrospective.retroColumns.forEach((x) => x.retroCards.sort((a, b) => {
+        if (a.position > b.position) {
+          return 1;
+        } else if (b.position > a.position) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }));
     });
   }
 
-  drop(event: CdkDragDrop<RetroCard[]>) {
+  drop(event: CdkDragDrop<RetroCard[]>, columnId) {
     if (event.container === event.previousContainer) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.updatePositions(event.container.data, columnId);
     } else {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+      this.updatePositions(event.container.data, columnId);
+      this.updatePositions(event.previousContainer.data, event.previousContainer.data[0].retroColumnId);
+    }
+  }
+
+  updatePositions(retroCards: RetroCard[], columnId) {
+    let index = 0;
+
+    for (const retroCard of retroCards) {
+      retroCard.position = index;
+      index++;
+
+      this.retroCardService.updateRetroCard(retroCard, columnId).subscribe(_ => {
+      });
     }
   }
 
@@ -99,7 +114,7 @@ export class RetroBoardComponent implements OnInit {
       if (result) {
         column.retroCards = [];
         // TODO: ADD SERVICE!
-        this.openSnackBar(this.dict.SNACKBAR_SUCCES_EMPTY, 'Ok')
+        this.openSnackBar(this.dict.SNACKBAR_SUCCES_EMPTY, 'Ok');
       }
     });
   }
@@ -140,6 +155,7 @@ export class RetroBoardComponent implements OnInit {
       }
     });
   }
+
   deleteCard(givenCard: RetroCard) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
@@ -173,7 +189,7 @@ export class RetroBoardComponent implements OnInit {
     column.title = newTitle;
     this.enableColumnTitleEditing(false, column);
 
-    this.retroColumnService.updateColumn(column.id, newTitle).subscribe(_ => {
+    this.retroColumnService.updateColumn(column).subscribe(_ => {
     });
   }
 

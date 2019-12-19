@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { baseUrl } from '../../helpers/url-constants';
-import { MessageService } from './message.service';
-import { RetroColumn } from '../../models/retroColumn';
-import { RetrospectiveService } from './retrospective.service';
+import {baseUrl} from '../../helpers/url-constants';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {RetrospectiveService} from './retrospective.service';
+import {Observable} from 'rxjs';
+import {RetroColumn} from '../../models/RetroColumn';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RetrocolumnService {
+export class RetroColumnService {
+
   private readonly baseUrlRetrospective: string = baseUrl + 'retrospectives/';
 
   private readonly baseUrlRetroColumn = baseUrl + 'retrocolumns/';
@@ -40,10 +40,11 @@ export class RetrocolumnService {
     }
   }
 
-  updateColumn(retroColumnId: number, title: string) {
+  updateColumn(retroColumn: RetroColumn) {
     if (this.retrospectiveService.getCurrentRetrospective()) {
-      return this.http.put<RetroColumn>(this.baseUrlRetroColumn + retroColumnId, {
-        title: title
+      return this.http.put<RetroColumn>(this.baseUrlRetroColumn, {
+        id: retroColumn.id,
+        title: retroColumn.title
       }, this.httpOptions);
     }
   }

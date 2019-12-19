@@ -43,22 +43,12 @@ namespace Retrospective_Back_End.Controllers
             return retroColumn;
         }
 
-        // PUT: api/RetroColumns/5
-        [HttpPut("{id}")]
-        public ActionResult<RetroColumn> PutRetroColumn(int id, RetroColumn retroColumn)
+        // PUT: api/RetroColumns
+        [HttpPut]
+        public ActionResult<RetroColumn> PutRetroColumn(RetroColumn retroColumn)
         {
-            var rc = retroColumn;
-
-            rc.Id = id;
-
-            var dbe = _context.UpdateRetroColumn(retroColumn);
-
-            if (dbe == null)
-            {
-                return BadRequest();
-            }
-
-            return dbe;
+            _context.SaveRetroColumn(retroColumn);
+            return retroColumn;
         }
 
         // POST: api/RetroColumns

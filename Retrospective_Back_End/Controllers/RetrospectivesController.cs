@@ -72,27 +72,7 @@ namespace Retrospective_Back_End.Controllers
         [HttpPost]
         public ActionResult<Retrospective> PostRetrospective(Retrospective retrospective)
         {
-	        var columns = new List<RetroColumn>
-	        {
-		        new RetroColumn
-		        {
-			        Title = "To do"
-		        },
-		        new RetroColumn
-		        {
-			        Title = "Doing"
-		        },
-
-		        new RetroColumn
-		        {
-			        Title = "Done"
-		        }
-	        };
-
-	        foreach (RetroColumn r in columns)
-	        {
-		        retrospective.RetroColumns.Add(r);
-	        }
+	        retrospective = ThreeColumnTemplate(retrospective);
 
             _context.SaveRetrospective(retrospective);
 
@@ -117,6 +97,33 @@ namespace Retrospective_Back_End.Controllers
         private bool RetrospectiveExists(int id)
         {
             return _context.Retrospectives.Any(e => e.Id == id);
+        }
+
+        private Retrospective ThreeColumnTemplate(Retrospective retrospective)
+        {
+	        var columns = new List<RetroColumn>
+	        {
+		        new RetroColumn
+		        {
+			        Title = "To do"
+		        },
+		        new RetroColumn
+		        {
+			        Title = "Doing"
+		        },
+
+		        new RetroColumn
+		        {
+			        Title = "Done"
+		        }
+	        };
+
+            foreach (RetroColumn r in columns)
+            {
+                retrospective.RetroColumns.Add(r);
+            }
+
+            return retrospective;
         }
     }
 }

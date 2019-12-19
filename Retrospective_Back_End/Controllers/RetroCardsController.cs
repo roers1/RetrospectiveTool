@@ -26,26 +26,31 @@ namespace Retrospective_Back_End.Controllers
             return await _context.RetroCards.ToListAsync();
         }
 
-		// GET: api/RetroCards/5
-		[HttpGet("{id}")]
-		public ActionResult<RetroCard> GetRetroCard(int id)
-		{
-			var retroCard = _context.RetroCards.FirstOrDefault(r => r.Id == id);
+        // GET: api/RetroCards/5
+        [HttpGet("{id}")]
+        public ActionResult<RetroCard> GetRetroCard(int id)
+        {
+            var retroCard = _context.RetroCards.FirstOrDefault(r => r.Id == id);
 
-			if (retroCard == null)
-			{
-				return NotFound();
-			}
+            if (retroCard == null)
+            {
+                return NotFound();
+            }
 
-			return retroCard;
-		}
+            return retroCard;
+        }
 
-		// PUT: api/RetroCards/5
-		[HttpPut]
-		public IActionResult PutRetroCard()
-		{
-			return NoContent();
-		}
+        // PUT: api/RetroCards/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
+
+        // PUT: api/RetroCards
+        [HttpPut]
+        public ActionResult<RetroCard> UpdateRetroCard(RetroCard retroCard)
+        {
+            _context.SaveRetroCard(retroCard);
+            return retroCard;
+        }
 
 		// POST: api/RetroCards
 		[HttpPost]
@@ -55,22 +60,22 @@ namespace Retrospective_Back_End.Controllers
 			return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
 		}
 
-		// DELETE: api/RetroCards/5
-		[HttpDelete("{id}")]
-		public ActionResult<RetroCard> DeleteRetroCard(int id)
-		{
-			RetroCard retroCard = _context.RetroCards.FirstOrDefault(r => r.Id == id);
-			if (retroCard == null)
-			{
-				return NotFound();
-			}
+        // DELETE: api/RetroCards/5
+        [HttpDelete("{id}")]
+        public ActionResult<RetroCard> DeleteRetroCard(int id)
+        {
+            RetroCard retroCard = _context.RetroCards.FirstOrDefault(r => r.Id == id);
+            if (retroCard == null)
+            {
+                return NotFound();
+            }
 
-			_context.RemoveRetroCard(retroCard);
+            _context.RemoveRetroCard(retroCard);
 
-			return retroCard;
-		}
+            return retroCard;
+        }
 
-		private bool RetroCardExists(int id)
+        private bool RetroCardExists(int id)
         {
             return _context.RetroCards.Any(e => e.Id == id);
         }
