@@ -112,12 +112,10 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 
                 if (dbEntry != null)
                 {
-                    dbEntry.RetrospectiveId = retroColumn.RetrospectiveId;
-                    dbEntry.Id = retroColumn.Id;
+	                dbEntry.Id = retroColumn.Id;
                     dbEntry.RetroCards = retroColumn.RetroCards;
                     dbEntry.Title = retroColumn.Title;
                 }
-
             }
             _context.SaveChanges();
         }
@@ -135,12 +133,6 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 
             _context.Retrospectives.Add(retrospective);
             _context.SaveChanges();
-        }
-
-        public void UpdateRetroColumn(RetroColumn retroColumn)
-        {
-	        _context.RetroColumns.Update(retroColumn);
-	        _context.SaveChanges();
         }
     }
 }

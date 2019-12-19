@@ -4,7 +4,8 @@ export class RetroColumn {
   constructor(
     public id: number,
     public title: string,
-    public retroCards: RetroCard[]
+    public retroCards: RetroCard[],
+    public retrospectiveId: number
   ) {
   }
 

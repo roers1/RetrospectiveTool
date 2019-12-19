@@ -40,11 +40,11 @@ export class RetroColumnService {
     }
   }
 
-  updateColumn(retroColumnId: number, title: string) {
+  updateColumn(retroColumn: RetroColumn) {
     if (this.retrospectiveService.getCurrentRetrospective()) {
-      return this.http.put<RetroColumn>(this.baseUrlRetroColumn + retroColumnId, {
-        title: title,
-        id: retroColumnId
+      return this.http.put<RetroColumn>(this.baseUrlRetroColumn, {
+        id: retroColumn.id,
+        title: retroColumn.title
       }, this.httpOptions);
     }
   }
