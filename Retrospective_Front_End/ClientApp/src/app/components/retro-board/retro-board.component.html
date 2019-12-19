@@ -52,7 +52,7 @@
              [cdkDropListData]="column.retroCards"
              [cdkDropListConnectedTo]="getColumnNames(element)"
              class="example-list"
-             (cdkDropListDropped)="drop($event)">
+             (cdkDropListDropped)="drop($event, column.id)">
           <div class="example-box" *ngFor="let item of column.retroCards" cdkDrag>
             <div class="box-content" *ngIf="!hasEnabledContentEditing(item)">
               {{item.content}}

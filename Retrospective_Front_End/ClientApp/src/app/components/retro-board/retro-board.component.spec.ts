@@ -25,7 +25,8 @@ describe('RetroBoardComponent', () => {
   let createColumnSpy;
   let updateColumnSpy;
   let addCardSpy;
-  let createBoardSpy;
+    let createBoardSpy;
+    let updateRetroCard;
   let mockCard = new RetroCard(-1, 'this is card content', 0);
   let mockColumn = new RetroColumn(-1, 'test', []);
 
@@ -38,6 +39,7 @@ describe('RetroBoardComponent', () => {
     createColumnSpy = retroColumnService.createColumn.and.returnValue(of(mockColumn));
     updateColumnSpy = retroColumnService.updateColumn.and.returnValue(of());
     addCardSpy = retroCardService.createCard.and.returnValue(of(mockCard));
+    updateRetroCard = retroCardService.updateRetroCard.and.returnValue(of());
 
     createBoardSpy = retrospectiveService.createRetrospective.and.returnValue(of());
 
@@ -211,5 +213,24 @@ describe('RetroBoardComponent', () => {
     component.deleteColumn(column);
 
     expect(component.retrospective.retroColumns.length === 0).toBe(true);
+  });
+
+  it('should re-assign the positions of a column', () => {
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [
+        new RetroCard(0, 'RetroCard 1', 1, 0),
+        new RetroCard(1, 'RetroCard 2', 2, 0),
+        new RetroCard(2, 'RetroCard 3', 0, 0)
+      ]
+    );
+
+    component.updatePositions(column.retroCards, column.id);
+
+    expect(column.retroCards.length === 3);
+    expect(column.retroCards[0].position === 0);
+    expect(column.retroCards[1].position === 1);
+    expect(column.retroCards[2].position === 2);
   });
 });

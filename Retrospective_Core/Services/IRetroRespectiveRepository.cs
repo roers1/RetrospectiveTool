@@ -3,8 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Retrospective_Core.Models;
 
-namespace Retrospective_Core.Services {
-    public interface IRetroRespectiveRepository {
+namespace Retrospective_Core.Services
+{
+    public interface IRetroRespectiveRepository
+    {
 
 	    IQueryable<Retrospective> Retrospectives { get; }
 	    IQueryable<RetroColumn> RetroColumns { get; }
