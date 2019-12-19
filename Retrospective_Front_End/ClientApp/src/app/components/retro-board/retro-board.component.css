@@ -5,7 +5,7 @@
   display: inline-block;
   vertical-align: top;
   background-color: rgba(230, 243, 232, 0.6);
-  box-shadow: 0.5px 0.5px 0 #595959;
+  box-shadow: 1px 1px 0 #595959;
   padding: 8px;
   border-radius: 4px;
   overflow: initial !important;
@@ -29,6 +29,17 @@
   border-top-right-radius: 20px;
 }
 
+.title-icons-background {
+  padding-top: 10px;
+  background-color: #595959;
+  padding-left: 5px;
+  padding-bottom: 5px;
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+  margin-right: -95%;
+}
+
+
 .example-box {
   padding: 20px 10px;
   border-bottom: solid 1px #ccc;
@@ -46,6 +57,7 @@
   height: fit-content;
   word-wrap: break-word;
   white-space: initial;
+  border-radius: 3px;
   position: relative;
 }
 .example-box:hover > div > img {
@@ -137,7 +149,7 @@ h6 {
 }
 
 .inputfield {
-  width: 100% !important; 
+  width: 100% !important;
 }
 .example-container-toaddcard {
   width: 275px;
@@ -145,10 +157,11 @@ h6 {
   margin: 8px 0 0 0;
   display: inline-block;
   vertical-align: top;
-  background-color: rgba(248, 255, 249, 0.9);
+  background-color: rgb(255, 255, 255); /*Color adjustment to pure white*/
   padding: 8px;
-  /*border-radius: 4px;*/
   font-size: 12px;
+  border-radius: 3px; /*radius of 3 pixels*/
+
 
   transition-duration: 0.2s;
   transition-property: color;
@@ -171,6 +184,7 @@ h6 {
   background-color: rgba(248, 255, 249, 0.4);
   padding: 8px;
   border-radius: 4px;
+  box-shadow: 1px 1px 0 #595959;
 
   transition-duration: 0.2s;
   transition-property: background-color;
@@ -198,6 +212,7 @@ h6 {
 
 .locked {
   position: fixed;
+
   padding-left: 7px;
   z-index: 2;
 }
