@@ -76,17 +76,17 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.foreground {
+/* .foreground {
   background-color: rgb(214, 215, 216);
   height: calc(100vh - 60px);
-}
+} */
 .scrollable {
   height: calc(100vh - 60px);
   overflow: auto;
 }
 
 body {
-  background-image: url('../../../assets/images/forest2.jpg');
+  background-image: url('../../../assets/images/achtergrond.png');
   background-position: center;
   /*background-repeat: no-repeat;*/
   /* -60px for header */
