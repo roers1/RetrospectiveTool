@@ -36,7 +36,7 @@ namespace Retrospective_Back_End
             services.AddDbContext<RetroSpectiveDbContext>(options =>
 	            options.UseSqlServer(
 		            Configuration["Data:ConnectionString"]));
-            services.AddTransient<IRetroRespectiveRepository, EfRetrospectiveRepository>();
+            services.AddTransient<IRetroRespectiveRepository, EFRetrospectiveRepository>();
             services.AddControllersWithViews().AddNewtonsoftJson(options =>options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 

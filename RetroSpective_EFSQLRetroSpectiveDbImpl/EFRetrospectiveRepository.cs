@@ -136,5 +136,11 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
             _context.Retrospectives.Add(retrospective);
             _context.SaveChanges();
         }
+
+        public void UpdateRetroColumn(RetroColumn retroColumn)
+        {
+	        _context.RetroColumns.Update(retroColumn);
+	        _context.SaveChanges();
+        }
     }
 }

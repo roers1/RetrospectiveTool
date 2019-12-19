@@ -45,20 +45,30 @@ namespace Retrospective_Back_End.Controllers
 
         // PUT: api/RetroColumns/5
         [HttpPut("{id}")]
-        public ActionResult<RetroColumn> PutRetroColumn(int id, RetroColumn retroColumn)
+        public ActionResult<RetroColumn> PutRetroColumn(int id,RetroColumn retroColumn)
         {
-            var rc = retroColumn;
+	        if (id != retroColumn.Id)
+	        {
+		        return BadRequest();
+	        }
 
-            rc.Id = id;
+	        try
+	        {
+		        _context.UpdateRetroColumn(retroColumn);
+	        }
+	        catch (DbUpdateConcurrencyException)
+	        {
+		        if (!RetroColumnExists(id))
+		        {
+			        return NotFound();
+		        }
+		        else
+		        {
+			        throw;
+		        }
+	        }
 
-            var dbe = _context.UpdateRetroColumn(retroColumn);
-
-            if (dbe == null)
-            {
-                return BadRequest();
-            }
-
-            return dbe;
+            return CreatedAtAction("PutRetroColumn", new { id = retroColumn.Id }, retroColumn);
         }
 
         // POST: api/RetroColumns

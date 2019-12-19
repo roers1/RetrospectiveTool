@@ -43,7 +43,8 @@ export class RetrocolumnService {
   updateColumn(retroColumnId: number, title: string) {
     if (this.retrospectiveService.getCurrentRetrospective()) {
       return this.http.put<RetroColumn>(this.baseUrlRetroColumn + retroColumnId, {
-        title: title
+        title: title,
+        id: retroColumnId
       }, this.httpOptions);
     }
   }
