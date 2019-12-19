@@ -20,16 +20,16 @@ import {of} from 'rxjs';
 describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
   let fixture: ComponentFixture<RetroBoardComponent>;
-  let removeColumnSpy;
-  let addCardSpy;
-  let mockCard = new RetroCard(-1, 'this is card content', 0);
+  let removeColumnSpy, addCardSpy, updateRetroCard;
+  let mockCard = new RetroCard(-1, 'this is card content', 0, 0);
 
   beforeEach(async(() => {
     const retrocolumnService = jasmine.createSpyObj('RetrocolumnService', ['removeColumn', 'addColumn']);
-    const retrocartService = jasmine.createSpyObj('RetrocardService', ['createCard'])
+    const retrocartService = jasmine.createSpyObj('RetrocardService', ['createCard', 'updateRetroCard']);
 
     removeColumnSpy = retrocolumnService.removeColumn.and.returnValue(of());
-    addCardSpy = retrocartService.createCard.and.returnValue(of(mockCard))
+    addCardSpy = retrocartService.createCard.and.returnValue(of(mockCard));
+    updateRetroCard = retrocartService.updateRetroCard.and.returnValue(of());
 
     TestBed.configureTestingModule({
       // tslint:disable-next-line:max-line-length
@@ -91,7 +91,7 @@ describe('RetroBoardComponent', () => {
 
     fixture.detectChanges();
 
-    component.cardGroup.get('content').setValue(mockCard.content)
+    component.cardGroup.get('content').setValue(mockCard.content);
     component.addCard(column);
 
     const testColumn = component.retrospective.retroColumns[0];
@@ -173,7 +173,7 @@ describe('RetroBoardComponent', () => {
     const testTitle = 'new';
     component.updateColumnTitle(column, testTitle);
     expect(column.title).toEqual(testTitle);
-    });
+  });
   it('should be able to delete column', () => {
     const column: RetroColumn = new RetroColumn(
       0,
@@ -194,10 +194,30 @@ describe('RetroBoardComponent', () => {
 
     expect(component.retrospective.retroColumns.length === 0).toBe(true);
   });
+
   it('Should trigger variable when add button is clicked should enable open menu', () => {
     component.enable = false;
     const button = fixture.debugElement.nativeElement.querySelector('.clickable_element');
     button.click();
     expect(component.enable).toEqual(true);
+  });
+
+  it('should re-assign the positions of a column', () => {
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [
+        new RetroCard(0, 'RetroCard 1', 1, 0),
+        new RetroCard(1, 'RetroCard 2', 2, 0),
+        new RetroCard(2, 'RetroCard 3', 0, 0)
+      ]
+    );
+
+    component.updatePositions(column.retroCards, column.id);
+
+    expect(column.retroCards.length === 3);
+    expect(column.retroCards[0].position === 0);
+    expect(column.retroCards[1].position === 1);
+    expect(column.retroCards[2].position === 2);
   });
 });
