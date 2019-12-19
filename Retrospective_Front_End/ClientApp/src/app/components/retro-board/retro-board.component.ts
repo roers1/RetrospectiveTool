@@ -11,8 +11,8 @@ import {RetrocardService} from '../../retrocard.service';
 import {ActivatedRoute} from '@angular/router';
 import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material';
-import { MatFormField } from '@angular/material';
-import { Router } from '@angular/router';
+import {MatFormField} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-retro-board',
@@ -26,17 +26,7 @@ export class RetroBoardComponent implements OnInit {
   enabledColumn = {};
   enabledColumnTitles = {};
   editedContent = {};
-  retrospective: Retrospective = new Retrospective(0, 'Title', 'Description', [
-    new RetroColumn(0, 'Todo', [
-      new RetroCard(0, 'Nothing', 0),
-    ]),
-    new RetroColumn(1, 'Doing', [
-      new RetroCard(1, 'Nothing', 0),
-    ]),
-    new RetroColumn(2, 'Done', [
-      new RetroCard(2, 'Nothing', 0),
-    ])
-  ]);
+  retrospective: Retrospective;
 
   cardGroup: FormGroup = new FormGroup({
     content: new FormControl('', Validators.required)
@@ -59,19 +49,44 @@ export class RetroBoardComponent implements OnInit {
     const params = this.route.snapshot.paramMap;
     const id = params.get(params.keys[0]);
 
-    this.retrospectiveService.getRetrospective(id, (retrospective) => {
+    this.retrospectiveService.getRetrospective(id, (retrospective: Retrospective) => {
       this.retrospective = retrospective;
+
+      this.retrospective.retroColumns.forEach((x) => x.retroCards.sort((a, b) => {
+        if (a.position > b.position) {
+          return 1;
+        } else if (b.position > a.position) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }));
     });
   }
 
-  drop(event: CdkDragDrop<RetroCard[]>) {
+  drop(event: CdkDragDrop<RetroCard[]>, columnId) {
     if (event.container === event.previousContainer) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.updatePositions(event.container.data, columnId);
     } else {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+      this.updatePositions(event.container.data, columnId);
+      this.updatePositions(event.previousContainer.data, event.previousContainer.data[0].retroColumnId);
+    }
+  }
+
+  updatePositions(retroCards: RetroCard[], columnId) {
+    let index = 0;
+
+    for (const retroCard of retroCards) {
+      retroCard.position = index;
+      index++;
+
+      this.retroCardService.updateRetroCard(retroCard, columnId).subscribe(_ => {
+      });
     }
   }
 
@@ -137,7 +152,8 @@ export class RetroBoardComponent implements OnInit {
         cd();
       }
     });
-  }ss
+  }
+
   deleteCard(givenCard: RetroCard) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
@@ -167,7 +183,7 @@ export class RetroBoardComponent implements OnInit {
   }
 
   updateColumnTitle(column: RetroColumn, newtitle) {
-    column.title = newtitle
+    column.title = newtitle;
     this.enableColumnTitleEditing(false, column);
     // TODO ADD SERVICE!
   }

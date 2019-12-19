@@ -48,44 +48,13 @@ namespace Retrospective_Back_End.Controllers
         // PUT: api/RetroCards/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+
+        // PUT: api/RetroCards
         [HttpPut]
-        public IActionResult PutRetroCard()
+        public ActionResult<RetroCard> UpdateRetroCard(RetroCard retroCard)
         {
-            //RetroCard retroCard //GetJSONFromBody(Request.Body);
-
-            //if (retroCard == null)
-            //{
-            //	return BadRequest();
-            //};
-
-            //try
-            //{
-            //	_context.SaveRetroCard(retroCard);
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //	if (!RetroCardExists(retroCard.Id))
-            //	{
-            //		return NotFound();
-            //	}
-            //	else
-            //	{
-            //		throw;
-            //	}
-            //}
-
-            return NoContent();
-        }
-
-        // PUT: api/RetroCards/:id
-        [HttpPut("{cardId}", Name = "UpdatePositionOfCard")]
-        public ActionResult<RetroCard> UpdatePositionOfCard(int cardId, RetroCard retroCard)
-        {
-            var rc = retroCard;
-            rc.Id = cardId;
-
-            var retroCardDbe = _context.UpdateRetroCard(rc);
-            return retroCardDbe;
+            _context.SaveRetroCard(retroCard);
+            return retroCard;
         }
 
         // POST: api/RetroCards

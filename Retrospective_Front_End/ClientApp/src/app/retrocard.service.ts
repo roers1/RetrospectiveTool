@@ -40,8 +40,13 @@ export class RetrocardService {
     return this.http.get<RetroCard[]>(this.baseUrlRetroCards, this.httpOptions);
   }
 
-  updateRetroCard(id, content) {
-    return this.http.put<RetroCard>(this.baseUrlRetroCards + id, {content: content}, this.httpOptions);
+  updateRetroCard(retroCard: RetroCard, columnId) {
+    return this.http.put<RetroCard>(this.baseUrlRetroCards, {
+      id: retroCard.id,
+      content: retroCard.content,
+      position: retroCard.position,
+      retroColumnId: columnId
+    }, this.httpOptions);
   }
 
   deleteRetroCard(id) {
