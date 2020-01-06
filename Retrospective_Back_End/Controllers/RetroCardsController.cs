@@ -5,8 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Retrospective_Back_End.Realtime;
 using Retrospective_Core.Models;
 using Retrospective_Core.Services;
 using Retrospective_EFSQLRetrospectiveDbImpl;
@@ -18,11 +20,13 @@ namespace Retrospective_Back_End.Controllers
     public class RetroCardsController : ControllerBase
     {
         private readonly IRetroRespectiveRepository _context;
+		private IHubContext<NotifyHub, ITypedHubClient> _hubContext;
 
-        public RetroCardsController(IRetroRespectiveRepository context)
+		public RetroCardsController(IRetroRespectiveRepository context, IHubContext<NotifyHub, ITypedHubClient> hubContext)
         {
             _context = context;
-        }
+			_hubContext = hubContext;
+		}
 
         // GET: api/RetroCards
         [HttpGet]
@@ -84,6 +88,13 @@ namespace Retrospective_Back_End.Controllers
 		public ActionResult<RetroCard> PostRetroCard(RetroCard retroCard)
 		{
 			_context.SaveRetroCard(retroCard);
+			try {
+				_hubContext.Clients.All.BroadcastMessage(true);
+			}
+			catch (Exception e)
+			{
+				_hubContext.Clients.All.BroadcastMessage(false);
+			}
 			return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
 		}
 

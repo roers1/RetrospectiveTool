@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Retrospective_Core.Services;
 using Retrospective_EFSQLRetrospectiveDbImpl;
 using Retrospective_EFSQLRetrospectiveDbImpl.Seeds;
+using Retrospective_Back_End.Realtime;
 
 namespace Retrospective_Back_End
 {
@@ -23,13 +24,15 @@ namespace Retrospective_Back_End
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-	        services.AddCors(options =>
-	        {
-		        options.AddPolicy("CorsPolicy", builder => builder
-			        .AllowAnyOrigin()
-			        .AllowAnyMethod()
-			        .AllowAnyHeader());
-	        });
+            services.AddCors(options =>
+            {
+            options.AddPolicy("CorsPolicy", builder => builder
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+
+            });
+            services.AddSignalR();
             _ = services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddDbContext<RetroSpectiveDbContext>(options =>
@@ -54,6 +57,10 @@ namespace Retrospective_Back_End
 
             app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotifyHub>("/notify");
+            });
             app.UseMvc();
             SeedData.Initialize(service);
         }
