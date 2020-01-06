@@ -1,4 +1,4 @@
-  import {RetroCard} from './RetroCard';
+import {RetroCard} from './RetroCard';
 
 export class RetroColumn {
   constructor(
