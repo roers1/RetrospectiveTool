@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {baseUrl} from '../../helpers/url-constants';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {RetrospectiveService} from './retrospective.service';
@@ -41,12 +41,7 @@ export class RetroColumnService {
   }
 
   updateColumn(retroColumn: RetroColumn) {
-    if (this.retrospectiveService.getCurrentRetrospective()) {
-      return this.http.put<RetroColumn>(this.baseUrlRetroColumn, {
-        id: retroColumn.id,
-        title: retroColumn.title
-      }, this.httpOptions);
-    }
+    return this.http.put<RetroColumn>(this.baseUrlRetroColumn, retroColumn, this.httpOptions);
   }
 
   removeColumn(columnId): Observable<RetroColumn> {

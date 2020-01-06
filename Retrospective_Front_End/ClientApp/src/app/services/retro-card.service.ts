@@ -20,9 +20,10 @@ export class RetroCardService {
   constructor(private http: HttpClient, private message: MessageService) {
   }
 
-  createCard(columnId, content): Observable<RetroCard> {
+  createCard(columnId, position, content): Observable<RetroCard> {
     return this.http.post<RetroCard>(this.baseUrlRetroCards, {
       content: content,
+      position: position,
       retrocolumnId: columnId
     }, this.httpOptions);
   }
@@ -49,6 +50,6 @@ export class RetroCardService {
   }
 
   deleteRetroCard(id) {
-    return this.http.delete(this.baseUrlRetroCards + id, this.httpOptions);
+    return this.http.delete(this.baseUrlRetroCards + "/" + id, this.httpOptions);
   }
 }

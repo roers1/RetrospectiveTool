@@ -5,6 +5,8 @@ using Retrospective_Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.SignalR;
+using Retrospective_Back_End.Realtime;
 using Xunit;
 
 namespace Retrospective_Back_End_Test
@@ -12,10 +14,12 @@ namespace Retrospective_Back_End_Test
     public class TestRetroColumnsController
     {
 	    readonly Mock<IRetroRespectiveRepository> _mockRetrospectiveRepo;
+        readonly Mock<IHubContext<NotifyHub, ITypedHubClient>> mockHub;
 
-	    public TestRetroColumnsController()
+        public TestRetroColumnsController()
         {
             this._mockRetrospectiveRepo = new Mock<IRetroRespectiveRepository>();
+            this.mockHub = new Mock<IHubContext<NotifyHub, ITypedHubClient>>();
         }
 
         [Fact]
@@ -23,7 +27,7 @@ namespace Retrospective_Back_End_Test
         {
             //Arrange
             IRetroRespectiveRepository repo = _mockRetrospectiveRepo.Object;
-            var controller = new RetroColumnsController(repo);
+            var controller = new RetroColumnsController(repo, mockHub.Object);
 
             IList<RetroColumn> columns = new List<RetroColumn>();
 
@@ -73,7 +77,7 @@ namespace Retrospective_Back_End_Test
             _mockRetrospectiveRepo.Setup(m => m.RemoveRetroColumn(It.IsAny<RetroColumn>())).Callback((Action<RetroColumn>) Action);
 
             IRetroRespectiveRepository repo = _mockRetrospectiveRepo.Object;
-            var controller = new RetroColumnsController(repo);
+            var controller = new RetroColumnsController(repo, mockHub.Object);
 
             //Act
             controller.DeleteRetroColumn(0);

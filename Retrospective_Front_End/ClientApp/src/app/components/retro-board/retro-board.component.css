@@ -20,13 +20,25 @@
   display: block;
 }
 
-.title-background {
+.title-background-left {
   padding-top: 10px;
   background-color: #595959;
-  padding-right: 5px;
+  position: fixed;
+  width: fit-content;
+  padding-right: 15px;
   padding-bottom: 5px;
   border-bottom-right-radius: 20px;
   border-top-right-radius: 20px;
+  box-shadow: 1px 1px 0 #3d3d3d;
+}
+.title-background-right {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #595959;
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+  float: right;
+  box-shadow: 1px 1px 0 #3d3d3d;
 }
 
 .title-icons-background {
@@ -38,7 +50,6 @@
   border-top-left-radius: 20px;
   margin-right: -95%;
 }
-
 
 .example-box {
   padding: 20px 10px;
@@ -120,10 +131,22 @@ body {
   padding-top: 4%;
   flex-direction: row;
 }
+.column-title-holder {
+  padding-left: 13px;
+}
+.column-title {
+  width: 85%;
+  color: #ED5603;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 h2 {
   /*color: purple;*/
-  display: inline;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: #ED5603;
 }
 h1 {
@@ -212,8 +235,8 @@ h6 {
 
 .locked {
   position: fixed;
+  width: 100%;
 
-  padding-left: 7px;
   z-index: 2;
 }
 
