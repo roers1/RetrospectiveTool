@@ -54,7 +54,7 @@ export class RetroCardService {
     }, this.httpOptions);
   }
 
-  deleteRetroCard(id) {
-    return this.http.delete(this.baseUrlRetroCards + "/" + id, this.httpOptions);
+  deleteRetroCard(retroCard: RetroCard) {
+    return this.http.delete(this.baseUrlRetroCards + "/" + retroCard.id, this.httpOptions);
   }
 }
