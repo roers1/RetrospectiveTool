@@ -7,16 +7,17 @@ import { Retrospective } from '../../../models/Retrospective';
 import { RetroCardService } from '../../services/retro-card.service';
 import { RetroCard } from '../../../models/RetroCard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule, MatDialogModule, MatIconModule, MatSnackBar, MatTooltipModule} from '@angular/material';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatFormFieldModule} from '@angular/material';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterModule, Router} from '@angular/router';
-import {RouterTestingModule} from '@angular/router/testing';
-import {MatDialog} from '@angular/material';
-import {RetroColumnService} from '../../services/retro-column.service';
-import {of} from 'rxjs';
+import { MatButtonModule, MatDialogModule, MatIconModule, MatSnackBar, MatTooltipModule } from '@angular/material';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterModule, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialog } from '@angular/material';
+import { RetroColumnService } from '../../services/retro-column.service';
+import { of } from 'rxjs';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
@@ -25,10 +26,10 @@ describe('RetroBoardComponent', () => {
   let createColumnSpy;
   let updateColumnSpy;
   let addCardSpy;
-    let createBoardSpy;
-    let updateRetroCard;
+  let createBoardSpy;
+  let updateRetroCard;
   const mockCard = new RetroCard(-1, 'this is card content', 0, 0);
-  const mockColumn = new RetroColumn(-1, 'test', [], -1);
+  const mockColumn = new RetroColumn(-1, 'test', [], 0);
 
   beforeEach(async(() => {
     const retrospectiveService = jasmine.createSpyObj('RetrospectiveService', ['createRetrospective']);
@@ -44,13 +45,13 @@ describe('RetroBoardComponent', () => {
     createBoardSpy = retrospectiveService.createRetrospective.and.returnValue(of());
 
     TestBed.configureTestingModule({
-        imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule,
+      imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule,
         MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule, MatTooltipModule,
         HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule, BrowserAnimationsModule],
       declarations: [RetroBoardComponent],
       providers: [MatDialog, MatSnackBar,
-        {provide: RetroColumnService, useValue: retroColumnService},
-        {provide: RetroCardService, useValue: retroCardService}]
+        { provide: RetroColumnService, useValue: retroColumnService },
+        { provide: RetroCardService, useValue: retroCardService }]
     })
       .compileComponents();
   }));
@@ -89,19 +90,23 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should add card', () => {
-    const column: RetroColumn = new RetroColumn(
-      0,
-      'TestColumn',
-      [],
-      -1
-    );
-
     component.retrospective = new Retrospective(
       0,
       'Cool board',
       'Wow',
-      [column]
+      []
     );
+
+    const retrospectiveId: number = component.retrospective.id;
+
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [],
+      retrospectiveId
+    );
+
+    component.retrospective.addRetroColumn(column);
 
     fixture.detectChanges();
 
@@ -120,19 +125,23 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should enable editing', () => {
-    const column: RetroColumn = new RetroColumn(
-      0,
-      'TestColumn',
-      [],
-      -1
-    );
-
     component.retrospective = new Retrospective(
       0,
       'Cool board',
       'Wow',
-      [column]
+      []
     );
+
+    const retrospectiveId: number = component.retrospective.id;
+
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [],
+      retrospectiveId
+    );
+
+    component.retrospective.addRetroColumn(column);
 
     fixture.detectChanges();
 
@@ -161,10 +170,12 @@ describe('RetroBoardComponent', () => {
 
 
   it('should return to homepage on clean retroBoard', () => {
-    component.retrospective = new Retrospective(1000, 'title', 'description', [
-      new RetroColumn(11, 'rc1', [], -1),
-      new RetroColumn(22, 'rc2', [], -1)
-    ]);
+    component.retrospective = new Retrospective(1000, 'title', 'description', []);
+
+    const retrospectiveId = component.retrospective.id;
+
+    component.retrospective.addRetroColumn(new RetroColumn(11, 'rc1', [], retrospectiveId));
+    component.retrospective.addRetroColumn(new RetroColumn(22, 'rc2', [], retrospectiveId));
 
     component.cleanRetroBoard();
     fixture.detectChanges();
@@ -174,18 +185,20 @@ describe('RetroBoardComponent', () => {
   });
 
   it('Should edit title when edit title is called', () => {
-    const column: RetroColumn = new RetroColumn(
-      0,
-      'TestColumn',
-      [],
-      -1
-    );
-
     component.retrospective = new Retrospective(
       0,
       'Cool board',
       'Wow',
-      [column]
+      []
+    );
+
+    const retrospectiveId: number = component.retrospective.id;
+
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [],
+      retrospectiveId
     );
 
     fixture.detectChanges();
@@ -198,19 +211,23 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should be able to delete column', () => {
-    const column: RetroColumn = new RetroColumn(
-      0,
-      'TestColumn',
-      [],
-      -1
-    );
-
     component.retrospective = new Retrospective(
       0,
       'Cool board',
       'Wow',
-      [column]
+      []
     );
+
+    const retrospectiveId = component.retrospective.id;
+
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [],
+      retrospectiveId
+    );
+
+    component.retrospective.addRetroColumn(column);
 
     fixture.detectChanges();
 
@@ -220,6 +237,10 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should re-assign the positions of a column', () => {
+    component.retrospective = new Retrospective(1, 'retrospective1', 'des', []);
+
+    const retrospectiveId = component.retrospective.id;
+
     const column: RetroColumn = new RetroColumn(
       0,
       'TestColumn',
@@ -228,7 +249,7 @@ describe('RetroBoardComponent', () => {
         new RetroCard(1, 'RetroCard 2', 2, 0),
         new RetroCard(2, 'RetroCard 3', 0, 0)
       ],
-      -1
+      retrospectiveId
     );
 
     component.updatePositions(column.retroCards, column.id);
@@ -237,5 +258,32 @@ describe('RetroBoardComponent', () => {
     expect(column.retroCards[0].position === 0);
     expect(column.retroCards[1].position === 1);
     expect(column.retroCards[2].position === 2);
+  });
+
+  it('should update content of a retrocard', () => {
+    component.retrospective = new Retrospective(1, 'retrospective1', 'des', []);
+
+    const retrospectiveId = component.retrospective.id;
+
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [],
+      retrospectiveId
+    );
+
+    const card: RetroCard = new RetroCard(0, 'RetroCard 1', 1, column.id);
+
+    column.addRetroCard(card);
+
+    component.retrospective.addRetroColumn(column);
+
+    fixture.detectChanges();
+
+    const newTitle: string = 'New Title';
+
+    card.updateContent(newTitle);
+
+    expect(card.content).toEqual(newTitle);
   });
 });
