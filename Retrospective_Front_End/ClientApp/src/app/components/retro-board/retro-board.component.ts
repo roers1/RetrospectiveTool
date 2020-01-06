@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { RetroCard } from '../../../models/RetroCard';
-import { Retrospective } from '../../../models/Retrospective';
-import { RetroColumn } from '../../../models/RetroColumn';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RetrospectiveService } from '../../services/retrospective.service';
-import { RetroColumnService } from '../../services/retro-column.service';
-import { RetroCardService } from '../../services/retro-card.service';
-import { ActivatedRoute } from '@angular/router';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
-import { dictionary } from '../../../helpers/message-constants';
+import {Component, OnInit} from '@angular/core';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {RetroCard} from '../../../models/RetroCard';
+import {Retrospective} from '../../../models/Retrospective';
+import {RetroColumn} from '../../../models/RetroColumn';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {RetrospectiveService} from '../../services/retrospective.service';
+import {RetroColumnService} from '../../services/retro-column.service';
+import {RetroCardService} from '../../services/retro-card.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {dictionary} from '../../../helpers/message-constants';
+import * as signalR from '@aspnet/signalr';
+import {LogLevel} from '@aspnet/signalr';
+import * as url from '../../../helpers/url-constants';
 
 @Component({
   selector: 'app-retro-board',
@@ -50,18 +52,37 @@ export class RetroBoardComponent implements OnInit {
     const params = this.route.snapshot.paramMap;
     const id = params.get(params.keys[0]);
 
-    this.retrospectiveService.getRetrospective(id, (retrospective: Retrospective) => {
-      this.retrospective = retrospective;
+    const connection = new signalR.HubConnectionBuilder()
+      .configureLogging(LogLevel.Debug)
+      .withUrl(url.baseUrl + `/board/${id}`)
+      .build();
 
-      this.retrospective.retroColumns.forEach((x) => x.retroCards.sort((a, b) => {
-        if (a.position > b.position) {
-          return 1;
-        } else if (b.position > a.position) {
-          return -1;
-        } else {
-          return 0;
-        }
-      }));
+    connection.start().then(() => {
+      console.log('Connected!');
+    }).catch(() => {
+      return console.error('Cannot find board!');
+    });
+
+    connection.on(`retrospective/${id}`, (succeeded: boolean) => {
+
+      console.log(succeeded);
+      // if (succeeded) {
+      //   this.retrospectiveService.getRetrospective(id, (retrospective: Retrospective) => {
+      //     this.retrospective = retrospective;
+      //
+      //     this.retrospective.retroColumns.forEach((x) => x.retroCards.sort((a, b) => {
+      //       if (a.position > b.position) {
+      //         return 1;
+      //       } else if (b.position > a.position) {
+      //         return -1;
+      //       } else {
+      //         return 0;
+      //       }
+      //     }));
+      //   });
+      // } else {
+      //   connection.stop().then(r => console.log('Connection stopped'));
+      // }
     });
   }
 
@@ -131,7 +152,7 @@ export class RetroBoardComponent implements OnInit {
   deleteColumnDialog(column: RetroColumn) {
     this.openDialog(this.dict.RETROBOARD_DELETE_COLUMN_NOTI(column.title), () => {
       this.deleteColumn(column);
-      this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok')
+      this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok');
     });
   }
 
@@ -173,7 +194,7 @@ export class RetroBoardComponent implements OnInit {
           });
 
         });
-        this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok')
+        this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok');
         // TODO ADD SERVICE!
       }
     });
