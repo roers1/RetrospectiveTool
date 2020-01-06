@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import {baseUrl} from '../../helpers/url-constants';
-import {MessageService} from './message.service';
-import {RetroCard} from '../../models/RetroCard';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { baseUrl } from '../../helpers/url-constants';
+import { MessageService } from './message.service';
+import { RetroCard } from '../../models/RetroCard';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +46,15 @@ export class RetroCardService {
       content: retroCard.content,
       position: retroCard.position,
       retroColumnId: columnId
+    }, this.httpOptions);
+  }
+
+  updateRetroCardContent(retroCard: RetroCard, content) {
+    return this.http.put<RetroCard>(this.baseUrlRetroCards, {
+      id: retroCard.id,
+      content: content,
+      position: retroCard.position,
+      retroColumnId: retroCard.retroColumnId
     }, this.httpOptions);
   }
 
