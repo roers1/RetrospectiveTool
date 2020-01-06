@@ -52,9 +52,23 @@ export class RetroBoardComponent implements OnInit {
     const params = this.route.snapshot.paramMap;
     const id = params.get(params.keys[0]);
 
+    this.retrospectiveService.getRetrospective(id, (retrospective: Retrospective) => {
+      this.retrospective = retrospective;
+
+      this.retrospective.retroColumns.forEach((x) => x.retroCards.sort((a, b) => {
+        if (a.position > b.position) {
+          return 1;
+        } else if (b.position > a.position) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }));
+    });
+
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(LogLevel.Debug)
-      .withUrl(url.baseUrl + `/board/${id}`)
+      .withUrl( `https://localhost:44348/notify`)
       .build();
 
     connection.start().then(() => {
@@ -63,26 +77,22 @@ export class RetroBoardComponent implements OnInit {
       return console.error('Cannot find board!');
     });
 
-    connection.on(`retrospective/${id}`, (succeeded: boolean) => {
+    connection.on(`BroadcastMessage`, (succeeded: boolean, new_id: number) => {
+      if (succeeded && id === new_id.toString()) {
+        this.retrospectiveService.getRetrospective(id, (retrospective: Retrospective) => {
+          this.retrospective = retrospective;
 
-      console.log(succeeded);
-      // if (succeeded) {
-      //   this.retrospectiveService.getRetrospective(id, (retrospective: Retrospective) => {
-      //     this.retrospective = retrospective;
-      //
-      //     this.retrospective.retroColumns.forEach((x) => x.retroCards.sort((a, b) => {
-      //       if (a.position > b.position) {
-      //         return 1;
-      //       } else if (b.position > a.position) {
-      //         return -1;
-      //       } else {
-      //         return 0;
-      //       }
-      //     }));
-      //   });
-      // } else {
-      //   connection.stop().then(r => console.log('Connection stopped'));
-      // }
+          this.retrospective.retroColumns.forEach((x) => x.retroCards.sort((a, b) => {
+            if (a.position > b.position) {
+              return 1;
+            } else if (b.position > a.position) {
+              return -1;
+            } else {
+              return 0;
+            }
+          }));
+        });
+      }
     });
   }
 

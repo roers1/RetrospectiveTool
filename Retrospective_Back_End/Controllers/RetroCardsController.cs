@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -62,12 +63,15 @@ namespace Retrospective_Back_End.Controllers
 		public ActionResult<RetroCard> PostRetroCard(RetroCard retroCard)
 		{
 			_context.SaveRetroCard(retroCard);
-			try {
-				_hubContext.Clients.All.BroadcastMessage(true);
+
+            RetroColumn retroColumn = _context.RetroColumns.Single(x => x.Id == retroCard.RetroColumnId);
+
+            try {
+				_hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
 			}
 			catch (Exception e)
 			{
-				_hubContext.Clients.All.BroadcastMessage(false);
+				_hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
 			}
 			return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
 		}

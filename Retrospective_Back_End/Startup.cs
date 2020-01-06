@@ -30,6 +30,7 @@ namespace Retrospective_Back_End
             options.AddPolicy("CorsPolicy", builder => builder
                 .AllowAnyMethod()
                 .AllowAnyHeader()
+                .SetIsOriginAllowed(isOriginAllowed: _ => true)
                 .AllowCredentials());
 
             });
