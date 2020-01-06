@@ -1,44 +1,51 @@
 <body *ngIf="retrospective">
 <div class="foreground">
+
   <div class="scrollable">
     <div class="locked">
       <br>
-        <div class="row title-background">
+        <div class="title-background-left">
           <h1 matTooltip="{{retrospective.description}}">{{retrospective.title}}</h1>
+        </div>
+        <div class="title-background-right">
           <img class="icon"
-            id="icon_wipe"
-            src="../../../assets/images/broom.png"
-            (click)="cleanRetroBoardDialog()" />
+          id="icon_wipe"
+          src="../../../assets/images/broom.png"
+          (click)="cleanRetroBoardDialog()" />
         </div>
     </div>
     <br>
 
     <div class="board_area">
       <div class="example-container" *ngFor="let column of retrospective.retroColumns">
-        <div class="board-title-holder">
-          <h2 class="testtitle" *ngIf="!hasEnabledColumnTitleEditing(column)">{{column.title}}</h2>
+          <div class="row column-title-holder">
 
-          <div class="icon_menu">
-            <img class="icon" id="icon_menu" src="../../../assets/images/icon_dot_menu.png" [matMenuTriggerFor]="menu">
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item
-                      class="dropdownitem"
-                      (click)="emptyColumn(column)">
-                {{dict.EMPTY_COLUMN_BTN}}
-              </button>
-              <button mat-menu-item
-                      class="dropdownitem"
-                      (click)="deleteColumnDialog(column)">
-                {{dict.DELETE_COLUMN_BTN}}
-              </button>
-              <button mat-menu-item
-                      class="dropdownitem"
-                      (click)="enableColumnTitleEditing(true, column)">
-                {{dict.EDIT_COLUMN_BTN}}
-              </button>
-            </mat-menu>
+            <div class="column-title">
+              <h2 matTooltip="{{column.title}}" *ngIf="!hasEnabledColumnTitleEditing(column)">{{column.title}}</h2>
+            </div>
+
+            <div class="icon_menu">
+              <img class="icon" id="icon_menu" src="../../../assets/images/icon_dot_menu.png" [matMenuTriggerFor]="menu">
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item
+                        class="dropdownitem"
+                        (click)="emptyColumn(column)">
+                  {{dict.EMPTY_COLUMN_BTN}}
+                </button>
+                <button mat-menu-item
+                        class="dropdownitem"
+                        (click)="deleteColumnDialog(column)">
+                  {{dict.DELETE_COLUMN_BTN}}
+                </button>
+                <button mat-menu-item
+                        class="dropdownitem"
+                        (click)="enableColumnTitleEditing(true, column)">
+                  {{dict.EDIT_COLUMN_BTN}}
+                </button>
+              </mat-menu>
+            </div>
           </div>
-        </div>
+
 
         <div class="box-content" *ngIf="hasEnabledColumnTitleEditing(column)">
           <input type="text" #newtitle value="{{column.title}}">
