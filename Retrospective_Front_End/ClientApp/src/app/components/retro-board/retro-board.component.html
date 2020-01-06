@@ -50,8 +50,8 @@
         <div class="box-content" *ngIf="hasEnabledColumnTitleEditing(column)">
           <input type="text" #newtitle value="{{column.title}}">
           <br>
-          <button 
-            class="TLbtn btn-small btn-color-primary editTitleBtn" 
+          <button
+            class="TLbtn btn-small btn-color-primary editTitleBtn"
             (click)="updateColumnTitle(column, newtitle.value)"
             (keyup.enter)="updateColumnTitle(column, newtitle.value)">
             Aanpassen
@@ -64,15 +64,15 @@
              [cdkDropListData]="column.retroCards"
              [cdkDropListConnectedTo]="getColumnNames(element)"
              class="example-list"
-             (cdkDropListDropped)="drop($event, column.id)">
+             (cdkDropListDropped)="drop($event, column)">
           <div class="example-box" *ngFor="let item of column.retroCards" cdkDrag>
             <div class="box-content" *ngIf="!hasEnabledContentEditing(item)">
               {{item.content}}
             </div>
             <div class="box-content" *ngIf="hasEnabledContentEditing(item)">
               <textarea type="text" class="editContentInput" #content value="{{item.content}}"></textarea>
-              <button 
-                class="TLbtn btn-small btn-color-primary" 
+              <button
+                class="TLbtn btn-small btn-color-primary"
                 (click)="updateContent(item, content.value)"
                 (keyup.enter)="updateContent(item, content.value)">
                 Aanpassen
@@ -129,7 +129,7 @@
               </mat-form-field>
             </div>
             <div>
-              <button 
+              <button
                 [disabled]="!listGroup.valid"
                 mat-button (click)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
                 (keyup.enter)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
