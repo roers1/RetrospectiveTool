@@ -28,10 +28,6 @@ export class RetroCardService {
     }, this.httpOptions);
   }
 
-  removeCard(cardId, columnId) {
-    // return this.http.delete<RetroCard>(this.baseUrlRetroColumn + columnId + '/retrocards/' + cardId, this.httpOptions);
-  }
-
   getRetroCard(id): Observable<RetroCard> {
     return this.http.get<RetroCard>(this.baseUrlRetroCards + id, this.httpOptions);
   }
