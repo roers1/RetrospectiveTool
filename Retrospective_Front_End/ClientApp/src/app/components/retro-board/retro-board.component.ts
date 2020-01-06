@@ -174,7 +174,8 @@ export class RetroBoardComponent implements OnInit {
 
         });
         this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok')
-        // TODO ADD SERVICE!
+
+        this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => { });
       }
     });
   }
