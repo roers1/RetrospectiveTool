@@ -1,20 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {RetroCard} from '../../../models/RetroCard';
-import {Retrospective} from '../../../models/Retrospective';
-import {RetroColumn} from '../../../models/RetroColumn';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {RetrospectiveService} from '../../services/retrospective.service';
-import {RetroColumnService} from '../../services/retro-column.service';
-import {RetroCardService} from '../../services/retro-card.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
-import {MatDialog, MatSnackBar} from '@angular/material';
-import {dictionary} from '../../../helpers/message-constants';
+import { Component, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { RetroCard } from '../../../models/RetroCard';
+import { Retrospective } from '../../../models/Retrospective';
+import { RetroColumn } from '../../../models/RetroColumn';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RetrospectiveService } from '../../services/retrospective.service';
+import { RetroColumnService } from '../../services/retro-column.service';
+import { RetroCardService } from '../../services/retro-card.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { dictionary } from '../../../helpers/message-constants';
 import * as signalR from '@aspnet/signalr';
-import {LogLevel} from '@aspnet/signalr';
+import { LogLevel } from '@aspnet/signalr';
 import * as url from '../../../helpers/url-constants';
-import {baseUrl} from '../../../helpers/url-constants';
+import { baseUrl } from '../../../helpers/url-constants';
 
 @Component({
   selector: 'app-retro-board',
@@ -69,7 +69,7 @@ export class RetroBoardComponent implements OnInit {
 
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(LogLevel.Debug)
-      .withUrl( baseUrl + `notify`)
+      .withUrl(baseUrl + `notify`)
       .build();
 
     connection.start().then(() => {
@@ -108,8 +108,8 @@ export class RetroBoardComponent implements OnInit {
         event.currentIndex);
       this.updatePositions(event.container.data);
       this.updatePositions(event.previousContainer.data);
-      this.retroColumnService.updateColumn(retroColumn).subscribe(() => {});
-      this.retroColumnService.updateColumn(this.retrospective.retroColumns.filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0]).subscribe(() => {});
+      this.retroColumnService.updateColumn(retroColumn).subscribe(() => { });
+      this.retroColumnService.updateColumn(this.retrospective.retroColumns.filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0]).subscribe(() => { });
     }
   }
 
@@ -204,8 +204,9 @@ export class RetroBoardComponent implements OnInit {
           });
 
         });
-        this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok');
-        this.retroCardService.deleteRetroCard(givenCard.id).subscribe(() => {});
+        this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok')
+
+        this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => { });
       }
     });
   }

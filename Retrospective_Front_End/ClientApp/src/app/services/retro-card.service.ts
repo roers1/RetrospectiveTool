@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import {baseUrl} from '../../helpers/url-constants';
-import {MessageService} from './message.service';
-import {RetroCard} from '../../models/RetroCard';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { baseUrl } from '../../helpers/url-constants';
+import { MessageService } from './message.service';
+import { RetroCard } from '../../models/RetroCard';
 
 @Injectable({
   providedIn: 'root'
@@ -28,10 +28,6 @@ export class RetroCardService {
     }, this.httpOptions);
   }
 
-  removeCard(cardId, columnId) {
-    // return this.http.delete<RetroCard>(this.baseUrlRetroColumn + columnId + '/retrocards/' + cardId, this.httpOptions);
-  }
-
   getRetroCard(id): Observable<RetroCard> {
     return this.http.get<RetroCard>(this.baseUrlRetroCards + id, this.httpOptions);
   }
@@ -49,7 +45,7 @@ export class RetroCardService {
     }, this.httpOptions);
   }
 
-  deleteRetroCard(id) {
-    return this.http.delete(this.baseUrlRetroCards + "/" + id, this.httpOptions);
+  deleteRetroCard(retroCard: RetroCard) {
+    return this.http.delete(this.baseUrlRetroCards + "/" + retroCard.id, this.httpOptions);
   }
 }
