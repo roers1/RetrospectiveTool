@@ -97,29 +97,28 @@ export class RetroBoardComponent implements OnInit {
     });
   }
 
-  drop(event: CdkDragDrop<RetroCard[]>, columnId) {
+  drop(event: CdkDragDrop<RetroCard[]>, retroColumn: RetroColumn) {
     if (event.container === event.previousContainer) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      this.updatePositions(event.container.data, columnId);
+      this.updatePositions(event.container.data);
     } else {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      this.updatePositions(event.container.data, columnId);
-      this.updatePositions(event.previousContainer.data, event.previousContainer.data[0].retroColumnId);
+      this.updatePositions(event.container.data);
+      this.updatePositions(event.previousContainer.data);
+      this.retroColumnService.updateColumn(retroColumn).subscribe(() => {});
+      this.retroColumnService.updateColumn(this.retrospective.retroColumns.filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0]).subscribe(() => {});
     }
   }
 
-  updatePositions(retroCards: RetroCard[], columnId) {
+  updatePositions(retroCards: RetroCard[]) {
     let index = 0;
 
     for (const retroCard of retroCards) {
       retroCard.position = index;
       index++;
-
-      this.retroCardService.updateRetroCard(retroCard, columnId).subscribe(_ => {
-      });
     }
   }
 
