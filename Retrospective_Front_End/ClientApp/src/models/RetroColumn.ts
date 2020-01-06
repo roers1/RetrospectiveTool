@@ -1,4 +1,4 @@
-import {RetroCard} from './RetroCard';
+import { RetroCard } from './RetroCard';
 
 export class RetroColumn {
   constructor(
@@ -13,9 +13,9 @@ export class RetroColumn {
     this.retroCards.push(card);
   }
 
-  removeRetroCard(cardId: number) {
-    if (cardId >= 0) {
-      this.retroCards.filter(rc => rc.id !== cardId);
-    }
+  removeRetroCard(card: RetroCard) {
+    const removeCard = this.retroCards.map(c => c.id).indexOf(card.id);
+
+    this.retroCards.splice(removeCard, 1);
   }
 }

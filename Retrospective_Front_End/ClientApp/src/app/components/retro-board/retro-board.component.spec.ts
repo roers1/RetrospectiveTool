@@ -252,7 +252,7 @@ describe('RetroBoardComponent', () => {
       retrospectiveId
     );
 
-    component.updatePositions(column.retroCards, column.id);
+    component.updatePositions(column.retroCards);
 
     expect(column.retroCards.length === 3);
     expect(column.retroCards[0].position === 0);
@@ -285,5 +285,37 @@ describe('RetroBoardComponent', () => {
     card.updateContent(newTitle);
 
     expect(card.content).toEqual(newTitle);
+  });
+
+  it('should remove a retrocard from a retrocolumn', () => {
+    component.retrospective = new Retrospective(
+      1,
+      'title',
+      'des',
+      []
+    );
+
+    const retrospective = component.retrospective;
+
+    const column: RetroColumn = new RetroColumn(
+      123,
+      'cardTitle',
+      [],
+      retrospective.id
+    );
+
+    const card: RetroCard = new RetroCard(12, 'content', 0, column.id);
+
+    retrospective.addRetroColumn(column);
+
+    fixture.detectChanges();
+
+    const retroColumn = retrospective.retroColumns[0];
+
+    retroColumn.addRetroCard(card);
+    expect(retroColumn.retroCards.length).toEqual(1);
+
+    column.removeRetroCard(card);
+    expect(retroColumn.retroCards.length).toEqual(0);
   });
 });
