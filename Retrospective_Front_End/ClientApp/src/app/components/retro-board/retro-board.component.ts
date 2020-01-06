@@ -153,7 +153,7 @@ export class RetroBoardComponent implements OnInit {
   addCard(column: RetroColumn) {
     const value = this.cardGroup.value;
 
-    this.retroCardService.createCard(column.id, value.content).subscribe((card) => {
+    this.retroCardService.createCard(column.id, column.retroCards.length, value.content).subscribe((card) => {
       this.cardGroup.get('content').setValue('');
       column.retroCards.push(card);
     });
@@ -205,7 +205,7 @@ export class RetroBoardComponent implements OnInit {
 
         });
         this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok');
-        // TODO ADD SERVICE!
+        this.retroCardService.deleteRetroCard(givenCard.id).subscribe(() => {});
       }
     });
   }
