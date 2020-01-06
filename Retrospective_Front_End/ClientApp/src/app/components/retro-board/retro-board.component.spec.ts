@@ -310,10 +310,12 @@ describe('RetroBoardComponent', () => {
 
     fixture.detectChanges();
 
-    column.addRetroCard(card);
-    expect(column.retroCards.length).toEqual(1);
+    const retroColumn = retrospective.retroColumns[0];
+
+    retroColumn.addRetroCard(card);
+    expect(retroColumn.retroCards.length).toEqual(1);
 
     column.removeRetroCard(card);
-    expect(column.retroCards.length).toEqual(0);
+    expect(retroColumn.retroCards.length).toEqual(0);
   });
 });
