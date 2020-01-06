@@ -14,6 +14,7 @@ import {dictionary} from '../../../helpers/message-constants';
 import * as signalR from '@aspnet/signalr';
 import {LogLevel} from '@aspnet/signalr';
 import * as url from '../../../helpers/url-constants';
+import {baseUrl} from '../../../helpers/url-constants';
 
 @Component({
   selector: 'app-retro-board',
@@ -68,7 +69,7 @@ export class RetroBoardComponent implements OnInit {
 
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(LogLevel.Debug)
-      .withUrl( `https://localhost:44348/notify`)
+      .withUrl( baseUrl + `notify`)
       .build();
 
     connection.start().then(() => {
