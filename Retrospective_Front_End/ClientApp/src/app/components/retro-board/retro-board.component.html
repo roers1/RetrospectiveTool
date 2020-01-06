@@ -50,7 +50,12 @@
         <div class="box-content" *ngIf="hasEnabledColumnTitleEditing(column)">
           <input type="text" #newtitle value="{{column.title}}">
           <br>
-          <button class="TLbtn btn-small btn-color-primary editTitleBtn" (click)="updateColumnTitle(column, newtitle.value)">Aanpassen</button>
+          <button 
+            class="TLbtn btn-small btn-color-primary editTitleBtn" 
+            (click)="updateColumnTitle(column, newtitle.value)"
+            (keyup.enter)="updateColumnTitle(column, newtitle.value)">
+            Aanpassen
+          </button>
         </div>
 
         <div cdkDropList
@@ -66,7 +71,11 @@
             </div>
             <div class="box-content" *ngIf="hasEnabledContentEditing(item)">
               <textarea type="text" class="editContentInput" #content value="{{item.content}}"></textarea>
-              <button class="TLbtn btn-small btn-color-primary" (click)="updateContent(item, content.value)">Aanpassen
+              <button 
+                class="TLbtn btn-small btn-color-primary" 
+                (click)="updateContent(item, content.value)"
+                (keyup.enter)="updateContent(item, content.value)">
+                Aanpassen
               </button>
             </div>
 
@@ -92,8 +101,11 @@
                 </mat-form-field>
               </div>
               <div>
-                <button [disabled]="!cardGroup.valid" mat-button (click)="enableEditing(false, column); addCard(column); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
-                        class="TLbtn btn-small btn-color-primary">
+                <button
+                  [disabled]="!cardGroup.valid"
+                  mat-button (click)="enableEditing(false, column); addCard(column); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
+                  (keyup.enter)="enableEditing(false, column); addCard(column); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
+                  class="TLbtn btn-small btn-color-primary">
                   {{dict.ADD_BTN}}
                 </button>
                 <button mat-button (click)="enableEditing(false, column);"
@@ -117,8 +129,11 @@
               </mat-form-field>
             </div>
             <div>
-              <button [disabled]="!listGroup.valid" mat-button (click)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
-                      class="TLbtn btn-small btn-color-primary click_should_disable">
+              <button 
+                [disabled]="!listGroup.valid"
+                mat-button (click)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
+                (keyup.enter)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
+                class="TLbtn btn-small btn-color-primary click_should_disable">
                 {{dict.ADD_BTN}}
               </button>
               <button mat-button (click)="enable=false"
