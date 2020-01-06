@@ -55,6 +55,18 @@ namespace Retrospective_Back_End.Controllers
         public ActionResult<RetroCard> UpdateRetroCard(RetroCard retroCard)
         {
             _context.SaveRetroCard(retroCard);
+
+            RetroColumn retroColumn = _context.RetroColumns.Single(x => x.Id == retroCard.RetroColumnId);
+
+            try
+            {
+                _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
+            }
+            catch (Exception e)
+            {
+                _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+            }
+
             return retroCard;
         }
 
@@ -73,6 +85,7 @@ namespace Retrospective_Back_End.Controllers
 			{
 				_hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
 			}
+
 			return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
 		}
 
@@ -87,6 +100,17 @@ namespace Retrospective_Back_End.Controllers
             }
 
             _context.RemoveRetroCard(retroCard);
+
+            RetroColumn retroColumn = _context.RetroColumns.Single(x => x.Id == retroCard.RetroColumnId);
+
+            try
+            {
+                _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
+            }
+            catch (Exception e)
+            {
+                _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+            }
 
             return retroCard;
         }
