@@ -252,7 +252,7 @@ describe('RetroBoardComponent', () => {
       retrospectiveId
     );
 
-    component.updatePositions(column.retroCards, column.id);
+    component.updatePositions(column.retroCards);
 
     expect(column.retroCards.length === 3);
     expect(column.retroCards[0].position === 0);
