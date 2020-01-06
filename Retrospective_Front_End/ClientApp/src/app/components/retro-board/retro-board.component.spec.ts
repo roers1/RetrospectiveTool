@@ -280,7 +280,7 @@ describe('RetroBoardComponent', () => {
 
     fixture.detectChanges();
 
-    const newTitle: string = 'New Title';
+    const newTitle = 'New Title';
 
     card.updateContent(newTitle);
 
