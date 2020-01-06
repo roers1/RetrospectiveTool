@@ -108,8 +108,8 @@ export class RetroBoardComponent implements OnInit {
         event.currentIndex);
       this.updatePositions(event.container.data);
       this.updatePositions(event.previousContainer.data);
-      this.retroColumnService.updateColumn(retroColumn).subscribe(() => {});
-      this.retroColumnService.updateColumn(this.retrospective.retroColumns.filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0]).subscribe(() => {});
+      this.retroColumnService.updateColumn(retroColumn).subscribe(() => { });
+      this.retroColumnService.updateColumn(this.retrospective.retroColumns.filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0]).subscribe(() => { });
     }
   }
 
