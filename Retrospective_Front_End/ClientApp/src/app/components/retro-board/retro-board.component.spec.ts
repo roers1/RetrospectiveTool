@@ -28,7 +28,7 @@ describe('RetroBoardComponent', () => {
     let createBoardSpy;
     let updateRetroCard;
   const mockCard = new RetroCard(-1, 'this is card content', 0, 0);
-  const mockColumn = new RetroColumn(-1, 'test', []);
+  const mockColumn = new RetroColumn(-1, 'test', [], -1);
 
   beforeEach(async(() => {
     const retrospectiveService = jasmine.createSpyObj('RetrospectiveService', ['createRetrospective']);
@@ -92,7 +92,8 @@ describe('RetroBoardComponent', () => {
     const column: RetroColumn = new RetroColumn(
       0,
       'TestColumn',
-      []
+      [],
+      -1
     );
 
     component.retrospective = new Retrospective(
@@ -122,7 +123,8 @@ describe('RetroBoardComponent', () => {
     const column: RetroColumn = new RetroColumn(
       0,
       'TestColumn',
-      []
+      [],
+      -1
     );
 
     component.retrospective = new Retrospective(
@@ -160,8 +162,8 @@ describe('RetroBoardComponent', () => {
 
   it('should return to homepage on clean retroBoard', () => {
     component.retrospective = new Retrospective(1000, 'title', 'description', [
-      new RetroColumn(11, 'rc1', []),
-      new RetroColumn(22, 'rc2', [])
+      new RetroColumn(11, 'rc1', [], -1),
+      new RetroColumn(22, 'rc2', [], -1)
     ]);
 
     component.cleanRetroBoard();
@@ -175,7 +177,8 @@ describe('RetroBoardComponent', () => {
     const column: RetroColumn = new RetroColumn(
       0,
       'TestColumn',
-      []
+      [],
+      -1
     );
 
     component.retrospective = new Retrospective(
@@ -198,7 +201,8 @@ describe('RetroBoardComponent', () => {
     const column: RetroColumn = new RetroColumn(
       0,
       'TestColumn',
-      []
+      [],
+      -1
     );
 
     component.retrospective = new Retrospective(
@@ -223,7 +227,8 @@ describe('RetroBoardComponent', () => {
         new RetroCard(0, 'RetroCard 1', 1, 0),
         new RetroCard(1, 'RetroCard 2', 2, 0),
         new RetroCard(2, 'RetroCard 3', 0, 0)
-      ]
+      ],
+      -1
     );
 
     component.updatePositions(column.retroCards, column.id);
