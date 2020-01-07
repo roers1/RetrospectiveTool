@@ -214,7 +214,9 @@ export class RetroBoardComponent implements OnInit {
   updateContent(card: RetroCard, content) {
     card.content = content;
     this.enableContentEditing(false, card);
-    // TODO ADD SERVICE!
+
+    this.retroCardService.updateRetroCardContent(card, content)
+      .subscribe(_ => { });
   }
 
   updateColumnTitle(column: RetroColumn, newTitle) {

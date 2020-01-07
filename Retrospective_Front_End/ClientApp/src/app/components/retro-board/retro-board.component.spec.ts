@@ -261,30 +261,34 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should update content of a retrocard', () => {
-    component.retrospective = new Retrospective(1, 'retrospective1', 'des', []);
+    component.retrospective = new Retrospective(
+      1,
+      'retrospective1', 'des', []);
 
-    const retrospectiveId = component.retrospective.id;
+    const retrospective = component.retrospective;
 
     const column: RetroColumn = new RetroColumn(
       0,
       'TestColumn',
       [],
-      retrospectiveId
+      retrospective.id
     );
 
     const card: RetroCard = new RetroCard(0, 'RetroCard 1', 1, column.id);
 
-    column.addRetroCard(card);
+    retrospective.addRetroColumn(column);
+    retrospective.retroColumns[0].addRetroCard(card);
 
-    component.retrospective.addRetroColumn(column);
+    const retroColumn = retrospective.retroColumns[0];
+    const retroCard = retrospective.retroColumns[0].retroCards[0];
 
     fixture.detectChanges();
 
-    const newTitle = 'New Title';
+    const newContent = 'New Content';
 
-    card.updateContent(newTitle);
+    retroCard.updateContent(newContent);
 
-    expect(card.content).toEqual(newTitle);
+    expect(retroCard.content).toEqual(newContent);
   });
 
   it('should remove a retrocard from a retrocolumn', () => {
