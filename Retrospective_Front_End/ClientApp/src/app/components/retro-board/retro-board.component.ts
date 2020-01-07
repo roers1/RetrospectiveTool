@@ -277,4 +277,18 @@ export class RetroBoardComponent implements OnInit {
       duration: 2000,
     });
   }
+
+  voteUp(card: RetroCard) {
+    if (card.upVoters == null) {
+      card.upVoters = []
+    }
+    card.upVoters.push(-1)
+  }
+
+  voteDown(card) {
+    if (card.downVoters == null) {
+      card.downVoters = []
+    }
+    card.downVoters.push(-1)
+  }
 }
