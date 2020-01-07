@@ -151,9 +151,9 @@ export class RetroBoardComponent implements OnInit {
   }
 
   addCard(column: RetroColumn) {
-    const value = this.cardGroup.value;
+    const value = this.cardGroup.value.content;
 
-    this.retroCardService.createCard(column.id, column.retroCards.length, value.content).subscribe((card) => {
+    this.retroCardService.createCard(column.id, column.retroCards.length, value).subscribe((card) => {
       this.cardGroup.get('content').setValue('');
       column.retroCards.push(card);
     });
@@ -215,7 +215,10 @@ export class RetroBoardComponent implements OnInit {
     card.content = content;
     this.enableContentEditing(false, card);
 
-    this.retroCardService.updateRetroCardContent(card, content)
+    const newCard = card;
+    newCard.content = content;
+
+    this.retroCardService.updateRetroCard(newCard)
       .subscribe(_ => { });
   }
 
