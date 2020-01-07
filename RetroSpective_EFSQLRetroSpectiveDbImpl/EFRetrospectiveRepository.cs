@@ -22,7 +22,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 		public IQueryable<RetroCard> RetroCards => _context.RetroCards;
 		public IQueryable<Retrospective> getAll()
 		{
-			return _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards);
+			return _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroItems);
 
 		}
 
@@ -113,7 +113,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
                 if (dbEntry != null)
                 {
 	                dbEntry.Id = retroColumn.Id;
-                    dbEntry.RetroCards = retroColumn.RetroCards;
+                    dbEntry.RetroItems = retroColumn.RetroItems;
                     dbEntry.Title = retroColumn.Title;
                 }
             }
@@ -124,7 +124,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
         {
             foreach (RetroColumn retroColumn in retrospective.RetroColumns)
             {
-                foreach (RetroCard retroCard in retroColumn.RetroCards)
+                foreach (RetroCard retroCard in retroColumn.RetroItems)
                 {
                     _context.RetroCards.Add(retroCard);
                 }

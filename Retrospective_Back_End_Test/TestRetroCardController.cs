@@ -3,8 +3,11 @@ using Retrospective_Back_End.Controllers;
 using Retrospective_Core.Models;
 using Retrospective_Core.Services;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.SignalR;
+using Retrospective_Back_End.Realtime;
 using Xunit;
 
 namespace Retrospective_Back_End_Test
@@ -12,35 +15,25 @@ namespace Retrospective_Back_End_Test
     public class TestRetroCardController
     {
 	    readonly Mock<IRetroRespectiveRepository> _mockRetrospectiveRepo;
+	    private readonly Mock<IHubContext<NotifyHub, ITypedHubClient>> _hubContext;
 
-	    public TestRetroCardController() {
+
+        public TestRetroCardController() {
             this._mockRetrospectiveRepo = new Mock<IRetroRespectiveRepository>();
-            //var retroCards = new List<RetroCard>() {
-	           // new RetroCard 
-	           // {
-		          //  Content = "Test RetroCard",
-		          //  Position = 2
-	           // },    
-	           // new RetroCard
-	           // {
-		          //  Content = "Test RetroCard 2",
-		          //  Position = 5
-	           // },
-	           // new RetroCard
-	           // {
-		          //  Content = "Last test RetroCard",
-		          //  Position = 6
-	           // }
-
-            //};
-	    }
+            this._hubContext = new Mock<IHubContext<NotifyHub, ITypedHubClient>>();
+        }
 
         [Fact]
         public void AdditionOfARetroCard()
         {
             //Arrange
             IRetroRespectiveRepository repo = _mockRetrospectiveRepo.Object;
-            var controller = new RetroCardsController(repo);
+            var controller = new RetroCardsController(repo, _hubContext.Object);
+
+            IList<RetroColumn> retroColumns = new List<RetroColumn>();
+            retroColumns.Add(new RetroColumn{Id = 0});
+
+            this._mockRetrospectiveRepo.Setup(r => r.RetroColumns).Returns(retroColumns.AsQueryable);
 
             IList<RetroCard> retroCards = new List<RetroCard>();
 

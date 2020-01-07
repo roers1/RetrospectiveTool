@@ -58,13 +58,16 @@ namespace Retrospective_Back_End.Controllers
 
             RetroColumn retroColumn = _context.RetroColumns.Single(x => x.Id == retroCard.RetroColumnId);
 
-            try
+            if (_hubContext != null)
             {
-                _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
-            }
-            catch (Exception e)
-            {
-                _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+	            try
+	            {
+		            _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
+	            }
+	            catch (Exception e)
+	            {
+		            _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+	            }
             }
 
             return retroCard;
@@ -78,15 +81,19 @@ namespace Retrospective_Back_End.Controllers
 
             RetroColumn retroColumn = _context.RetroColumns.Single(x => x.Id == retroCard.RetroColumnId);
 
-            try {
-				_hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
-			}
-			catch (Exception e)
-			{
-				_hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
-			}
+            if (_hubContext.Clients != null)
+            {
+	            try
+	            {
+		            _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
+	            }
+	            catch (Exception e)
+	            {
+		            _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+	            }
+            }
 
-			return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
+            return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
 		}
 
         // DELETE: api/RetroCards/5
@@ -103,13 +110,16 @@ namespace Retrospective_Back_End.Controllers
 
             RetroColumn retroColumn = _context.RetroColumns.Single(x => x.Id == retroCard.RetroColumnId);
 
-            try
+            if (_hubContext != null)
             {
-                _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
-            }
-            catch (Exception e)
-            {
-                _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+	            try
+	            {
+		            _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
+	            }
+	            catch (Exception e)
+	            {
+		            _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+	            }
             }
 
             return retroCard;

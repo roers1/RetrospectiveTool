@@ -2,18 +2,16 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Retrospective_Core.Models {
-    public class RetroCard {
+    public class RetroCard : BaseItem {
+        
+        public int UpVotes { get; set; }
 
-        [Key]
-        public int Id { get; set; }
-        public string Content { get; set; }
-        public int Position { get; set; }
-        public int Upvotes { get; set; }
-        public int Downvotes { get; set; }
-        [ForeignKey("RetroColumnId")]
-        public int RetroColumnId { get; set; }
+        public int DownVotes { get; set; }
 
-        public virtual RetroColumn RetroColumn { get; set; }
+        [ForeignKey("FamilyId")]
+        public int FamilyId { get; set; }
+
+        public virtual RetroFamily RetroFamily { get; set; }
 
     }
 }
