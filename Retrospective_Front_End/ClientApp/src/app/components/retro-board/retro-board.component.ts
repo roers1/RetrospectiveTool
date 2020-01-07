@@ -189,35 +189,31 @@ export class RetroBoardComponent implements OnInit {
     });
   }
 
+  deleteCardDialog(givenCard: RetroCard) {
+    this.openDialog(this.dict.RETROBOARD_DELETE_CARD_NOTI, () => {
+      this.deleteCard(givenCard);
+      this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok');
+    });
+  }
+
   deleteCard(givenCard: RetroCard) {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '500px',
-      data: this.dict.RETROBOARD_DELETE_CARD_NOTI
+    this.retrospective.retroColumns.forEach(column => {
+      column.retroItems.forEach(card => {
+        if (card.id === givenCard.id) {
+          const index = column.retroItems.indexOf(givenCard);
+          column.retroItems.splice(index, 1);
+        }
+      });
+
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.retrospective.retroColumns.forEach(column => {
-          column.retroItems.forEach(card => {
-            if (card.id === givenCard.id) {
-              const index = column.retroItems.indexOf(givenCard);
-              column.retroItems.splice(index, 1);
-            }
-          });
-
-        });
-        this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok');
-
-        this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => { });
-      }
-    });
+    this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => { });
   }
 
   updateContent(card: RetroCard, content) {
     card.content = content;
     this.enableContentEditing(false, card);
 
-    this.retroCardService.updateRetroCardContent(card, content)
+    this.retroCardService.updateRetroCard(card)
       .subscribe(_ => { });
   }
 
