@@ -55,7 +55,7 @@ export class RetroBoardComponent implements OnInit {
     this.retrospectiveService.getRetrospective(id, (retrospective: Retrospective) => {
       this.retrospective = retrospective;
 
-      this.retrospective.retroColumns.forEach((x) => x.retroCards.sort((a, b) => {
+      this.retrospective.retroColumns.forEach((x) => x.retroItems.sort((a, b) => {
         if (a.position > b.position) {
           return 1;
         } else if (b.position > a.position) {
@@ -82,7 +82,7 @@ export class RetroBoardComponent implements OnInit {
         this.retrospectiveService.getRetrospective(id, (retrospective: Retrospective) => {
           this.retrospective = retrospective;
 
-          this.retrospective.retroColumns.forEach((x) => x.retroCards.sort((a, b) => {
+          this.retrospective.retroColumns.forEach((x) => x.retroItems.sort((a, b) => {
             if (a.position > b.position) {
               return 1;
             } else if (b.position > a.position) {
@@ -117,7 +117,7 @@ export class RetroBoardComponent implements OnInit {
       retroCard.position = index;
       index++;
 
-      this.retroCardService.updateRetroCard(retroCard, columnId).subscribe(_ => {
+      this.retroCardService.updateRetroCard(retroCard).subscribe(_ => {
       });
     }
   }
@@ -143,7 +143,7 @@ export class RetroBoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        column.retroCards = [];
+        column.retroItems = [];
         // TODO: ADD SERVICE!
         this.openSnackBar(this.dict.SNACKBAR_SUCCES_EMPTY, 'Ok');
       }
@@ -155,7 +155,7 @@ export class RetroBoardComponent implements OnInit {
 
     this.retroCardService.createCard(column.id, value.content).subscribe((card) => {
       this.cardGroup.get('content').setValue('');
-      column.retroCards.push(card);
+      column.retroItems.push(card);
     });
   }
 
@@ -196,10 +196,10 @@ export class RetroBoardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.retrospective.retroColumns.forEach(column => {
-          column.retroCards.forEach(card => {
+          column.retroItems.forEach(card => {
             if (card.id === givenCard.id) {
-              const index = column.retroCards.indexOf(givenCard);
-              column.retroCards.splice(index, 1);
+              const index = column.retroItems.indexOf(givenCard);
+              column.retroItems.splice(index, 1);
             }
           });
 
@@ -280,18 +280,21 @@ export class RetroBoardComponent implements OnInit {
 
   voteUp(card: RetroCard) {
     if (card.upVotes == null) {
-      card.upVotes = 0
+      card.upVotes = 0;
     }
     card.upVotes++;
+
+    this.retroCardService.updateRetroCard(card).subscribe(_ => {
+    });
   }
 
   voteDown(card: RetroCard) {
     if (card.downVotes == null) {
-      card.downVotes = 0
+      card.downVotes = 0;
     }
     card.downVotes++;
-    //update retrocard service
-    // this.retroCardService.updateRetroCard(card, columnId).subscribe(_ => {
-    // });
+
+    this.retroCardService.updateRetroCard(card).subscribe(_ => {
+    });
   }
 }

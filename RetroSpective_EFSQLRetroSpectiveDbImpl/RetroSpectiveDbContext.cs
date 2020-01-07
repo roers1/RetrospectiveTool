@@ -26,6 +26,8 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl {
 
         public virtual DbSet<RetroColumn> RetroColumns { get; set; }
 
+        public virtual DbSet<RetroFamily> RetroFamilies { get; set; }
+
         public virtual DbSet<RetroCard> RetroCards { get; set; }
     }
 }
