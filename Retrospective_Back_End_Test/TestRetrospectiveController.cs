@@ -33,7 +33,7 @@ namespace Retrospective_Back_End_Test
                         new RetroColumn
                         {
                             Title = "Kolom 1",
-                            RetroCards = new List<RetroCard>()
+                            RetroItems = new List<BaseItem>()
                             {
                                 new RetroCard
                                 {

@@ -15,6 +15,7 @@ import * as signalR from '@aspnet/signalr';
 import { LogLevel } from '@aspnet/signalr';
 import * as url from '../../../helpers/url-constants';
 import { baseUrl } from '../../../helpers/url-constants';
+import {BaseItem} from '../../../models/BaseItem';
 
 @Component({
   selector: 'app-retro-board',
@@ -56,7 +57,7 @@ export class RetroBoardComponent implements OnInit {
     this.retrospectiveService.getRetrospective(id, (retrospective: Retrospective) => {
       this.retrospective = retrospective;
 
-      this.retrospective.retroColumns.forEach((x) => x.retroCards.sort((a, b) => {
+      this.retrospective.retroColumns.forEach((x) => x.retroItems.sort((a, b) => {
         if (a.position > b.position) {
           return 1;
         } else if (b.position > a.position) {
@@ -83,7 +84,7 @@ export class RetroBoardComponent implements OnInit {
         this.retrospectiveService.getRetrospective(id, (retrospective: Retrospective) => {
           this.retrospective = retrospective;
 
-          this.retrospective.retroColumns.forEach((x) => x.retroCards.sort((a, b) => {
+          this.retrospective.retroColumns.forEach((x) => x.retroItems.sort((a, b) => {
             if (a.position > b.position) {
               return 1;
             } else if (b.position > a.position) {
@@ -97,7 +98,7 @@ export class RetroBoardComponent implements OnInit {
     });
   }
 
-  drop(event: CdkDragDrop<RetroCard[]>, retroColumn: RetroColumn) {
+  drop(event: CdkDragDrop<BaseItem[]>, retroColumn: RetroColumn) {
     if (event.container === event.previousContainer) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       this.updatePositions(event.container.data);
@@ -109,11 +110,12 @@ export class RetroBoardComponent implements OnInit {
       this.updatePositions(event.container.data);
       this.updatePositions(event.previousContainer.data);
       this.retroColumnService.updateColumn(retroColumn).subscribe(() => { });
+      // tslint:disable-next-line:max-line-length
       this.retroColumnService.updateColumn(this.retrospective.retroColumns.filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0]).subscribe(() => { });
     }
   }
 
-  updatePositions(retroCards: RetroCard[]) {
+  updatePositions(retroCards: BaseItem[]) {
     let index = 0;
 
     for (const retroCard of retroCards) {
@@ -143,7 +145,7 @@ export class RetroBoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        column.retroCards = [];
+        column.retroItems = [];
         // TODO: ADD SERVICE!
         this.openSnackBar(this.dict.SNACKBAR_SUCCES_EMPTY, 'Ok');
       }
@@ -153,9 +155,9 @@ export class RetroBoardComponent implements OnInit {
   addCard(column: RetroColumn) {
     const value = this.cardGroup.value;
 
-    this.retroCardService.createCard(column.id, column.retroCards.length, value.content).subscribe((card) => {
+    this.retroCardService.createCard(column.id, column.retroItems.length, value.content).subscribe((card) => {
       this.cardGroup.get('content').setValue('');
-      column.retroCards.push(card);
+      column.retroItems.push(card);
     });
   }
 
@@ -196,15 +198,15 @@ export class RetroBoardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.retrospective.retroColumns.forEach(column => {
-          column.retroCards.forEach(card => {
+          column.retroItems.forEach(card => {
             if (card.id === givenCard.id) {
-              const index = column.retroCards.indexOf(givenCard);
-              column.retroCards.splice(index, 1);
+              const index = column.retroItems.indexOf(givenCard);
+              column.retroItems.splice(index, 1);
             }
           });
 
         });
-        this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok')
+        this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok');
 
         this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => { });
       }
@@ -231,7 +233,7 @@ export class RetroBoardComponent implements OnInit {
     this.editedContent[card.id] = bool;
   }
 
-  hasEnabledContentEditing(card: RetroCard) {
+  hasEnabledContentEditing(card: BaseItem) {
     if (!this.editedContent[card.id]) {
       this.editedContent[card.id] = false;
     }
@@ -279,5 +281,33 @@ export class RetroBoardComponent implements OnInit {
     this._snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  voteUp(card: RetroCard) {
+    if (card.upVotes == null) {
+      card.upVotes = 0;
+    }
+    card.upVotes++;
+
+    this.retroCardService.updateRetroCard(card).subscribe(_ => {
+    });
+  }
+
+  voteDown(card: RetroCard) {
+    if (card.downVotes == null) {
+      card.downVotes = 0;
+    }
+    card.downVotes++;
+
+    this.retroCardService.updateRetroCard(card).subscribe(_ => {
+    });
+  }
+
+  isRetroCard(item) {
+    return item.hasOwnProperty('upVotes');
+  }
+
+  castRetroCard(item: BaseItem): RetroCard {
+    return Object.assign(item, null);
   }
 }

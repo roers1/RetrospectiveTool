@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Retrospective_EFSQLRetrospectiveDbImpl;
 
 namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
 {
     [DbContext(typeof(RetroSpectiveDbContext))]
-    partial class RetroSpectiveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200107081932_Added voting system")]
+    partial class Addedvotingsystem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +21,7 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Retrospective_Core.Models.BaseItem", b =>
+            modelBuilder.Entity("Retrospective_Core.Models.RetroCard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,9 +31,8 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Downvotes")
+                        .HasColumnType("int");
 
                     b.Property<int>("Position")
                         .HasColumnType("int");
@@ -39,13 +40,14 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                     b.Property<int>("RetroColumnId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Upvotes")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RetroColumnId");
 
-                    b.ToTable("BaseItem");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseItem");
+                    b.ToTable("RetroCards");
                 });
 
             modelBuilder.Entity("Retrospective_Core.Models.RetroColumn", b =>
@@ -91,36 +93,8 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
 
             modelBuilder.Entity("Retrospective_Core.Models.RetroCard", b =>
                 {
-                    b.HasBaseType("Retrospective_Core.Models.BaseItem");
-
-                    b.Property<int>("DownVotes")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FamilyId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RetroFamilyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UpVotes")
-                        .HasColumnType("int");
-
-                    b.HasIndex("RetroFamilyId");
-
-                    b.HasDiscriminator().HasValue("RetroCard");
-                });
-
-            modelBuilder.Entity("Retrospective_Core.Models.RetroFamily", b =>
-                {
-                    b.HasBaseType("Retrospective_Core.Models.BaseItem");
-
-                    b.HasDiscriminator().HasValue("RetroFamily");
-                });
-
-            modelBuilder.Entity("Retrospective_Core.Models.BaseItem", b =>
-                {
                     b.HasOne("Retrospective_Core.Models.RetroColumn", "RetroColumn")
-                        .WithMany("RetroItems")
+                        .WithMany("RetroCards")
                         .HasForeignKey("RetroColumnId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -133,13 +107,6 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                         .HasForeignKey("RetrospectiveId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Retrospective_Core.Models.RetroCard", b =>
-                {
-                    b.HasOne("Retrospective_Core.Models.RetroFamily", "RetroFamily")
-                        .WithMany("RetroCards")
-                        .HasForeignKey("RetroFamilyId");
                 });
 #pragma warning restore 612, 618
         }
