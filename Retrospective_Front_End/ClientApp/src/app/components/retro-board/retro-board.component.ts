@@ -15,6 +15,7 @@ import * as signalR from '@aspnet/signalr';
 import { LogLevel } from '@aspnet/signalr';
 import * as url from '../../../helpers/url-constants';
 import { baseUrl } from '../../../helpers/url-constants';
+import {BaseItem} from '../../../models/BaseItem';
 
 @Component({
   selector: 'app-retro-board',
@@ -97,7 +98,7 @@ export class RetroBoardComponent implements OnInit {
     });
   }
 
-  drop(event: CdkDragDrop<RetroCard[]>, retroColumn: RetroColumn) {
+  drop(event: CdkDragDrop<BaseItem[]>, retroColumn: RetroColumn) {
     if (event.container === event.previousContainer) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       this.updatePositions(event.container.data);
@@ -109,19 +110,17 @@ export class RetroBoardComponent implements OnInit {
       this.updatePositions(event.container.data);
       this.updatePositions(event.previousContainer.data);
       this.retroColumnService.updateColumn(retroColumn).subscribe(() => { });
+      // tslint:disable-next-line:max-line-length
       this.retroColumnService.updateColumn(this.retrospective.retroColumns.filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0]).subscribe(() => { });
     }
   }
 
-  updatePositions(retroCards: RetroCard[]) {
+  updatePositions(retroCards: BaseItem[]) {
     let index = 0;
 
     for (const retroCard of retroCards) {
       retroCard.position = index;
       index++;
-
-      this.retroCardService.updateRetroCard(retroCard).subscribe(_ => {
-      });
     }
   }
 
@@ -156,7 +155,7 @@ export class RetroBoardComponent implements OnInit {
   addCard(column: RetroColumn) {
     const value = this.cardGroup.value;
 
-    this.retroCardService.createCard(column.id, column.retroCards.length, value.content).subscribe((card) => {
+    this.retroCardService.createCard(column.id, column.retroItems.length, value.content).subscribe((card) => {
       this.cardGroup.get('content').setValue('');
       column.retroItems.push(card);
     });
@@ -207,7 +206,7 @@ export class RetroBoardComponent implements OnInit {
           });
 
         });
-        this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok')
+        this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok');
 
         this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => { });
       }
@@ -234,7 +233,7 @@ export class RetroBoardComponent implements OnInit {
     this.editedContent[card.id] = bool;
   }
 
-  hasEnabledContentEditing(card: RetroCard) {
+  hasEnabledContentEditing(card: BaseItem) {
     if (!this.editedContent[card.id]) {
       this.editedContent[card.id] = false;
     }
@@ -302,5 +301,13 @@ export class RetroBoardComponent implements OnInit {
 
     this.retroCardService.updateRetroCard(card).subscribe(_ => {
     });
+  }
+
+  isRetroCard(item) {
+    return item.hasOwnProperty('upVotes');
+  }
+
+  castRetroCard(item: BaseItem): RetroCard {
+    return Object.assign(item, null);
   }
 }

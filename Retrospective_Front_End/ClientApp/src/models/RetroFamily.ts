@@ -1,4 +1,4 @@
-import { BaseItem } from "./BaseItem";
+import { BaseItem } from './BaseItem';
 
 export class RetroCard extends BaseItem {
 
