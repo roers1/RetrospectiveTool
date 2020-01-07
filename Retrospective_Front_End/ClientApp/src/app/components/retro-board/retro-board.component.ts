@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { RetroCard } from '../../../models/RetroCard';
-import { Retrospective } from '../../../models/Retrospective';
-import { RetroColumn } from '../../../models/RetroColumn';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RetrospectiveService } from '../../services/retrospective.service';
-import { RetroColumnService } from '../../services/retro-column.service';
-import { RetroCardService } from '../../services/retro-card.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { dictionary } from '../../../helpers/message-constants';
+import {Component, OnInit} from '@angular/core';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {RetroCard} from '../../../models/RetroCard';
+import {Retrospective} from '../../../models/Retrospective';
+import {RetroColumn} from '../../../models/RetroColumn';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {RetrospectiveService} from '../../services/retrospective.service';
+import {RetroColumnService} from '../../services/retro-column.service';
+import {RetroCardService} from '../../services/retro-card.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {dictionary} from '../../../helpers/message-constants';
 import * as signalR from '@aspnet/signalr';
-import { LogLevel } from '@aspnet/signalr';
+import {LogLevel} from '@aspnet/signalr';
 import * as url from '../../../helpers/url-constants';
-import { baseUrl } from '../../../helpers/url-constants';
+import {baseUrl} from '../../../helpers/url-constants';
 import {BaseItem} from '../../../models/BaseItem';
+import {RetroFamily} from '../../../models/RetroFamily';
 
 @Component({
   selector: 'app-retro-board',
@@ -109,9 +110,11 @@ export class RetroBoardComponent implements OnInit {
         event.currentIndex);
       this.updatePositions(event.container.data);
       this.updatePositions(event.previousContainer.data);
-      this.retroColumnService.updateColumn(retroColumn).subscribe(() => { });
+      this.retroColumnService.updateColumn(retroColumn).subscribe(() => {
+      });
       // tslint:disable-next-line:max-line-length
-      this.retroColumnService.updateColumn(this.retrospective.retroColumns.filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0]).subscribe(() => { });
+      this.retroColumnService.updateColumn(this.retrospective.retroColumns.filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0]).subscribe(() => {
+      });
     }
   }
 
@@ -208,7 +211,8 @@ export class RetroBoardComponent implements OnInit {
         });
         this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok');
 
-        this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => { });
+        this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => {
+        });
       }
     });
   }
@@ -218,7 +222,8 @@ export class RetroBoardComponent implements OnInit {
     this.enableContentEditing(false, card);
 
     this.retroCardService.updateRetroCardContent(card, content)
-      .subscribe(_ => { });
+      .subscribe(_ => {
+      });
   }
 
   updateColumnTitle(column: RetroColumn, newTitle) {
@@ -307,7 +312,19 @@ export class RetroBoardComponent implements OnInit {
     return item.hasOwnProperty('upVotes');
   }
 
+  isFamily(item) {
+    return item.hasOwnProperty('retroCards');
+  }
+
   castRetroCard(item: BaseItem): RetroCard {
     return Object.assign(item, null);
+  }
+
+  castFamily(item: BaseItem): RetroFamily {
+    return Object.assign(item, null);
+  }
+
+  addFamily(retroColumn: RetroColumn) {
+    retroColumn.retroItems.push(new RetroFamily(0, 'Okay', 0, retroColumn.id, [new RetroCard(0, 'Okay', 0, retroColumn.id, 0, 0)]));
   }
 }
