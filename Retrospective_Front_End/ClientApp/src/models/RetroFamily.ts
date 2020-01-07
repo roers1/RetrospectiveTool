@@ -7,8 +7,7 @@ export class RetroCard extends BaseItem {
     public content: string,
     public position: number,
     public retroColumnId: number,
-    public upVotes: number,
-    public downVotes: number
+    public retroCards:  RetroCard[]
   ) {
     super(id, content, position, retroColumnId);
   }
