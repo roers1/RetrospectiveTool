@@ -25,14 +25,17 @@
             <img class="icon" id="icon_menu" src="../../../assets/images/icon_dot_menu.png"
                  [matMenuTriggerFor]="menu">
             <mat-menu #menu="matMenu">
+              <button mat-menu-item class="dropdownitem">
+                {{dict.CREATE_NEW_FAMILY_BTN}}
+              </button>
+              <button mat-menu-item class="dropdownitem" (click)="enableColumnTitleEditing(true, column)">
+                {{dict.EDIT_COLUMN_BTN}}
+              </button>
               <button mat-menu-item class="dropdownitem" (click)="emptyColumn(column)">
                 {{dict.EMPTY_COLUMN_BTN}}
               </button>
               <button mat-menu-item class="dropdownitem" (click)="deleteColumnDialog(column)">
                 {{dict.DELETE_COLUMN_BTN}}
-              </button>
-              <button mat-menu-item class="dropdownitem" (click)="enableColumnTitleEditing(true, column)">
-                {{dict.EDIT_COLUMN_BTN}}
               </button>
             </mat-menu>
           </div>
@@ -45,7 +48,7 @@
           <button class="TLbtn btn-small btn-color-primary editTitleBtn"
                   (click)="updateColumnTitle(column, newtitle.value)"
                   (keyup.enter)="updateColumnTitle(column, newtitle.value)">
-            Aanpassen
+            {{dict.EDIT_BTN}}
           </button>
         </div>
 
@@ -62,7 +65,7 @@
                 <button class="TLbtn btn-small btn-color-primary"
                         (click)="updateContent(castRetroCard(item), content.value)"
                         (keyup.enter)="updateContent(castRetroCard(item), content.value)">
-                  Aanpassen
+                        {{dict.EDIT_BTN}}
                 </button>
               </div>
 
