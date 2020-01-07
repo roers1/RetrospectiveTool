@@ -24,7 +24,7 @@ export class RetroCardService {
     return this.http.post<RetroCard>(this.baseUrlRetroCards, {
       content: content,
       position: position,
-      retrocolumnId: columnId
+      retroColumnId: columnId
     }, this.httpOptions);
   }
 
@@ -36,19 +36,10 @@ export class RetroCardService {
     return this.http.get<RetroCard[]>(this.baseUrlRetroCards, this.httpOptions);
   }
 
-  updateRetroCard(retroCard: RetroCard, columnId) {
+  updateRetroCard(retroCard: RetroCard) {
     return this.http.put<RetroCard>(this.baseUrlRetroCards, {
       id: retroCard.id,
       content: retroCard.content,
-      position: retroCard.position,
-      retroColumnId: columnId
-    }, this.httpOptions);
-  }
-
-  updateRetroCardContent(retroCard: RetroCard, content) {
-    return this.http.put<RetroCard>(this.baseUrlRetroCards, {
-      id: retroCard.id,
-      content: content,
       position: retroCard.position,
       retroColumnId: retroCard.retroColumnId
     }, this.httpOptions);
