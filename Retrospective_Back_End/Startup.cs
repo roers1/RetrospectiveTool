@@ -55,11 +55,13 @@ namespace Retrospective_Back_End
 	            app.UseHsts();
             }
 
+            app.UseFileServer();
+            app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
             app.UseSignalR(routes =>
             {
-                routes.MapHub<NotifyHub>("/notify");
+                routes.MapHub<NotifyHub>("/api/notify");
             });
             app.UseMvc();
             SeedData.Initialize(service);

@@ -89,19 +89,23 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should add card', () => {
-    const column: RetroColumn = new RetroColumn(
-      0,
-      'TestColumn',
-      [],
-      -1
-    );
-
     component.retrospective = new Retrospective(
       0,
       'Cool board',
       'Wow',
-      [column]
+      []
     );
+
+    const retrospectiveId: number = component.retrospective.id;
+
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [],
+      retrospectiveId
+    );
+
+    component.retrospective.addRetroColumn(column);
 
     fixture.detectChanges();
 
@@ -120,19 +124,23 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should enable editing', () => {
-    const column: RetroColumn = new RetroColumn(
-      0,
-      'TestColumn',
-      [],
-      -1
-    );
-
     component.retrospective = new Retrospective(
       0,
       'Cool board',
       'Wow',
-      [column]
+      []
     );
+
+    const retrospectiveId: number = component.retrospective.id;
+
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [],
+      retrospectiveId
+    );
+
+    component.retrospective.addRetroColumn(column);
 
     fixture.detectChanges();
 
@@ -161,10 +169,12 @@ describe('RetroBoardComponent', () => {
 
 
   it('should return to homepage on clean retroBoard', () => {
-    component.retrospective = new Retrospective(1000, 'title', 'description', [
-      new RetroColumn(11, 'rc1', [], -1),
-      new RetroColumn(22, 'rc2', [], -1)
-    ]);
+    component.retrospective = new Retrospective(1000, 'title', 'description', []);
+
+    const retrospectiveId = component.retrospective.id;
+
+    component.retrospective.addRetroColumn(new RetroColumn(11, 'rc1', [], retrospectiveId));
+    component.retrospective.addRetroColumn(new RetroColumn(22, 'rc2', [], retrospectiveId));
 
     component.cleanRetroBoard();
     fixture.detectChanges();
@@ -174,18 +184,20 @@ describe('RetroBoardComponent', () => {
   });
 
   it('Should edit title when edit title is called', () => {
-    const column: RetroColumn = new RetroColumn(
-      0,
-      'TestColumn',
-      [],
-      -1
-    );
-
     component.retrospective = new Retrospective(
       0,
       'Cool board',
       'Wow',
-      [column]
+      []
+    );
+
+    const retrospectiveId: number = component.retrospective.id;
+
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [],
+      retrospectiveId
     );
 
     fixture.detectChanges();
@@ -198,19 +210,23 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should be able to delete column', () => {
-    const column: RetroColumn = new RetroColumn(
-      0,
-      'TestColumn',
-      [],
-      -1
-    );
-
     component.retrospective = new Retrospective(
       0,
       'Cool board',
       'Wow',
-      [column]
+      []
     );
+
+    const retrospectiveId = component.retrospective.id;
+
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [],
+      retrospectiveId
+    );
+
+    component.retrospective.addRetroColumn(column);
 
     fixture.detectChanges();
 
@@ -220,6 +236,10 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should re-assign the positions of a column', () => {
+    component.retrospective = new Retrospective(1, 'retrospective1', 'des', []);
+
+    const retrospectiveId = component.retrospective.id;
+
     const column: RetroColumn = new RetroColumn(
       0,
       'TestColumn',
@@ -228,15 +248,78 @@ describe('RetroBoardComponent', () => {
         new RetroCard(1, 'RetroCard 2', 2, 0, 0, 0),
         new RetroCard(2, 'RetroCard 3', 0, 0, 0, 0)
       ],
-      -1
+      retrospectiveId
     );
 
-    component.updatePositions(column.retroCards, column.id);
+    component.updatePositions(column.retroCards);
 
     expect(column.retroCards.length === 3);
     expect(column.retroCards[0].position === 0);
     expect(column.retroCards[1].position === 1);
     expect(column.retroCards[2].position === 2);
+  });
+
+  it('should update content of a retrocard', () => {
+    component.retrospective = new Retrospective(
+      1,
+      'retrospective1', 'des', []);
+
+    const retrospective = component.retrospective;
+
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [],
+      retrospective.id
+    );
+
+    const card: RetroCard = new RetroCard(0, 'RetroCard 1', 1, column.id);
+
+    retrospective.addRetroColumn(column);
+    retrospective.retroColumns[0].addRetroCard(card);
+
+    const retroColumn = retrospective.retroColumns[0];
+    const retroCard = retrospective.retroColumns[0].retroCards[0];
+
+    fixture.detectChanges();
+
+    const newContent = 'New Content';
+
+    retroCard.updateContent(newContent);
+
+    expect(retroCard.content).toEqual(newContent);
+  });
+
+  it('should remove a retrocard from a retrocolumn', () => {
+    component.retrospective = new Retrospective(
+      1,
+      'title',
+      'des',
+      []
+    );
+
+    const retrospective = component.retrospective;
+
+    const column: RetroColumn = new RetroColumn(
+      123,
+      'cardTitle',
+      [],
+      retrospective.id
+    );
+
+    const card: RetroCard = new RetroCard(12, 'content', 0, column.id);
+
+    retrospective.addRetroColumn(column);
+
+    fixture.detectChanges();
+
+    const retroColumn = retrospective.retroColumns[0];
+
+    retroColumn.addRetroCard(card);
+    expect(retroColumn.retroCards.length).toEqual(1);
+
+    column.removeRetroCard(card);
+    expect(retroColumn.retroCards.length).toEqual(0);
   });
 
   it('card should have 2 upvotes & 1 downvote', () => {
