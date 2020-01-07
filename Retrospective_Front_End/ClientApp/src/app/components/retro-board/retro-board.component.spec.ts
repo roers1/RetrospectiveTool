@@ -7,16 +7,16 @@ import { Retrospective } from '../../../models/Retrospective';
 import { RetroCardService } from '../../services/retro-card.service';
 import { RetroCard } from '../../../models/RetroCard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule, MatDialogModule, MatIconModule, MatSnackBar, MatTooltipModule} from '@angular/material';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatFormFieldModule} from '@angular/material';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterModule, Router} from '@angular/router';
-import {RouterTestingModule} from '@angular/router/testing';
-import {MatDialog} from '@angular/material';
-import {RetroColumnService} from '../../services/retro-column.service';
-import {of} from 'rxjs';
+import { MatButtonModule, MatDialogModule, MatIconModule, MatSnackBar, MatTooltipModule } from '@angular/material';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterModule, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialog } from '@angular/material';
+import { RetroColumnService } from '../../services/retro-column.service';
+import { of } from 'rxjs';
 
 describe('RetroBoardComponent', () => {
   let component: RetroBoardComponent;
@@ -25,9 +25,9 @@ describe('RetroBoardComponent', () => {
   let createColumnSpy;
   let updateColumnSpy;
   let addCardSpy;
-    let createBoardSpy;
-    let updateRetroCard;
-  const mockCard = new RetroCard(-1, 'this is card content', 0, 0);
+  let createBoardSpy;
+  let updateRetroCard;
+  const mockCard = new RetroCard(-1, 'this is card content', 0, 0, 0, 0);
   const mockColumn = new RetroColumn(-1, 'test', [], -1);
 
   beforeEach(async(() => {
@@ -44,13 +44,13 @@ describe('RetroBoardComponent', () => {
     createBoardSpy = retrospectiveService.createRetrospective.and.returnValue(of());
 
     TestBed.configureTestingModule({
-        imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule,
+      imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule,
         MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule, MatTooltipModule,
         HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule, BrowserAnimationsModule],
       declarations: [RetroBoardComponent],
       providers: [MatDialog, MatSnackBar,
-        {provide: RetroColumnService, useValue: retroColumnService},
-        {provide: RetroCardService, useValue: retroCardService}]
+        { provide: RetroColumnService, useValue: retroColumnService },
+        { provide: RetroCardService, useValue: retroCardService }]
     })
       .compileComponents();
   }));
@@ -224,9 +224,9 @@ describe('RetroBoardComponent', () => {
       0,
       'TestColumn',
       [
-        new RetroCard(0, 'RetroCard 1', 1, 0),
-        new RetroCard(1, 'RetroCard 2', 2, 0),
-        new RetroCard(2, 'RetroCard 3', 0, 0)
+        new RetroCard(0, 'RetroCard 1', 1, 0, 0, 0),
+        new RetroCard(1, 'RetroCard 2', 2, 0, 0, 0),
+        new RetroCard(2, 'RetroCard 3', 0, 0, 0, 0)
       ],
       -1
     );
@@ -238,4 +238,25 @@ describe('RetroBoardComponent', () => {
     expect(column.retroCards[1].position === 1);
     expect(column.retroCards[2].position === 2);
   });
+
+  it('card should have 2 upvotes & 1 downvote', () => {
+    const retroCard = new RetroCard(1, 'RetroCard 2', 2, 0, 0, 0)
+    const column: RetroColumn = new RetroColumn(
+      0,
+      'TestColumn',
+      [
+        new RetroCard(0, 'RetroCard 1', 1, 0, 0, 0),
+        retroCard,
+        new RetroCard(2, 'RetroCard 3', 0, 0, 0, 0)
+      ],
+      -1
+    );
+
+    component.voteUp(retroCard)
+    component.voteUp(retroCard)
+    component.voteDown(retroCard)
+
+    expect(column.retroCards[1].upVotes === 2)
+    expect(column.retroCards[1].downVotes === 1)
+  })
 });

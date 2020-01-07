@@ -71,16 +71,14 @@
                   (click)="deleteCard(item)" alt="" />
               </div>
               <div class="votecount row">
-                <div class="vote-up vote-text">+{{item.upVoters == null ? 0 : item.upVotes}}</div>
+                <div class="vote-up vote-text">+{{item.upVotes}}</div>
                 <div class="vote-text">&nbsp;</div>
-                <div class="vote-down vote-text">-{{item.downVoters == null ? 0 : item.downVotes}}</div>
+                <div class="vote-down vote-text">-{{item.downVotes}}</div>
               </div>
               <div class="smiley-icons" id="expandable">
-                <img class="icon" id="icon_edit" src="../../../assets/images/smiley_happy.png" (click)="voteUp(item)"
-                  alt="" />
+                <img class="icon" id="icon_edit" src="../../../assets/images/smiley_happy.png" (click)="voteUp(item)" alt="" />
                 <img class="icon" id="icon_edit" src="../../../assets/images/smiley_neutral.png" alt="" />
-                <img class="icon" id="icon_edit" src="../../../assets/images/smiley_down.png" (click)="voteDown(item)"
-                  alt="" />
+                <img class="icon" id="icon_edit" src="../../../assets/images/smiley_down.png" (click)="voteDown(item)" alt="" />
               </div>
             </div>
           </div>
