@@ -1,23 +1,20 @@
 <body *ngIf="retrospective">
-<div class="foreground">
+  <div class="foreground">
 
-  <div class="scrollable">
-    <div class="locked">
-      <br>
+    <div class="scrollable">
+      <div class="locked">
+        <br>
         <div class="title-background-left">
           <h1 matTooltip="{{retrospective.description}}">{{retrospective.title}}</h1>
         </div>
         <div class="title-background-right">
-          <img class="icon"
-          id="icon_wipe"
-          src="../../../assets/images/broom.png"
-          (click)="cleanRetroBoardDialog()" />
+          <img class="icon" id="icon_wipe" src="../../../assets/images/broom.png" (click)="cleanRetroBoardDialog()" />
         </div>
-    </div>
-    <br>
+      </div>
+      <br>
 
-    <div class="board_area">
-      <div class="example-container" *ngFor="let column of retrospective.retroColumns">
+      <div class="board_area">
+        <div class="example-container" *ngFor="let column of retrospective.retroColumns">
           <div class="row column-title-holder">
 
             <div class="column-title">
@@ -25,21 +22,16 @@
             </div>
 
             <div class="icon_menu">
-              <img class="icon" id="icon_menu" src="../../../assets/images/icon_dot_menu.png" [matMenuTriggerFor]="menu">
+              <img class="icon" id="icon_menu" src="../../../assets/images/icon_dot_menu.png"
+                [matMenuTriggerFor]="menu">
               <mat-menu #menu="matMenu">
-                <button mat-menu-item
-                        class="dropdownitem"
-                        (click)="emptyColumn(column)">
+                <button mat-menu-item class="dropdownitem" (click)="emptyColumn(column)">
                   {{dict.EMPTY_COLUMN_BTN}}
                 </button>
-                <button mat-menu-item
-                        class="dropdownitem"
-                        (click)="deleteColumnDialog(column)">
+                <button mat-menu-item class="dropdownitem" (click)="deleteColumnDialog(column)">
                   {{dict.DELETE_COLUMN_BTN}}
                 </button>
-                <button mat-menu-item
-                        class="dropdownitem"
-                        (click)="enableColumnTitleEditing(true, column)">
+                <button mat-menu-item class="dropdownitem" (click)="enableColumnTitleEditing(true, column)">
                   {{dict.EDIT_COLUMN_BTN}}
                 </button>
               </mat-menu>
@@ -47,106 +39,109 @@
           </div>
 
 
-        <div class="box-content" *ngIf="hasEnabledColumnTitleEditing(column)">
-          <input type="text" #newtitle value="{{column.title}}">
-          <br>
-          <button 
-            class="TLbtn btn-small btn-color-primary editTitleBtn" 
-            (click)="updateColumnTitle(column, newtitle.value)"
-            (keyup.enter)="updateColumnTitle(column, newtitle.value)">
-            Aanpassen
-          </button>
-        </div>
+          <div class="box-content" *ngIf="hasEnabledColumnTitleEditing(column)">
+            <input type="text" #newtitle value="{{column.title}}">
+            <br>
+            <button class="TLbtn btn-small btn-color-primary editTitleBtn"
+              (click)="updateColumnTitle(column, newtitle.value)"
+              (keyup.enter)="updateColumnTitle(column, newtitle.value)">
+              Aanpassen
+            </button>
+          </div>
 
-        <div cdkDropList
-             #element="cdkDropList"
-             [attr.id]="column.title"
-             [cdkDropListData]="column.retroCards"
-             [cdkDropListConnectedTo]="getColumnNames(element)"
-             class="example-list"
-             (cdkDropListDropped)="drop($event, column.id)">
-          <div class="example-box" *ngFor="let item of column.retroCards" cdkDrag>
-            <div class="box-content" *ngIf="!hasEnabledContentEditing(item)">
-              {{item.content}}
-            </div>
-            <div class="box-content" *ngIf="hasEnabledContentEditing(item)">
-              <textarea type="text" class="editContentInput" #content value="{{item.content}}"></textarea>
-              <button 
-                class="TLbtn btn-small btn-color-primary" 
-                (click)="updateContent(item, content.value)"
-                (keyup.enter)="updateContent(item, content.value)">
-                Aanpassen
-              </button>
-            </div>
+          <div cdkDropList #element="cdkDropList" [attr.id]="column.title" [cdkDropListData]="column.retroCards"
+            [cdkDropListConnectedTo]="getColumnNames(element)" class="example-list"
+            (cdkDropListDropped)="drop($event, column.id)">
+            <div class="example-box" *ngFor="let item of column.retroCards" cdkDrag>
+              <div class="box-content" *ngIf="!hasEnabledContentEditing(item)">
+                {{item.content}}
+              </div>
+              <div class="box-content" *ngIf="hasEnabledContentEditing(item)">
+                <textarea type="text" class="editContentInput" #content value="{{item.content}}"></textarea>
+                <button class="TLbtn btn-small btn-color-primary" (click)="updateContent(item, content.value)"
+                  (keyup.enter)="updateContent(item, content.value)">
+                  Aanpassen
+                </button>
+              </div>
 
-            <div class="icons">
-              <img class="icon" id="icon_edit" src="../../../assets/images/icon_edit.png"
-                   (click)="enableContentEditing(true, item)" alt=""/>
-              <img class="icon" id="icon_delete" src="../../../assets/images/icon_delete.png" (click)="deleteCard(item)"
-                   alt=""/>
+              <div class="icons">
+                <img class="icon" id="icon_edit" src="../../../assets/images/icon_edit.png"
+                  (click)="enableContentEditing(true, item)" alt="" />
+                <img class="icon" id="icon_delete" src="../../../assets/images/icon_delete.png"
+                  (click)="deleteCard(item)" alt="" />
+              </div>
+              <div class="votecount row">
+                <div class="vote-up vote-text">+{{item.upVoters == null ? 0 : item.upVotes}}</div>
+                <div class="vote-text">&nbsp;</div>
+                <div class="vote-down vote-text">-{{item.downVoters == null ? 0 : item.downVotes}}</div>
+              </div>
+              <div class="smiley-icons" id="expandable">
+                <img class="icon" id="icon_edit" src="../../../assets/images/smiley_happy.png" (click)="voteUp(item)"
+                  alt="" />
+                <img class="icon" id="icon_edit" src="../../../assets/images/smiley_neutral.png" alt="" />
+                <img class="icon" id="icon_edit" src="../../../assets/images/smiley_down.png" (click)="voteDown(item)"
+                  alt="" />
+              </div>
+            </div>
+          </div>
+
+          <div class="example-container-toaddcard">
+            <h6 (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ {{dict.CREATE_NEW_CARD_BTN}}
+            </h6>
+            <div class="animated-item" *ngIf="hasEnabledEditing(column)">
+              <form [formGroup]="cardGroup">
+                <div>
+                  <mat-form-field [formGroup]="cardGroup" class="inputfield">
+                    <label class="inputfield">
+                      <input class="inputfield" matInput #card placeholder="{{dict.FILL_IN_DESC_FORM}}"
+                        formControlName="content" value="">
+                    </label>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <button [disabled]="!cardGroup.valid" mat-button
+                    (click)="enableEditing(false, column); addCard(column); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
+                    (keyup.enter)="enableEditing(false, column); addCard(column); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
+                    class="TLbtn btn-small btn-color-primary">
+                    {{dict.ADD_BTN}}
+                  </button>
+                  <button mat-button (click)="enableEditing(false, column);"
+                    class="TLbtn btn-small btn-color-secondary btn-margin-left">
+                    {{dict.CANCEL_BTN}}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
 
-        <div class="example-container-toaddcard">
-          <h6 (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ {{dict.CREATE_NEW_CARD_BTN}}</h6>
-          <div class="animated-item" *ngIf="hasEnabledEditing(column)">
-            <form [formGroup]="cardGroup">
+        <div class="example-container-toadd">
+          <h4 class="clickable_element" (click)="enable=true">+ {{dict.CREATE_NEW_COLUMN_BTN}}</h4>
+          <div class="animated-item" *ngIf="enable">
+            <form [formGroup]="listGroup">
               <div>
-                <mat-form-field [formGroup]="cardGroup" class="inputfield">
-                  <label class="inputfield">
-                    <input class="inputfield" matInput #card placeholder="{{dict.FILL_IN_DESC_FORM}}"
-                           formControlName="content" value="">
-                  </label>
+                <mat-form-field [formGroup]="listGroup" class="inputfield">
+                  <input matInput #column placeholder="{{dict.FILL_IN_TITLE_FORM}}" class="inputfield"
+                    formControlName="title" value="">
                 </mat-form-field>
               </div>
               <div>
-                <button
-                  [disabled]="!cardGroup.valid"
-                  mat-button (click)="enableEditing(false, column); addCard(column); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
-                  (keyup.enter)="enableEditing(false, column); addCard(column); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
-                  class="TLbtn btn-small btn-color-primary">
+                <button [disabled]="!listGroup.valid" mat-button
+                  (click)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
+                  (keyup.enter)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
+                  class="TLbtn btn-small btn-color-primary click_should_disable">
                   {{dict.ADD_BTN}}
                 </button>
-                <button mat-button (click)="enableEditing(false, column);"
-                        class="TLbtn btn-small btn-color-secondary btn-margin-left">
+                <button mat-button (click)="enable=false"
+                  class="TLbtn btn-small btn-color-secondary clickable_element_closed btn-margin-left">
                   {{dict.CANCEL_BTN}}
                 </button>
               </div>
             </form>
           </div>
         </div>
-      </div>
 
-      <div class="example-container-toadd">
-        <h4 class="clickable_element" (click)="enable=true">+ {{dict.CREATE_NEW_COLUMN_BTN}}</h4>
-        <div class="animated-item" *ngIf="enable">
-          <form [formGroup]="listGroup">
-            <div>
-              <mat-form-field [formGroup]="listGroup" class="inputfield">
-                <input matInput #column placeholder="{{dict.FILL_IN_TITLE_FORM}}" class="inputfield"
-                       formControlName="title" value="">
-              </mat-form-field>
-            </div>
-            <div>
-              <button 
-                [disabled]="!listGroup.valid"
-                mat-button (click)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
-                (keyup.enter)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')"
-                class="TLbtn btn-small btn-color-primary click_should_disable">
-                {{dict.ADD_BTN}}
-              </button>
-              <button mat-button (click)="enable=false"
-                      class="TLbtn btn-small btn-color-secondary clickable_element_closed btn-margin-left">
-                {{dict.CANCEL_BTN}}
-              </button>
-            </div>
-          </form>
-        </div>
       </div>
-
     </div>
   </div>
-</div>
 </body>
-
