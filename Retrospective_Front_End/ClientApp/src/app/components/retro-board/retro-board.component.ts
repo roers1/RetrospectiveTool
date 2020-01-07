@@ -248,16 +248,19 @@ export class RetroBoardComponent implements OnInit {
   }
 
   voteUp(card: RetroCard) {
-    if (card.upVoters == null) {
-      card.upVoters = []
+    if (card.upVotes == null) {
+      card.upVotes = 0
     }
-    card.upVoters.push(-1)
+    card.upVotes++;
   }
 
-  voteDown(card) {
-    if (card.downVoters == null) {
-      card.downVoters = []
+  voteDown(card: RetroCard) {
+    if (card.downVotes == null) {
+      card.downVotes = 0
     }
-    card.downVoters.push(-1)
+    card.downVotes++;
+    //update retrocard service
+    // this.retroCardService.updateRetroCard(card, columnId).subscribe(_ => {
+    // });
   }
 }
