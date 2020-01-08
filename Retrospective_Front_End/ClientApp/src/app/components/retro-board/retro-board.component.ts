@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { RetroCard } from '../../../models/RetroCard';
-import { Retrospective } from '../../../models/Retrospective';
-import { RetroColumn } from '../../../models/RetroColumn';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RetrospectiveService } from '../../services/retrospective.service';
-import { RetroColumnService } from '../../services/retro-column.service';
-import { RetroCardService } from '../../services/retro-card.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { dictionary } from '../../../helpers/message-constants';
+import {Component, OnInit} from '@angular/core';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {RetroCard} from '../../../models/RetroCard';
+import {Retrospective} from '../../../models/Retrospective';
+import {RetroColumn} from '../../../models/RetroColumn';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {RetrospectiveService} from '../../services/retrospective.service';
+import {RetroColumnService} from '../../services/retro-column.service';
+import {RetroCardService} from '../../services/retro-card.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {dictionary} from '../../../helpers/message-constants';
 import * as signalR from '@aspnet/signalr';
-import { LogLevel } from '@aspnet/signalr';
+import {LogLevel} from '@aspnet/signalr';
 import * as url from '../../../helpers/url-constants';
-import { baseUrl } from '../../../helpers/url-constants';
+import {baseUrl} from '../../../helpers/url-constants';
 import {BaseItem} from '../../../models/BaseItem';
+import {RetroFamily} from '../../../models/RetroFamily';
+import {RetroFamilyService} from '../../services/retro-family.service';
 
 @Component({
   selector: 'app-retro-board',
@@ -44,6 +46,7 @@ export class RetroBoardComponent implements OnInit {
     public retrospectiveService: RetrospectiveService,
     public retroColumnService: RetroColumnService,
     public retroCardService: RetroCardService,
+    public retroFamilyService: RetroFamilyService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
@@ -98,7 +101,16 @@ export class RetroBoardComponent implements OnInit {
     });
   }
 
-  drop(event: CdkDragDrop<BaseItem[]>, retroColumn: RetroColumn) {
+  drop(event: CdkDragDrop<BaseItem[]>, retroColumn: RetroColumn, retroFamily: RetroFamily) {
+    if (retroFamily != null) {
+      this.updatePositions(retroFamily.retroCards);
+      for (const card of retroFamily.retroCards) {
+        card.familyId = retroFamily.id;
+      }
+
+      this.retroFamilyService.updateRetroFamily(retroFamily);
+    }
+
     if (event.container === event.previousContainer) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       this.updatePositions(event.container.data);
@@ -107,11 +119,14 @@ export class RetroBoardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+
       this.updatePositions(event.container.data);
       this.updatePositions(event.previousContainer.data);
-      this.retroColumnService.updateColumn(retroColumn).subscribe(() => { });
-      // tslint:disable-next-line:max-line-length
-      this.retroColumnService.updateColumn(this.retrospective.retroColumns.filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0]).subscribe(() => { });
+
+      this.retroColumnService.updateColumn(retroColumn).subscribe(() => {});
+      this.retroColumnService.updateColumn(this.retrospective.retroColumns
+        .filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0])
+        .subscribe(() => {});
     }
   }
 
@@ -189,36 +204,32 @@ export class RetroBoardComponent implements OnInit {
     });
   }
 
+  deleteCardDialog(givenCard: RetroCard) {
+    this.openDialog(this.dict.RETROBOARD_DELETE_CARD_NOTI, () => {
+      this.deleteCard(givenCard);
+      this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok');
+    });
+  }
+
   deleteCard(givenCard: RetroCard) {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '500px',
-      data: this.dict.RETROBOARD_DELETE_CARD_NOTI
+    this.retrospective.retroColumns.forEach(column => {
+      column.retroItems.forEach(card => {
+        if (card.id === givenCard.id) {
+          const index = column.retroItems.indexOf(givenCard);
+          column.retroItems.splice(index, 1);
+        }
+      });
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.retrospective.retroColumns.forEach(column => {
-          column.retroItems.forEach(card => {
-            if (card.id === givenCard.id) {
-              const index = column.retroItems.indexOf(givenCard);
-              column.retroItems.splice(index, 1);
-            }
-          });
-
-        });
-        this.openSnackBar(this.dict.SNACKBAR_SUCCES_DELETE, 'Ok');
-
-        this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => { });
-      }
-    });
+    this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => { });
   }
 
   updateContent(card: RetroCard, content) {
     card.content = content;
     this.enableContentEditing(false, card);
 
-    this.retroCardService.updateRetroCardContent(card, content)
-      .subscribe(_ => { });
+    this.retroCardService.updateRetroCard(card)
+      .subscribe(_ => {
+      });
   }
 
   updateColumnTitle(column: RetroColumn, newTitle) {
@@ -307,7 +318,27 @@ export class RetroBoardComponent implements OnInit {
     return item.hasOwnProperty('upVotes');
   }
 
+  isFamily(item) {
+    return item.hasOwnProperty('retroCards');
+  }
+
   castRetroCard(item: BaseItem): RetroCard {
     return Object.assign(item, null);
+  }
+
+  castFamily(item: BaseItem): RetroFamily {
+    return Object.assign(item, null);
+  }
+
+  addFamily(retroColumn: RetroColumn) {
+    this.retroFamilyService.createRetroFamily(new RetroFamily(
+      0,
+      'Okay',
+      retroColumn.retroItems.length,
+      retroColumn.id,
+      []
+    )).subscribe((retroFamily) => {
+      retroColumn.retroItems.push(retroFamily);
+    });
   }
 }

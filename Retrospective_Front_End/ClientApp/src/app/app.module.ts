@@ -7,7 +7,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material';
+import {MatExpansionModule, MatInputModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
@@ -33,29 +33,30 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ConfirmationDialogComponent,
     RetroBoardComponent
   ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatTooltipModule,
-    MatFormFieldModule,
-    MatSnackBarModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatSliderModule,
-    MatMenuModule,
-    MatDialogModule,
-    DragDropModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'styles', component: StylesComponent },
-      { path: 'board/:id', component: RetroBoardComponent }
-    ]),
-    BrowserAnimationsModule
-  ],
+    imports: [
+        BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatTooltipModule,
+        MatFormFieldModule,
+        MatSnackBarModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatInputModule,
+        MatSliderModule,
+        MatMenuModule,
+        MatDialogModule,
+        DragDropModule,
+        RouterModule.forRoot([
+            {path: '', component: HomeComponent, pathMatch: 'full'},
+            {path: 'styles', component: StylesComponent},
+            {path: 'board/:id', component: RetroBoardComponent}
+        ]),
+        BrowserAnimationsModule,
+        MatExpansionModule
+    ],
   entryComponents: [
     CreateBoardDialogComponent,
     ConfirmationDialogComponent
