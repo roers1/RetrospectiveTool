@@ -220,7 +220,7 @@ export class RetroBoardComponent implements OnInit {
         }
       });
     });
-    this.retroCardService.deleteRetroCard(givenCard.id).subscribe(_ => { });
+    this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => { });
   }
 
   updateContent(card: RetroCard, content) {
