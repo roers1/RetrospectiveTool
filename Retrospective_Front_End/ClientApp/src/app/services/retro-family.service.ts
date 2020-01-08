@@ -24,25 +24,25 @@ export class RetroFamilyService {
   constructor(private http: HttpClient, private retrospectiveService: RetrospectiveService) {
   }
 
-  getRetroColumns(): Observable<RetroFamily[]> {
+  getRetroFamilies(): Observable<RetroFamily[]> {
     return this.http.get<RetroFamily[]>(this.baseUrlRetroColumn, this.httpOptions);
   }
 
-  getRetroColumn(id): Observable<RetroFamily> {
+  getRetroFamily(id): Observable<RetroFamily> {
     return this.http.get<RetroFamily>(this.baseUrlRetroColumn + id, this.httpOptions);
   }
 
-  createColumn(retroFamily: RetroFamily): Observable<RetroFamily> {
+  createRetroFamily(retroFamily: RetroFamily): Observable<RetroFamily> {
     if (this.retrospectiveService.getCurrentRetrospective()) {
       return this.http.post<RetroFamily>(this.baseUrlRetroColumn, retroFamily, this.httpOptions);
     }
   }
 
-  updateColumn(retroFamily: RetroFamily) {
+  updateRetroFamily(retroFamily: RetroFamily) {
     return this.http.put<RetroColumn>(this.baseUrlRetroColumn, retroFamily, this.httpOptions);
   }
 
-  removeColumn(retroFamilyId): Observable<RetroFamily> {
+  removeRetroFamily(retroFamilyId): Observable<RetroFamily> {
     if (this.retrospectiveService.getCurrentRetrospective()) {
       return this.http.delete<RetroFamily>(this.baseUrlRetroColumn + retroFamilyId, this.httpOptions);
     }

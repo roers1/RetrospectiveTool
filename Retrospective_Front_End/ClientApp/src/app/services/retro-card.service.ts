@@ -49,7 +49,6 @@ export class RetroCardService {
   }
 
   deleteRetroCard(retroCard: RetroCard) {
-   
     return this.http.delete(this.baseUrlRetroCards + '/' + retroCard.id, this.httpOptions);
   }
 

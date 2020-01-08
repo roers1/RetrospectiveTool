@@ -53,8 +53,7 @@
         </div>
         <div cdkDropList #element="cdkDropList" [attr.id]="column.title" [cdkDropListData]="column.retroItems"
              [cdkDropListConnectedTo]="getColumnNames(element)" class="example-list"
-             (cdkDropListDropped)="drop($event, column)"
-        [cdkDropListSortingDisabled]="true">
+             (cdkDropListDropped)="drop($event, column, null)">
           <div *ngFor="let item of column.retroItems">
             <div *ngIf="isRetroCard(item)" class="example-box" cdkDrag>
               <div class="box-content" *ngIf="!hasEnabledContentEditing(item)">
@@ -96,8 +95,8 @@
                 <div cdkDropList #element="cdkDropList" [attr.id]="item.id"
                      [cdkDropListData]="castFamily(item).retroCards"
                      [cdkDropListConnectedTo]="getColumnNames(element)"
-                     (cdkDropListDropped)="drop($event, column)"
-                     [cdkDropListSortingDisabled]="true" style="background-color: black">
+                     (cdkDropListDropped)="drop($event, column, castFamily(item))"
+                     style="background-color: black">
                   <div class="example-box" *ngFor="let item of castFamily(item).retroCards"
                        cdkDrag>{{item.content}}</div>
                 </div>

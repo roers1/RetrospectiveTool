@@ -17,6 +17,7 @@ import * as url from '../../../helpers/url-constants';
 import {baseUrl} from '../../../helpers/url-constants';
 import {BaseItem} from '../../../models/BaseItem';
 import {RetroFamily} from '../../../models/RetroFamily';
+import {RetroFamilyService} from '../../services/retro-family.service';
 
 @Component({
   selector: 'app-retro-board',
@@ -45,6 +46,7 @@ export class RetroBoardComponent implements OnInit {
     public retrospectiveService: RetrospectiveService,
     public retroColumnService: RetroColumnService,
     public retroCardService: RetroCardService,
+    public retroFamilyService: RetroFamilyService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
@@ -99,7 +101,16 @@ export class RetroBoardComponent implements OnInit {
     });
   }
 
-  drop(event: CdkDragDrop<BaseItem[]>, retroColumn: RetroColumn) {
+  drop(event: CdkDragDrop<BaseItem[]>, retroColumn: RetroColumn, retroFamily: RetroFamily) {
+    if (retroFamily != null) {
+      this.updatePositions(retroFamily.retroCards);
+      for (const card of retroFamily.retroCards) {
+        card.familyId = retroFamily.id;
+      }
+
+      this.retroFamilyService.updateRetroFamily(retroFamily);
+    }
+
     if (event.container === event.previousContainer) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       this.updatePositions(event.container.data);
@@ -108,13 +119,14 @@ export class RetroBoardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+
       this.updatePositions(event.container.data);
       this.updatePositions(event.previousContainer.data);
-      this.retroColumnService.updateColumn(retroColumn).subscribe(() => {
-      });
-      // tslint:disable-next-line:max-line-length
-      this.retroColumnService.updateColumn(this.retrospective.retroColumns.filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0]).subscribe(() => {
-      });
+
+      this.retroColumnService.updateColumn(retroColumn).subscribe(() => {});
+      this.retroColumnService.updateColumn(this.retrospective.retroColumns
+        .filter(x => x.id === event.previousContainer.data[0].retroColumnId)[0])
+        .subscribe(() => {});
     }
   }
 
@@ -209,7 +221,8 @@ export class RetroBoardComponent implements OnInit {
       });
 
     });
-    this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => { });
+    this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => {
+    });
   }
 
   updateContent(card: RetroCard, content) {
@@ -217,7 +230,8 @@ export class RetroBoardComponent implements OnInit {
     this.enableContentEditing(false, card);
 
     this.retroCardService.updateRetroCard(card)
-      .subscribe(_ => { });
+      .subscribe(_ => {
+      });
   }
 
   updateColumnTitle(column: RetroColumn, newTitle) {
@@ -319,6 +333,14 @@ export class RetroBoardComponent implements OnInit {
   }
 
   addFamily(retroColumn: RetroColumn) {
-    retroColumn.retroItems.push(new RetroFamily(0, 'Okay', 0, retroColumn.id, [new RetroCard(0, 'Okay', 0, retroColumn.id, 0, 0)]));
+    this.retroFamilyService.createRetroFamily(new RetroFamily(
+      0,
+      'Okay',
+      retroColumn.retroItems.length,
+      retroColumn.id,
+      []
+    )).subscribe((retroFamily) => {
+      retroColumn.retroItems.push(retroFamily);
+    });
   }
 }

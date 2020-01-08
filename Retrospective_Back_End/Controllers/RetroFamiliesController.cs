@@ -43,9 +43,10 @@ namespace Retrospective_Back_End.Controllers
 
         // POST: api/RetroFamily
         [HttpPost]
-        public void Post([FromBody] RetroFamily retroFamily)
+        public ActionResult<RetroFamily> Post([FromBody] RetroFamily retroFamily)
         {
             _repo.SaveRetroFamily(retroFamily);
+            return retroFamily;
         }
 
         // PUT: api/RetroFamily/5
