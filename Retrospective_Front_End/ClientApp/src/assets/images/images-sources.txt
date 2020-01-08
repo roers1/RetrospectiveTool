@@ -1,5 +1,0 @@
-Images sources
-
-Images from Icons8
-
-Images generated from Android Studio
