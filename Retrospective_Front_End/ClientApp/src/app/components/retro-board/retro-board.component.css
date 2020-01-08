@@ -71,7 +71,7 @@
   border-radius: 3px;
   position: relative;
 }
-.example-box:hover > div > div > img {
+.example-box:hover > div > img {
   opacity: 100;
 }
 .example-box:hover #expandable {
