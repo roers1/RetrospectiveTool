@@ -7,7 +7,7 @@ import { Retrospective } from '../../../models/Retrospective';
 import { RetroCardService } from '../../services/retro-card.service';
 import { RetroCard } from '../../../models/RetroCard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatDialogModule, MatIconModule, MatSnackBar, MatTooltipModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatIconModule, MatSnackBar, MatTooltipModule, MatExpansionModule, MatInputModule } from '@angular/material';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material';
@@ -27,15 +27,17 @@ describe('RetroBoardComponent', () => {
   let addCardSpy;
   let createBoardSpy;
   let updateRetroCard;
+  let deleteRetroCardSpy;
   const mockCard = new RetroCard(-1, 'this is card content', 0, 0, 0, 0);
   const mockColumn = new RetroColumn(-1, 'test', [], -1);
 
   beforeEach(async(() => {
     const retrospectiveService = jasmine.createSpyObj('RetrospectiveService', ['createRetrospective']);
     const retroColumnService = jasmine.createSpyObj('RetroColumnService', ['removeColumn', 'addColumn', 'createColumn', 'updateColumn']);
-    const retroCardService = jasmine.createSpyObj('RetroCardService', ['createCard', 'updateRetroCard']);
+    const retroCardService = jasmine.createSpyObj('RetroCardService', ['createCard', 'updateRetroCard', 'deleteRetroCard']);
 
     removeColumnSpy = retroColumnService.removeColumn.and.returnValue(of());
+    deleteRetroCardSpy = retroCardService.deleteRetroCard.and.returnValue(of());
     createColumnSpy = retroColumnService.createColumn.and.returnValue(of(mockColumn));
     updateColumnSpy = retroColumnService.updateColumn.and.returnValue(of());
     addCardSpy = retroCardService.createCard.and.returnValue(of(mockCard));
@@ -46,7 +48,8 @@ describe('RetroBoardComponent', () => {
     TestBed.configureTestingModule({
       imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule,
         MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule, MatTooltipModule,
-        HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule, BrowserAnimationsModule],
+        HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule, BrowserAnimationsModule,
+        MatInputModule, MatExpansionModule],
       declarations: [RetroBoardComponent],
       providers: [MatDialog, MatSnackBar,
         { provide: RetroColumnService, useValue: retroColumnService },
@@ -291,33 +294,32 @@ describe('RetroBoardComponent', () => {
   });
 
   it('should remove a retrocard from a retrocolumn', () => {
-    component.retrospective = new Retrospective(
+    const retroCard = new RetroCard(
+      111,
+      'cardtitle',
+      0,
+      11,
+      0, 0
+    )
+    const retroColumn = new RetroColumn(
+      11,
+      'title',
+      [retroCard],
+      1
+    )
+    const retrospective = new Retrospective(
       1,
       'title',
-      'des',
-      []
-    );
+      'description',
+      [retroColumn]
+    )
 
-    const retrospective = component.retrospective;
-
-    const column: RetroColumn = new RetroColumn(
-      123,
-      'cardTitle',
-      [],
-      retrospective.id
-    );
-
-    const card: RetroCard = new RetroCard(12, 'content', 0, column.id,0,0);
-
-    retrospective.addRetroColumn(column);
-
+    component.retrospective = retrospective
+    
     fixture.detectChanges();
 
-    const retroColumn = retrospective.retroColumns[0];
-
-    component.addCard(retroColumn)
     expect(retroColumn.retroItems.length).toEqual(1);
-    component.deleteCard(card)
+    component.deleteCard(retroCard)
     expect(retroColumn.retroItems.length).toEqual(0);
   });
 
