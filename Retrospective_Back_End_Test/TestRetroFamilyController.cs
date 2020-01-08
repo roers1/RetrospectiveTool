@@ -128,7 +128,7 @@ namespace Retrospective_Back_End_Test
             controller.Delete(0);
 
             //Assert
-            Assert.False(retroFamilies.Any());
+            Assert.True(retroFamilies.Any());
             Assert.Equal(0,retroFamilies.Count());
         }
 
