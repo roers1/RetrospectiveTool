@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Retrospective_Back_End.Realtime;
 using Retrospective_Core.Models;
 using Retrospective_Core.Services;
 
@@ -15,17 +17,19 @@ namespace Retrospective_Back_End.Controllers
     public class RetroFamiliesController : ControllerBase
     {
         private readonly IRetroRespectiveRepository _repo;
+        private readonly IHubContext<NotifyHub, ITypedHubClient> _hubContext;
 
-        public RetroFamiliesController(IRetroRespectiveRepository repo)
+        public RetroFamiliesController(IRetroRespectiveRepository repo, IHubContext<NotifyHub, ITypedHubClient> Context)
         {
             this._repo = repo;
+            this._hubContext = Context;
         }
 
         // GET: api/RetroFamilies
         [HttpGet]
-        public async Task<IEnumerable<RetroFamily>> Get()
+        public async Task<ActionResult<IEnumerable<RetroFamily>>> Get()
         {
-            return await _repo.RetroFamilies.ToListAsync();
+            return await Task.FromResult(_repo.RetroFamilies.ToList());
         }
 
         // GET: api/RetroFamily/5
@@ -66,7 +70,10 @@ namespace Retrospective_Back_End.Controllers
                 return NotFound();
 
             else
+            {
+                _repo.RemoveRetroFamily(family);
                 return family;
+            }
         }
     }
 }

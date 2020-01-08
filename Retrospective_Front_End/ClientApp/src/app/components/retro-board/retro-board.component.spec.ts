@@ -28,7 +28,7 @@ describe('RetroBoardComponent', () => {
   let createBoardSpy;
   let updateRetroCard;
   let deleteRetroCardSpy;
-  const mockCard = new RetroCard(-1, 'this is card content', 0, 0, 0, 0);
+  const mockCard = new RetroCard(-1, 'this is card content', 0, 0, 0, 0, 0);
   const mockColumn = new RetroColumn(-1, 'test', [], -1);
 
   beforeEach(async(() => {
@@ -247,9 +247,9 @@ describe('RetroBoardComponent', () => {
       0,
       'TestColumn',
       [
-        new RetroCard(0, 'RetroCard 1', 1, 0, 0, 0),
-        new RetroCard(1, 'RetroCard 2', 2, 0, 0, 0),
-        new RetroCard(2, 'RetroCard 3', 0, 0, 0, 0)
+        new RetroCard(0, 'RetroCard 1', 1, 0, 0, 0, 0),
+        new RetroCard(1, 'RetroCard 2', 2, 0, 0, 0, 0),
+        new RetroCard(2, 'RetroCard 3', 0, 0, 0, 0, 0)
       ],
       retrospectiveId
     );
@@ -276,7 +276,7 @@ describe('RetroBoardComponent', () => {
       retrospective.id
     );
 
-    const card: RetroCard = new RetroCard(0, 'RetroCard 1', 1, column.id,0,0);
+    const card: RetroCard = new RetroCard(0, 'RetroCard 1', 1, column.id,0,0, 0);
 
     component.addColumn(column);
     retrospective.retroColumns[0].retroItems.push(card);
@@ -299,7 +299,7 @@ describe('RetroBoardComponent', () => {
       'cardtitle',
       0,
       11,
-      0, 0
+      0, 0, 0
     )
     const retroColumn = new RetroColumn(
       11,
@@ -324,14 +324,14 @@ describe('RetroBoardComponent', () => {
   });
 
   it('card should have 2 upvotes & 1 downvote', () => {
-    const retroCard = new RetroCard(1, 'RetroCard 2', 2, 0, 0, 0)
+    const retroCard = new RetroCard(1, 'RetroCard 2', 2, 0, 0, 0, 0)
     const column: RetroColumn = new RetroColumn(
       0,
       'TestColumn',
       [
-        new RetroCard(0, 'RetroCard 1', 1, 0, 0, 0),
+        new RetroCard(0, 'RetroCard 1', 1, 0, 0, 0, 0),
         retroCard,
-        new RetroCard(2, 'RetroCard 3', 0, 0, 0, 0)
+        new RetroCard(2, 'RetroCard 3', 0, 0, 0, 0, 0)
       ],
       -1
     );
