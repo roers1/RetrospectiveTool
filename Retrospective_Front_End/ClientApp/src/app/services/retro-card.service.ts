@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { baseUrl } from '../../helpers/url-constants';
 import { MessageService } from './message.service';
+import {RetrospectiveService} from './retrospective.service';
 import { RetroCard } from '../../models/RetroCard';
 import {BaseItem} from '../../models/BaseItem';
 
@@ -18,7 +19,7 @@ export class RetroCardService {
     })
   };
 
-  constructor(private http: HttpClient, private message: MessageService) {
+  constructor(private http: HttpClient, private message: MessageService, private retrospectiveService: RetrospectiveService) {
   }
 
   createCard(columnId, position, content): Observable<RetroCard> {
@@ -48,14 +49,9 @@ export class RetroCardService {
     }, this.httpOptions);
   }
 
-  deleteRetroCard(retroCard: RetroCard) {
-   
-    return this.http.delete(this.baseUrlRetroCards + '/' + retroCard.id, this.httpOptions);
+  deleteRetroCard(retroCardId): Observable<RetroCard> {
+    if (this.retrospectiveService.getCurrentRetrospective()) {
+      return this.http.delete<RetroCard>(this.baseUrlRetroCards + '/' + retroCardId, this.httpOptions);
+    }
   }
-
-  // removeColumn(columnId): Observable<RetroColumn> {
-  //   if (this.retrospectiveService.getCurrentRetrospective()) {
-  //     return this.http.delete<RetroColumn>(this.baseUrlRetroColumn + columnId, this.httpOptions);
-  //   }
-  // }
 }

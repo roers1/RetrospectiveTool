@@ -204,9 +204,8 @@ export class RetroBoardComponent implements OnInit {
           column.retroItems.splice(index, 1);
         }
       });
-
     });
-    this.retroCardService.deleteRetroCard(givenCard).subscribe(_ => { });
+    this.retroCardService.deleteRetroCard(givenCard.id).subscribe(_ => { });
   }
 
   updateContent(card: RetroCard, content) {

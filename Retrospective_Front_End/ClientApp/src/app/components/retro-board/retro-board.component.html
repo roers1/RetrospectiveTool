@@ -70,7 +70,7 @@
                 <img class="icon" id="icon_edit" src="../../../assets/images/icon_edit.png"
                      (click)="enableContentEditing(true, castRetroCard(item))" alt=""/>
                 <img class="icon" id="icon_delete" src="../../../assets/images/icon_delete.png"
-                     (click)="deleteCard(castRetroCard(item))" alt=""/>
+                     (click)="deleteCardDialog(castRetroCard(item))" alt=""/>
               </div>
               <div class="votecount row">
                 <div class="vote-up vote-text">+{{castRetroCard(item).upVotes}}</div>
