@@ -7,7 +7,7 @@ import { Retrospective } from '../../../models/Retrospective';
 import { RetroCardService } from '../../services/retro-card.service';
 import { RetroCard } from '../../../models/RetroCard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatDialogModule, MatIconModule, MatSnackBar, MatTooltipModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatIconModule, MatSnackBar, MatTooltipModule, MatExpansionModule, MatInputModule } from '@angular/material';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material';
@@ -27,15 +27,17 @@ describe('RetroBoardComponent', () => {
   let addCardSpy;
   let createBoardSpy;
   let updateRetroCard;
+  let deleteRetroCardSpy;
   const mockCard = new RetroCard(-1, 'this is card content', 0, 0, 0, 0);
   const mockColumn = new RetroColumn(-1, 'test', [], -1);
 
   beforeEach(async(() => {
     const retrospectiveService = jasmine.createSpyObj('RetrospectiveService', ['createRetrospective']);
     const retroColumnService = jasmine.createSpyObj('RetroColumnService', ['removeColumn', 'addColumn', 'createColumn', 'updateColumn']);
-    const retroCardService = jasmine.createSpyObj('RetroCardService', ['createCard', 'updateRetroCard']);
+    const retroCardService = jasmine.createSpyObj('RetroCardService', ['createCard', 'updateRetroCard', 'deleteRetroCard']);
 
     removeColumnSpy = retroColumnService.removeColumn.and.returnValue(of());
+    deleteRetroCardSpy = retroCardService.deleteRetroCard.and.returnValue(of());
     createColumnSpy = retroColumnService.createColumn.and.returnValue(of(mockColumn));
     updateColumnSpy = retroColumnService.updateColumn.and.returnValue(of());
     addCardSpy = retroCardService.createCard.and.returnValue(of(mockCard));
@@ -46,7 +48,8 @@ describe('RetroBoardComponent', () => {
     TestBed.configureTestingModule({
       imports: [DragDropModule, FormsModule, ReactiveFormsModule, MatButtonModule,
         MatIconModule, BrowserDynamicTestingModule, MatMenuModule, MatFormFieldModule, MatTooltipModule,
-        HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule, BrowserAnimationsModule],
+        HttpClientTestingModule, RouterModule, RouterTestingModule, MatDialogModule, BrowserAnimationsModule,
+        MatInputModule, MatExpansionModule],
       declarations: [RetroBoardComponent],
       providers: [MatDialog, MatSnackBar,
         { provide: RetroColumnService, useValue: retroColumnService },
@@ -114,10 +117,10 @@ describe('RetroBoardComponent', () => {
 
     const testColumn = component.retrospective.retroColumns[0];
 
-    expect(testColumn.retroCards.length > 0).toBe(true);
-    expect(testColumn.retroCards.length === 0).toBe(false);
+    expect(testColumn.retroItems.length > 0).toBe(true);
+    expect(testColumn.retroItems.length === 0).toBe(false);
 
-    const card = testColumn.retroCards[0];
+    const card = testColumn.retroItems[0];
 
     expect(card).toBeTruthy();
     expect(card.content).toBe(mockCard.content);
@@ -251,12 +254,12 @@ describe('RetroBoardComponent', () => {
       retrospectiveId
     );
 
-    component.updatePositions(column.retroCards);
+    component.updatePositions(column.retroItems);
 
-    expect(column.retroCards.length === 3);
-    expect(column.retroCards[0].position === 0);
-    expect(column.retroCards[1].position === 1);
-    expect(column.retroCards[2].position === 2);
+    expect(column.retroItems.length === 3);
+    expect(column.retroItems[0].position === 0);
+    expect(column.retroItems[1].position === 1);
+    expect(column.retroItems[2].position === 2);
   });
 
   it('should update content of a retrocard', () => {
@@ -273,53 +276,51 @@ describe('RetroBoardComponent', () => {
       retrospective.id
     );
 
-    const card: RetroCard = new RetroCard(0, 'RetroCard 1', 1, column.id);
+    const card: RetroCard = new RetroCard(0, 'RetroCard 1', 1, column.id,0,0);
 
-    retrospective.addRetroColumn(column);
-    retrospective.retroColumns[0].addRetroCard(card);
+    component.addColumn(column);
+    retrospective.retroColumns[0].retroItems.push(card);
 
     const retroColumn = retrospective.retroColumns[0];
-    const retroCard = retrospective.retroColumns[0].retroCards[0];
+    var retroCard = retrospective.retroColumns[0].retroItems[0] as RetroCard;
 
     fixture.detectChanges();
 
     const newContent = 'New Content';
 
-    retroCard.updateContent(newContent);
+    component.updateContent(retroCard ,newContent);
 
     expect(retroCard.content).toEqual(newContent);
   });
 
   it('should remove a retrocard from a retrocolumn', () => {
-    component.retrospective = new Retrospective(
+    const retroCard = new RetroCard(
+      111,
+      'cardtitle',
+      0,
+      11,
+      0, 0
+    )
+    const retroColumn = new RetroColumn(
+      11,
+      'title',
+      [retroCard],
+      1
+    )
+    const retrospective = new Retrospective(
       1,
       'title',
-      'des',
-      []
-    );
+      'description',
+      [retroColumn]
+    )
 
-    const retrospective = component.retrospective;
-
-    const column: RetroColumn = new RetroColumn(
-      123,
-      'cardTitle',
-      [],
-      retrospective.id
-    );
-
-    const card: RetroCard = new RetroCard(12, 'content', 0, column.id);
-
-    retrospective.addRetroColumn(column);
-
+    component.retrospective = retrospective
+    
     fixture.detectChanges();
 
-    const retroColumn = retrospective.retroColumns[0];
-
-    retroColumn.addRetroCard(card);
-    expect(retroColumn.retroCards.length).toEqual(1);
-
-    column.removeRetroCard(card);
-    expect(retroColumn.retroCards.length).toEqual(0);
+    expect(retroColumn.retroItems.length).toEqual(1);
+    component.deleteCard(retroCard)
+    expect(retroColumn.retroItems.length).toEqual(0);
   });
 
   it('card should have 2 upvotes & 1 downvote', () => {
@@ -339,7 +340,9 @@ describe('RetroBoardComponent', () => {
     component.voteUp(retroCard)
     component.voteDown(retroCard)
 
-    expect(column.retroCards[1].upVotes === 2)
-    expect(column.retroCards[1].downVotes === 1)
+    var updatedCard = column.retroItems[1] as RetroCard
+    
+    expect(updatedCard.upVotes === 2)
+    expect(updatedCard.downVotes === 1)
   })
 });

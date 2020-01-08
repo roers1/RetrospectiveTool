@@ -25,7 +25,7 @@
             <img class="icon" id="icon_menu" src="../../../assets/images/icon_dot_menu.png"
                  [matMenuTriggerFor]="menu">
             <mat-menu #menu="matMenu">
-              <button mat-menu-item class="dropdownitem">
+              <button mat-menu-item class="dropdownitem" (click)="addFamily(column)>
                 {{dict.CREATE_NEW_FAMILY_BTN}}
               </button>
               <button mat-menu-item class="dropdownitem" (click)="enableColumnTitleEditing(true, column)">
@@ -51,12 +51,11 @@
             {{dict.EDIT_BTN}}
           </button>
         </div>
-
         <div cdkDropList #element="cdkDropList" [attr.id]="column.title" [cdkDropListData]="column.retroItems"
              [cdkDropListConnectedTo]="getColumnNames(element)" class="example-list"
-             (cdkDropListDropped)="drop($event, column)">
-          <div class="example-box" *ngFor="let item of column.retroItems" cdkDrag>
-            <div *ngIf="isRetroCard(item)">
+             (cdkDropListDropped)="drop($event, column, null)">
+          <div *ngFor="let item of column.retroItems">
+            <div *ngIf="isRetroCard(item)" class="example-box" cdkDrag>
               <div class="box-content" *ngIf="!hasEnabledContentEditing(item)">
                 {{item.content}}
               </div>
@@ -73,7 +72,7 @@
                 <img class="icon" id="icon_edit" src="../../../assets/images/icon_edit.png"
                      (click)="enableContentEditing(true, castRetroCard(item))" alt=""/>
                 <img class="icon" id="icon_delete" src="../../../assets/images/icon_delete.png"
-                     (click)="deleteCard(castRetroCard(item))" alt=""/>
+                     (click)="deleteCardDialog(castRetroCard(item))" alt=""/>
               </div>
               <div class="votecount row">
                 <div class="vote-up vote-text">+{{castRetroCard(item).upVotes}}</div>
@@ -81,16 +80,30 @@
                 <div class="vote-down vote-text">-{{castRetroCard(item).downVotes}}</div>
               </div>
               <div class="smiley-icons" id="expandable">
-                <img class="icon" id="icon_edit" src="../../../assets/images/smiley_happy.png" (click)="voteUp(castRetroCard(item))"
+                <img class="icon" src="../../../assets/images/smiley_happy.png" (click)="voteUp(castRetroCard(item))"
                      alt=""/>
-                <img class="icon" id="icon_edit" src="../../../assets/images/smiley_neutral.png" alt=""/>
-                <img class="icon" id="icon_edit" src="../../../assets/images/smiley_down.png" (click)="voteDown(castRetroCard(item))"
+                <img class="icon" src="../../../assets/images/smiley_neutral.png" alt=""/>
+                <img class="icon" src="../../../assets/images/smiley_down.png" (click)="voteDown(castRetroCard(item))"
                      alt=""/>
               </div>
             </div>
+            <div *ngIf="isFamily(item)" cdkDrag>
+              <mat-expansion-panel style="padding-bottom: 25px; padding-top: 25px;">
+                <mat-expansion-panel-header>
+                  {{item.content}}
+                </mat-expansion-panel-header>
+                <div cdkDropList #element="cdkDropList" [attr.id]="item.id"
+                     [cdkDropListData]="castFamily(item).retroCards"
+                     [cdkDropListConnectedTo]="getColumnNames(element)"
+                     (cdkDropListDropped)="drop($event, column, castFamily(item))"
+                     style="background-color: black">
+                  <div class="example-box" *ngFor="let item of castFamily(item).retroCards"
+                       cdkDrag>{{item.content}}</div>
+                </div>
+              </mat-expansion-panel>
+            </div>
           </div>
         </div>
-
         <div class="example-container-toaddcard">
           <h6 (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">+ {{dict.CREATE_NEW_CARD_BTN}}
           </h6>
@@ -146,7 +159,6 @@
           </form>
         </div>
       </div>
-
     </div>
   </div>
 </div>
