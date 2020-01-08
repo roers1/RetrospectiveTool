@@ -15,6 +15,8 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
             this._context = context;
         }
 
+        public IQueryable<RetroFamily> RetroFamilies => _context.RetroFamilies;
+
         public IQueryable<Retrospective> Retrospectives => _context.Retrospectives;
 
         public IQueryable<RetroColumn> RetroColumns => _context.RetroColumns;
@@ -35,6 +37,12 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
         public void RemoveRetroColumn(RetroColumn retroColumn)
         {
             _context.RetroColumns.Remove(retroColumn);
+            _context.SaveChanges();
+        }
+
+        public void RemoveRetroFamily(RetroFamily retroFamily)
+        {
+            _context.RetroFamilies.Remove(retroFamily);
             _context.SaveChanges();
         }
 
@@ -85,6 +93,24 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 	                dbEntry.Id = retroColumn.Id;
                     dbEntry.RetroItems = retroColumn.RetroItems;
                     dbEntry.Title = retroColumn.Title;
+                }
+            }
+            _context.SaveChanges();
+        }
+
+        public void SaveRetroFamily(RetroFamily retroFamily) {
+            if (retroFamily.Id == 0) {
+                _context.RetroFamilies.Add(retroFamily);
+            } else {
+                RetroFamily dbEntry = _context.RetroFamilies
+                    .FirstOrDefault(c => c.Id == retroFamily.Id);
+
+                if (dbEntry != null) {
+                    dbEntry.Id = retroFamily.Id;
+                    dbEntry.RetroCards = retroFamily.RetroCards;
+                    dbEntry.Content = retroFamily.Content;
+                    dbEntry.Position = retroFamily.Position;
+                    dbEntry.RetroColumnId = retroFamily.RetroColumnId;
                 }
             }
             _context.SaveChanges();
