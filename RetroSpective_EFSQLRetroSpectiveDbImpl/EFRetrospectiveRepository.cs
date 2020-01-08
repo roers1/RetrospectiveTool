@@ -22,7 +22,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 		public IQueryable<RetroCard> RetroCards => _context.RetroCards;
 		public IQueryable<Retrospective> getAll()
 		{
-			return _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards);
+			return _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroItems);
 
 		}
 
@@ -61,42 +61,12 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
                     dbEntry.Id = retroCard.Id;
                     dbEntry.Content = retroCard.Content;
                     dbEntry.Position = retroCard.Position;
+                    dbEntry.DownVotes = retroCard.DownVotes;
+                    dbEntry.UpVotes = retroCard.UpVotes;
+                    dbEntry.FamilyId = retroCard.FamilyId;
                 }
             }
             _context.SaveChanges();
-        }
-
-        // TODO: add sort update of the positions of the cards
-        public RetroCard UpdateRetroCard(RetroCard retroCard)
-        {
-            var dbe = _context.RetroCards.FirstOrDefault(rc => rc.Id == retroCard.Id);
-
-            if (dbe != null && dbe != retroCard)
-            {
-                dbe.Content = retroCard.Content;
-                dbe.RetroColumnId = retroCard.RetroColumnId;
-                dbe.Position = retroCard.Position;
-
-                RetroCard[] retroCards = _context.RetroCards
-                    .Where(rc => rc.RetroColumnId == retroCard.RetroColumnId)
-                    .ToArray();
-
-
-                // Sort all cards positions
-                var tempCard = retroCards[0];
-
-                for (var i = 1; i < retroCards.Length - 1; i++)
-                {
-                    if (retroCards[i].Position == tempCard.Position &&
-                        retroCards[i].Position > retroCards[i - 1].Position)
-                    {
-                        
-                    }
-                }
-
-            }
-
-            return dbe;
         }
 
         public void SaveRetroColumn(RetroColumn retroColumn)
@@ -113,7 +83,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
                 if (dbEntry != null)
                 {
 	                dbEntry.Id = retroColumn.Id;
-                    dbEntry.RetroCards = retroColumn.RetroCards;
+                    dbEntry.RetroItems = retroColumn.RetroItems;
                     dbEntry.Title = retroColumn.Title;
                 }
             }
@@ -124,7 +94,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
         {
             foreach (RetroColumn retroColumn in retrospective.RetroColumns)
             {
-                foreach (RetroCard retroCard in retroColumn.RetroCards)
+                foreach (RetroCard retroCard in retroColumn.RetroItems)
                 {
                     _context.RetroCards.Add(retroCard);
                 }

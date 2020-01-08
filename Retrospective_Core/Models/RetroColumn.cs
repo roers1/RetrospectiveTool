@@ -11,7 +11,7 @@ namespace Retrospective_Core.Models {
 
         public string Title { get; set; }
 
-        public ICollection<RetroCard> RetroCards { get; set; } = new List<RetroCard>();
+        public ICollection<BaseItem> RetroItems { get; set; } = new List<BaseItem>();
 
         [ForeignKey("RetrospectiveId")]
         public int RetrospectiveId { get; set; }

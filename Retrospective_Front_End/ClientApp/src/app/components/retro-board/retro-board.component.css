@@ -71,8 +71,11 @@
   border-radius: 3px;
   position: relative;
 }
-.example-box:hover > div > img {
+.example-box:hover > div > div > img {
   opacity: 100;
+}
+.example-box:hover #expandable {
+  height: 16px;
 }
 
 .cdk-drag-preview {
@@ -266,12 +269,18 @@ h6 {
   right: 0;
   margin-top: 5px;
 }
+.smiley-icons {
+  height: 0px;
+  margin-top: 4px;
+  transition-duration: 0.2s;
+  transition-property: height;
+}
 .box-content {
   padding-right: 65px;
 }
 .icon {
   height: 24px;
-  transition-duration: 0.2s;
+  transition-duration: 0.1s;
   opacity: 0;
   -webkit-user-drag: none;
   -khtml-user-drag: none;
@@ -323,4 +332,20 @@ ng-invalid.ng-touched {
 
 .btn-margin-left {
   float: right;
+}
+.votecount {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+}
+.vote-text {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 18px;
+}
+.vote-up {
+  color: #83e278;
+}
+.vote-down {
+  color: #ff8080;
 }

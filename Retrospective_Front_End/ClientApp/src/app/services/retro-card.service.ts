@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { baseUrl } from '../../helpers/url-constants';
 import { MessageService } from './message.service';
 import { RetroCard } from '../../models/RetroCard';
+import {BaseItem} from '../../models/BaseItem';
 
 @Injectable({
   providedIn: 'root'
@@ -36,16 +37,29 @@ export class RetroCardService {
     return this.http.get<RetroCard[]>(this.baseUrlRetroCards, this.httpOptions);
   }
 
-  updateRetroCard(retroCard: RetroCard, columnId) {
+  updateRetroCard(retroCard: RetroCard) {
     return this.http.put<RetroCard>(this.baseUrlRetroCards, {
       id: retroCard.id,
       content: retroCard.content,
       position: retroCard.position,
-      retroColumnId: columnId
+      upvotes: retroCard.upVotes,
+      downvotes: retroCard.downVotes,
+      retroColumnId: retroCard.retroColumnId
+    }, this.httpOptions);
+  }
+
+  updateRetroCardContent(retroCard: RetroCard, content) {
+    return this.http.put<RetroCard>(this.baseUrlRetroCards, {
+      id: retroCard.id,
+      content: content,
+      position: retroCard.position,
+      retroColumnId: retroCard.retroColumnId,
+      downvotes: retroCard.downVotes,
+      upvotes: retroCard.upVotes
     }, this.httpOptions);
   }
 
   deleteRetroCard(retroCard: RetroCard) {
-    return this.http.delete(this.baseUrlRetroCards + "/" + retroCard.id, this.httpOptions);
+    return this.http.delete(this.baseUrlRetroCards + '/' + retroCard.id, this.httpOptions);
   }
 }

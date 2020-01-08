@@ -30,14 +30,14 @@ namespace Retrospective_Back_End.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RetroColumn>>> GetRetroColumns()
         {
-            return await _context.RetroColumns.Include(c => c.RetroCards).ToListAsync();
+            return await _context.RetroColumns.Include(c => c.RetroItems).ToListAsync();
         }
 
         // GET: api/RetroColumns/5
         [HttpGet("{id}")]
         public ActionResult<RetroColumn> GetRetroColumn(int id)
         {
-            var retroColumn = _context.RetroColumns.Include(c => c.RetroCards).FirstOrDefault(r => r.Id == id);
+            var retroColumn = _context.RetroColumns.Include(c => c.RetroItems).FirstOrDefault(r => r.Id == id);
 
             if (retroColumn == null)
             {
@@ -71,14 +71,16 @@ namespace Retrospective_Back_End.Controllers
         {
 
             _context.SaveRetroColumn(retroColumn);
-
-            try
+            if (_hubContext.Clients != null)
             {
-                _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
-            }
-            catch (Exception e)
-            {
-                _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+	            try
+	            {
+		            _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
+	            }
+	            catch (Exception e)
+	            {
+		            _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+	            }
             }
 
             return CreatedAtAction("GetRetroColumn", new { id = retroColumn.Id }, retroColumn);
@@ -97,14 +99,18 @@ namespace Retrospective_Back_End.Controllers
 
             _context.RemoveRetroColumn(retroColumn);
 
-            try
+            if (_hubContext.Clients != null)
             {
-                _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
+                try
+                {
+                    _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
+                }
+                catch (Exception e)
+                {
+                    _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+                }
             }
-            catch (Exception e)
-            {
-                _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
-            }
+
 
             return retroColumn;
         }

@@ -1,21 +1,14 @@
-import { RetroCard } from './RetroCard';
+import {RetroCard} from './RetroCard';
+import {BaseItem} from './BaseItem';
 
 export class RetroColumn {
+
+  // @ts-ignore
   constructor(
     public id: number,
     public title: string,
-    public retroCards: RetroCard[],
+    public retroItems: BaseItem[],
     public retrospectiveId: number
   ) {
-  }
-
-  addRetroCard(card: RetroCard) {
-    this.retroCards.push(card);
-  }
-
-  removeRetroCard(card: RetroCard) {
-    const removeCard = this.retroCards.map(c => c.id).indexOf(card.id);
-
-    this.retroCards.splice(removeCard, 1);
   }
 }
