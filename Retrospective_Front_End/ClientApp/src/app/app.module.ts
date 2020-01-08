@@ -23,6 +23,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatMenuModule } from '@angular/material/menu';
 import { RetroBoardComponent } from './components/retro-board/retro-board.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +56,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
             {path: 'board/:id', component: RetroBoardComponent}
         ]),
         BrowserAnimationsModule,
-        MatExpansionModule
+        MatExpansionModule,
     ],
   entryComponents: [
     CreateBoardDialogComponent,

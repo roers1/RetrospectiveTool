@@ -25,9 +25,7 @@
             <img class="icon" id="icon_menu" src="../../../assets/images/icon_dot_menu.png"
                  [matMenuTriggerFor]="menu">
             <mat-menu #menu="matMenu">
-              <button mat-menu-item class="dropdownitem" (click)="addFamily(column)>
-                {{dict.CREATE_NEW_FAMILY_BTN}}
-              </button>
+              <button mat-menu-item class="dropdownitem" (click)="addFamily(column)">AddFamily</button>
               <button mat-menu-item class="dropdownitem" (click)="enableColumnTitleEditing(true, column)">
                 {{dict.EDIT_COLUMN_BTN}}
               </button>
@@ -64,7 +62,7 @@
                 <button class="TLbtn btn-small btn-color-primary"
                         (click)="updateContent(castRetroCard(item), content.value)"
                         (keyup.enter)="updateContent(castRetroCard(item), content.value)">
-                        {{dict.EDIT_BTN}}
+                  {{dict.EDIT_BTN}}
                 </button>
               </div>
 
@@ -88,18 +86,18 @@
               </div>
             </div>
             <div *ngIf="isFamily(item)" cdkDrag>
-              <mat-expansion-panel style="padding-bottom: 25px; padding-top: 25px;">
+              <mat-expansion-panel style="padding-bottom: 25px; padding-top: 25px;" cdkDropList #element="cdkDropList"
+                                   [attr.id]="item.id"
+                                   [cdkDropListData]="castFamily(item).retroCards"
+                                   [cdkDropListConnectedTo]="getColumnNames(element)"
+                                   (cdkDropListDropped)="drop($event, column, castFamily(item))">
                 <mat-expansion-panel-header>
                   {{item.content}}
                 </mat-expansion-panel-header>
-                <div cdkDropList #element="cdkDropList" [attr.id]="item.id"
-                     [cdkDropListData]="castFamily(item).retroCards"
-                     [cdkDropListConnectedTo]="getColumnNames(element)"
-                     (cdkDropListDropped)="drop($event, column, castFamily(item))"
-                     style="background-color: black">
-                  <div class="example-box" *ngFor="let item of castFamily(item).retroCards"
-                       cdkDrag>{{item.content}}</div>
-                </div>
+                <div *ngIf="castFamily(item).retroCards.length === 0"
+                     style="background-color: gray; height: 100px;"></div>
+                <div class="example-box" *ngFor="let item of castFamily(item).retroCards"
+                     cdkDrag>{{item.content}}</div>
               </mat-expansion-panel>
             </div>
           </div>
