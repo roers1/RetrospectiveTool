@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Retrospective_Core.Models
 {
-	public abstract class BaseItem
+	public class BaseItem
 	{
 		[Key]
 		public int Id { get; set; }

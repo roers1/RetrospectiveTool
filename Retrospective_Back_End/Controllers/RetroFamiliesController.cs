@@ -29,14 +29,14 @@ namespace Retrospective_Back_End.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RetroFamily>>> Get()
         {
-            return await Task.FromResult(_repo.RetroFamilies.ToList());
+            return await Task.FromResult(_repo.BaseItems.OfType<RetroFamily>().ToList());
         }
 
         // GET: api/RetroFamily/5
         [HttpGet("{id}", Name = "Get")]
         public ActionResult<RetroFamily> Get(int id)
         {
-            var family = _repo.RetroFamilies.Include(retroFamily => retroFamily.RetroCards)
+            var family = _repo.BaseItems.OfType<RetroFamily>().Include(retroFamily => retroFamily.RetroCards)
                 .FirstOrDefault(x => x.Id == id);
 
             if (family == null)
@@ -49,7 +49,7 @@ namespace Retrospective_Back_End.Controllers
         [HttpPost]
         public ActionResult<RetroFamily> Post([FromBody] RetroFamily retroFamily)
         {
-            _repo.SaveRetroFamily(retroFamily);
+            _repo.SaveBaseItem(retroFamily);
             return retroFamily;
         }
 
@@ -57,21 +57,21 @@ namespace Retrospective_Back_End.Controllers
         [HttpPut]
         public void Put([FromBody] RetroFamily retroFamily)
         {
-            _repo.SaveRetroFamily(retroFamily);
+            _repo.SaveBaseItem(retroFamily);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public ActionResult<RetroFamily> Delete(int id)
         {
-            var family = _repo.RetroFamilies.FirstOrDefault(x => x.Id == id);
+            var family = _repo.BaseItems.OfType<RetroFamily>().FirstOrDefault(x => x.Id == id);
 
             if (family == null)
                 return NotFound();
 
             else
             {
-                _repo.RemoveRetroFamily(family);
+                _repo.RemoveBaseItem(family);
                 return family;
             }
         }

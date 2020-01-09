@@ -8,8 +8,8 @@ namespace Retrospective_Core.Models {
 
         public int DownVotes { get; set; }
 
-        [ForeignKey("FamilyId")]
-        public int FamilyId { get; set; }
+        [ForeignKey("RetroFamilyId")]
+        public int RetroFamilyId { get; set; }
 
         public virtual RetroFamily RetroFamily { get; set; }
 

@@ -20,14 +20,15 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl {
 		        .WithOne(c => c.RetroColumn)
 		        .IsRequired()
 		        .OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<RetroCard>().HasBaseType<BaseItem>();
+	        modelBuilder.Entity<RetroFamily>().HasBaseType<BaseItem>();
         }
 
         public virtual DbSet<Retrospective> Retrospectives { get; set; }
 
         public virtual DbSet<RetroColumn> RetroColumns { get; set; }
 
-        public virtual DbSet<RetroFamily> RetroFamilies { get; set; }
-
-        public virtual DbSet<RetroCard> RetroCards { get; set; }
+        public virtual DbSet<BaseItem> BaseItem { get; set; }
     }
 }
