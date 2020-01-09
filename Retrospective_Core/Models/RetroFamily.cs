@@ -6,8 +6,18 @@ using System.Text;
 
 namespace Retrospective_Core.Models
 {
-    public class RetroFamily : BaseItem
+    public class RetroFamily
     {
 	    public ICollection<RetroCard> RetroCards { get; set; } = new List<RetroCard>();
-    }
+
+		[Key]
+		public int Id { get; set; }
+		public string Content { get; set; }
+		public int Position { get; set;  }
+
+		[ForeignKey("RetroColumnId")]
+		public int RetroColumnId { get; set; }
+
+		public virtual RetroColumn RetroColumn { get; set; }
+	}
 }

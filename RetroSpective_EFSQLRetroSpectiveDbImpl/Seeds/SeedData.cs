@@ -41,7 +41,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl.Seeds
 
             RetroCard retroCard4 = new RetroCard { Content = "Ik sta in collom 3 als het goed is", Position = 1};
 
-            retroColumn1.RetroItems.Add(retroCard1);
+            retroColumn1.RetroCards.Add(retroCard1);
             //  retroColumn2.RetroItems.Add(retroCard2);
             //retroColumn3.RetroItems.Add(retroCard3);
             //retroColumn3.RetroItems.Add(retroCard4);

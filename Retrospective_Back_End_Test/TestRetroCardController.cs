@@ -42,7 +42,7 @@ namespace Retrospective_Back_End_Test
 	            retroCards.Add(retroCard);
             }
 
-            _mockRetrospectiveRepo.Setup(m => m.SaveBaseItem(It.IsAny<RetroCard>())).Callback((Action<RetroCard>) Action);
+            _mockRetrospectiveRepo.Setup(m => m.SaveRetroCard(It.IsAny<RetroCard>())).Callback((Action<RetroCard>) Action);
 
             //Act
             controller.PostRetroCard(new RetroCard

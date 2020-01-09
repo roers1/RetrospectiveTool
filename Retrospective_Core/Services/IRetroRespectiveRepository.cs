@@ -10,10 +10,13 @@ namespace Retrospective_Core.Services
 
 	    IQueryable<Retrospective> Retrospectives { get; }
 	    IQueryable<RetroColumn> RetroColumns { get; }
-	    IQueryable<BaseItem> BaseItems { get; }
-	    void SaveBaseItem(BaseItem baseItem);
-		void RemoveBaseItem(BaseItem baseItem);
-	    void SaveRetroColumn(RetroColumn retroColumn);
+	    IQueryable<RetroCard> RetroCards { get; }
+		IQueryable<RetroFamily> RetroFamilies { get; }
+	    void SaveRetroCard(RetroCard retroCard);
+		void RemoveRetroCard(RetroCard retroCard);
+		void SaveRetroFamily(RetroFamily retroFamily);
+		void RemoveRetroFamily(RetroFamily retroFamily);
+		void SaveRetroColumn(RetroColumn retroColumn);
 	    void RemoveRetroColumn(RetroColumn retroColumn);
 	    void SaveRetrospective(Retrospective retrospective);
 	    void RemoveRetrospective(Retrospective retrospective);

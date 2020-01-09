@@ -31,22 +31,19 @@ namespace Retrospective_Back_End.Controllers
         [HttpGet("{id}")]
         public ActionResult<Retrospective> GetRetrospective(int id)
         {
-            var retrospective = _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroItems).FirstOrDefault(r => r.Id == id);
+            var retrospective = _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards).FirstOrDefault(r => r.Id == id);
 
-            foreach(RetroColumn r in retrospective.RetroColumns)
+            foreach (RetroColumn r in retrospective.RetroColumns)
             {
-                foreach(BaseItem i in r.RetroItems)
+                foreach (RetroCard i in r.RetroCards)
                 {
-                    if(i.GetType() == typeof(RetroCard))
+                    RetroCard c = (RetroCard)i;
+                    if (c.RetroFamily == null)
                     {
-                        RetroCard c = (RetroCard) i;
-                        if(c.RetroFamily == null)
-                        {
-                            r.RetroItems.Remove(i);
-                        }
+                        r.RetroCards.Remove(i);
                     }
                 }
-            }   
+            }
 
 
             if (retrospective == null)
@@ -89,7 +86,7 @@ namespace Retrospective_Back_End.Controllers
         [HttpPost]
         public ActionResult<Retrospective> PostRetrospective(Retrospective retrospective)
         {
-	        retrospective = ThreeColumnTemplate(retrospective);
+            retrospective = ThreeColumnTemplate(retrospective);
 
             _context.SaveRetrospective(retrospective);
 
@@ -118,22 +115,22 @@ namespace Retrospective_Back_End.Controllers
 
         private Retrospective ThreeColumnTemplate(Retrospective retrospective)
         {
-	        var columns = new List<RetroColumn>
-	        {
-		        new RetroColumn
-		        {
-			        Title = "To do"
-		        },
-		        new RetroColumn
-		        {
-			        Title = "Doing"
-		        },
+            var columns = new List<RetroColumn>
+            {
+                new RetroColumn
+                {
+                    Title = "To do"
+                },
+                new RetroColumn
+                {
+                    Title = "Doing"
+                },
 
-		        new RetroColumn
-		        {
-			        Title = "Done"
-		        }
-	        };
+                new RetroColumn
+                {
+                    Title = "Done"
+                }
+            };
 
             foreach (RetroColumn r in columns)
             {

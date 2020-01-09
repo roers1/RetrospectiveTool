@@ -29,14 +29,14 @@ namespace Retrospective_Back_End.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RetroCard>>> GetRetroCards()
         {
-            return await _context.BaseItems.OfType<RetroCard>().ToListAsync();
+            return await _context.RetroCards.ToListAsync();
         }
 
         // GET: api/RetroCards/5
         [HttpGet("{id}")]
         public ActionResult<RetroCard> GetRetroCard(int id)
         {
-            var retroCard = _context.BaseItems.OfType<RetroCard>().FirstOrDefault(r => r.Id == id);
+            var retroCard = _context.RetroCards.FirstOrDefault(r => r.Id == id);
 
             if (retroCard == null)
             {
@@ -54,7 +54,7 @@ namespace Retrospective_Back_End.Controllers
         [HttpPut]
         public ActionResult<RetroCard> UpdateRetroCard(RetroCard retroCard)
         {
-            _context.SaveBaseItem(retroCard);
+            _context.SaveRetroCard(retroCard);
 
             RetroColumn retroColumn = _context.RetroColumns.Single(x => x.Id == retroCard.RetroColumnId);
 
@@ -77,7 +77,7 @@ namespace Retrospective_Back_End.Controllers
 		[HttpPost]
 		public ActionResult<RetroCard> PostRetroCard(RetroCard retroCard)
 		{
-			_context.SaveBaseItem(retroCard);
+			_context.SaveRetroCard(retroCard);
 
             RetroColumn retroColumn = _context.RetroColumns.Single(x => x.Id == retroCard.RetroColumnId);
 
@@ -100,13 +100,13 @@ namespace Retrospective_Back_End.Controllers
         [HttpDelete("{id}")]
         public ActionResult<RetroCard> DeleteRetroCard(int id)
         {
-            RetroCard retroCard = _context.BaseItems.OfType<RetroCard>().FirstOrDefault(r => r.Id == id);
+            RetroCard retroCard = _context.RetroCards.FirstOrDefault(r => r.Id == id);
             if (retroCard == null)
             {
                 return NotFound();
             }
 
-            _context.RemoveBaseItem(retroCard);
+            _context.RemoveRetroCard(retroCard);
 
             RetroColumn retroColumn = _context.RetroColumns.Single(x => x.Id == retroCard.RetroColumnId);
 
@@ -127,7 +127,7 @@ namespace Retrospective_Back_End.Controllers
 
         private bool RetroCardExists(int id)
         {
-            return _context.BaseItems.OfType<RetroCard>().Any(e => e.Id == id);
+            return _context.RetroCards.Any(e => e.Id == id);
         }
     }
 }

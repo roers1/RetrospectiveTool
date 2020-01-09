@@ -16,37 +16,45 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl {
 		        .OnDelete(DeleteBehavior.Cascade);
 
 	        modelBuilder.Entity<RetroColumn>()
-		        .HasMany(i => i.RetroItems)
+		        .HasMany(i => i.RetroCards)
 		        .WithOne(c => c.RetroColumn)
 		        .IsRequired()
 		        .OnDelete(DeleteBehavior.Cascade);
 
-	        modelBuilder.Entity<BaseItem>()
-		        .HasOne(i => i.RetroColumn)
-		        .WithMany(r => r.RetroItems)
+			modelBuilder.Entity<RetroColumn>()
+				.HasMany(i => i.RetroFamilies)
+				.WithOne(c => c.RetroColumn)
+				.IsRequired()
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<RetroFamily>()
+				.HasOne(i => i.RetroColumn)
+				.WithMany(f => f.RetroFamilies)
 				.HasForeignKey(i => i.RetroColumnId)
-		        .OnDelete(DeleteBehavior.NoAction);
+				.OnDelete(DeleteBehavior.Cascade);
 
-	        modelBuilder.Entity<RetroFamily>()
-		        .HasMany(i => i.RetroCards)
-		        .WithOne(i => i.RetroFamily)
+			modelBuilder.Entity<RetroCard>(e => {
+				e.HasOne(i => i.RetroFamily)
+				.WithMany(i => i.RetroCards)
 				.IsRequired(false)
-		        .OnDelete(DeleteBehavior.Cascade);
-
-			modelBuilder.Entity<RetroCard>()
-		        .HasOne(i => i.RetroFamily)
-		        .WithMany(i => i.RetroCards)
 				.HasForeignKey(i => i.RetroFamilyId)
-		        .OnDelete(DeleteBehavior.NoAction);
+				.OnDelete(DeleteBehavior.NoAction);
 
-			modelBuilder.Entity<RetroCard>().HasBaseType<BaseItem>();
-	        modelBuilder.Entity<RetroFamily>().HasBaseType<BaseItem>();
+
+				e.HasOne(i => i.RetroColumn)
+				.WithMany(i => i.RetroCards)
+				.HasForeignKey(i => i.RetroColumnId)
+				.OnDelete(DeleteBehavior.Cascade);
+			});
+			
         }
 
         public virtual DbSet<Retrospective> Retrospectives { get; set; }
 
         public virtual DbSet<RetroColumn> RetroColumns { get; set; }
 
-        public virtual DbSet<BaseItem> BaseItem { get; set; }
+        public virtual DbSet<RetroCard> RetroCards { get; set; }
+
+		public virtual DbSet<RetroFamily> RetroFamilies { get; set; }
     }
 }
