@@ -63,14 +63,12 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                         name: "FK_BaseItem_RetroColumns_RetroColumnId",
                         column: x => x.RetroColumnId,
                         principalTable: "RetroColumns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_BaseItem_BaseItem_RetroFamilyId",
                         column: x => x.RetroFamilyId,
                         principalTable: "BaseItem",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

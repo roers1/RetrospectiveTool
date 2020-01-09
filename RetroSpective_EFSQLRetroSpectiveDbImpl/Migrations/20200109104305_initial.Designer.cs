@@ -10,7 +10,7 @@ using Retrospective_EFSQLRetrospectiveDbImpl;
 namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
 {
     [DbContext(typeof(RetroSpectiveDbContext))]
-    [Migration("20200109102930_initial")]
+    [Migration("20200109104305_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,7 +121,7 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                     b.HasOne("Retrospective_Core.Models.RetroColumn", "RetroColumn")
                         .WithMany("RetroItems")
                         .HasForeignKey("RetroColumnId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -139,7 +139,7 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                     b.HasOne("Retrospective_Core.Models.RetroFamily", "RetroFamily")
                         .WithMany("RetroCards")
                         .HasForeignKey("RetroFamilyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
