@@ -38,7 +38,7 @@ namespace Retrospective_Back_End_Test
                 retroFamilies.Add(retroFamily);
             }
 
-            _mockRetrospectiveRepo.Setup(m => m.SaveRetroFamily(It.IsAny<RetroFamily>()))
+            _mockRetrospectiveRepo.Setup(m => m.SaveBaseItem(It.IsAny<RetroFamily>()))
                 .Callback((Action<RetroFamily>) Action);
 
             //Act
@@ -80,7 +80,7 @@ namespace Retrospective_Back_End_Test
                 entry.Content = retroFamily.Content;
             }
 
-            _mockRetrospectiveRepo.Setup(m => m.SaveRetroFamily(It.IsAny<RetroFamily>()))
+            _mockRetrospectiveRepo.Setup(m => m.SaveBaseItem(It.IsAny<RetroFamily>()))
                 .Callback((Action<RetroFamily>) Action);
 
             //Act
@@ -119,9 +119,9 @@ namespace Retrospective_Back_End_Test
                 retroFamilies.Remove(y);
             }
 
-            _mockRetrospectiveRepo.Setup(m => m.RetroFamilies).Returns(retroFamilies.AsQueryable());
+            _mockRetrospectiveRepo.Setup(m => m.BaseItems).Returns(retroFamilies.AsQueryable());
 
-            _mockRetrospectiveRepo.Setup(m => m.RemoveRetroFamily(It.IsAny<RetroFamily>()))
+            _mockRetrospectiveRepo.Setup(m => m.RemoveBaseItem(It.IsAny<RetroFamily>()))
                 .Callback((Action<RetroFamily>)Action);
 
             //Act
@@ -149,7 +149,7 @@ namespace Retrospective_Back_End_Test
 
             retroFamilies.Add(f);
 
-            _mockRetrospectiveRepo.Setup(r => r.RetroFamilies).Returns(retroFamilies.AsQueryable());
+            _mockRetrospectiveRepo.Setup(r => r.BaseItems).Returns(retroFamilies.AsQueryable());
 
             //Act
             RetroFamily family = controller.Get(0).Value;
@@ -189,7 +189,7 @@ namespace Retrospective_Back_End_Test
                 retroFamilies.Add(f);
             }
 
-            _mockRetrospectiveRepo.Setup(r => r.RetroFamilies).Returns(retroFamilies.AsQueryable());
+            _mockRetrospectiveRepo.Setup(r => r.BaseItems).Returns(retroFamilies.AsQueryable());
             
             //Act
             var entries = await controller.Get();

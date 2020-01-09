@@ -96,10 +96,7 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                     b.Property<int>("DownVotes")
                         .HasColumnType("int");
 
-                    b.Property<int>("FamilyId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RetroFamilyId")
+                    b.Property<int>("RetroFamilyId")
                         .HasColumnType("int");
 
                     b.Property<int>("UpVotes")
@@ -139,7 +136,9 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                 {
                     b.HasOne("Retrospective_Core.Models.RetroFamily", "RetroFamily")
                         .WithMany("RetroCards")
-                        .HasForeignKey("RetroFamilyId");
+                        .HasForeignKey("RetroFamilyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

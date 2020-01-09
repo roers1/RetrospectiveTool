@@ -10,8 +10,8 @@ using Retrospective_EFSQLRetrospectiveDbImpl;
 namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
 {
     [DbContext(typeof(RetroSpectiveDbContext))]
-    [Migration("20200107093402_Introduced abstract class for content")]
-    partial class Introducedabstractclassforcontent
+    [Migration("20200109102930_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,10 +98,7 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                     b.Property<int>("DownVotes")
                         .HasColumnType("int");
 
-                    b.Property<int>("FamilyId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RetroFamilyId")
+                    b.Property<int>("RetroFamilyId")
                         .HasColumnType("int");
 
                     b.Property<int>("UpVotes")
@@ -141,7 +138,9 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                 {
                     b.HasOne("Retrospective_Core.Models.RetroFamily", "RetroFamily")
                         .WithMany("RetroCards")
-                        .HasForeignKey("RetroFamilyId");
+                        .HasForeignKey("RetroFamilyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

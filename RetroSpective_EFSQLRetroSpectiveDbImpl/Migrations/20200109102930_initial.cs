@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
 {
-    public partial class Refactoring : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,30 +43,45 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RetroCards",
+                name: "BaseItem",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(nullable: true),
                     Position = table.Column<int>(nullable: false),
-                    RetroColumnId = table.Column<int>(nullable: false)
+                    RetroColumnId = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    UpVotes = table.Column<int>(nullable: true),
+                    DownVotes = table.Column<int>(nullable: true),
+                    RetroFamilyId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RetroCards", x => x.Id);
+                    table.PrimaryKey("PK_BaseItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RetroCards_RetroColumns_RetroColumnId",
+                        name: "FK_BaseItem_RetroColumns_RetroColumnId",
                         column: x => x.RetroColumnId,
                         principalTable: "RetroColumns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BaseItem_BaseItem_RetroFamilyId",
+                        column: x => x.RetroFamilyId,
+                        principalTable: "BaseItem",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_RetroCards_RetroColumnId",
-                table: "RetroCards",
+                name: "IX_BaseItem_RetroColumnId",
+                table: "BaseItem",
                 column: "RetroColumnId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BaseItem_RetroFamilyId",
+                table: "BaseItem",
+                column: "RetroFamilyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RetroColumns_RetrospectiveId",
@@ -77,7 +92,7 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RetroCards");
+                name: "BaseItem");
 
             migrationBuilder.DropTable(
                 name: "RetroColumns");
