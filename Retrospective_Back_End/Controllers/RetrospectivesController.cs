@@ -33,6 +33,22 @@ namespace Retrospective_Back_End.Controllers
         {
             var retrospective = _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroItems).FirstOrDefault(r => r.Id == id);
 
+            foreach(RetroColumn r in retrospective.RetroColumns)
+            {
+                foreach(BaseItem i in r.RetroItems)
+                {
+                    if(i.GetType() == typeof(RetroCard))
+                    {
+                        RetroCard c = (RetroCard) i;
+                        if(c.RetroFamily == null)
+                        {
+                            r.RetroItems.Remove(i);
+                        }
+                    }
+                }
+            }   
+
+
             if (retrospective == null)
             {
                 return NotFound();

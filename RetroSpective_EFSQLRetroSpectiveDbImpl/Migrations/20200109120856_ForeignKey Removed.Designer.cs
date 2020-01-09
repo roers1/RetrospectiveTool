@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Retrospective_EFSQLRetrospectiveDbImpl;
 
 namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
 {
     [DbContext(typeof(RetroSpectiveDbContext))]
-    partial class RetroSpectiveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200109120856_ForeignKey Removed")]
+    partial class ForeignKeyRemoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,7 +139,8 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
                     b.HasOne("Retrospective_Core.Models.RetroFamily", "RetroFamily")
                         .WithMany("RetroCards")
                         .HasForeignKey("RetroFamilyId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

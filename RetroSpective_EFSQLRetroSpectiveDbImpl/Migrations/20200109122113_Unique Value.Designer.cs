@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Retrospective_EFSQLRetrospectiveDbImpl;
 
 namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
 {
     [DbContext(typeof(RetroSpectiveDbContext))]
-    partial class RetroSpectiveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200109122113_Unique Value")]
+    partial class UniqueValue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,6 +112,13 @@ namespace RetroSpective_EFSQLRetroSpectiveDbImpl.Migrations
             modelBuilder.Entity("Retrospective_Core.Models.RetroFamily", b =>
                 {
                     b.HasBaseType("Retrospective_Core.Models.BaseItem");
+
+                    b.Property<int>("FamilyId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("FamilyId")
+                        .IsUnique()
+                        .HasFilter("[FamilyId] IS NOT NULL");
 
                     b.HasDiscriminator().HasValue("RetroFamily");
                 });

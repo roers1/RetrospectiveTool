@@ -24,16 +24,19 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl {
 	        modelBuilder.Entity<BaseItem>()
 		        .HasOne(i => i.RetroColumn)
 		        .WithMany(r => r.RetroItems)
+				.HasForeignKey(i => i.RetroColumnId)
 		        .OnDelete(DeleteBehavior.NoAction);
 
 	        modelBuilder.Entity<RetroFamily>()
 		        .HasMany(i => i.RetroCards)
 		        .WithOne(i => i.RetroFamily)
+				.IsRequired(false)
 		        .OnDelete(DeleteBehavior.Cascade);
 
-	        modelBuilder.Entity<RetroCard>()
+			modelBuilder.Entity<RetroCard>()
 		        .HasOne(i => i.RetroFamily)
 		        .WithMany(i => i.RetroCards)
+				.HasForeignKey(i => i.RetroFamilyId)
 		        .OnDelete(DeleteBehavior.NoAction);
 
 			modelBuilder.Entity<RetroCard>().HasBaseType<BaseItem>();
