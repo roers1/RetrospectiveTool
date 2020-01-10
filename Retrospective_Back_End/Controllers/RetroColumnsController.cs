@@ -30,14 +30,14 @@ namespace Retrospective_Back_End.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RetroColumn>>> GetRetroColumns()
         {
-            return await _context.RetroColumns.Include(c => c.RetroItems).ToListAsync();
+            return await _context.RetroColumns.Include(c => c.RetroCards).ToListAsync();
         }
 
         // GET: api/RetroColumns/5
         [HttpGet("{id}")]
         public ActionResult<RetroColumn> GetRetroColumn(int id)
         {
-            var retroColumn = _context.RetroColumns.Include(c => c.RetroItems).FirstOrDefault(r => r.Id == id);
+            var retroColumn = _context.RetroColumns.Include(c => c.RetroCards).FirstOrDefault(r => r.Id == id);
 
             if (retroColumn == null)
             {
