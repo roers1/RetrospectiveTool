@@ -122,6 +122,23 @@ namespace Retrospective_Back_End.Controllers
             return _context.Retrospectives.Any(e => e.Id == id);
         }
 
+        // DELETE: api/Retrospectives/{id}/RetroCards
+        [HttpDelete("{id}/RetroCards")]
+        public ActionResult<Retrospective> CleanRetrospective(int id)
+        {
+            var retrospective = _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards).FirstOrDefault(r => r.Id == id);
+            if (retrospective == null)
+            {
+                return NotFound();
+            }
+
+            _context.CleanRetrospective(retrospective);
+
+            return retrospective;
+        }
+
+
+
         private Retrospective ThreeColumnTemplate(Retrospective retrospective)
         {
             var columns = new List<RetroColumn>
