@@ -50,6 +50,21 @@ namespace Retrospective_Back_End.Controllers
         public ActionResult<RetroFamily> Post([FromBody] RetroFamily retroFamily)
         {
             _repo.SaveRetroFamily(retroFamily);
+
+            RetroColumn retroColumn = _repo.RetroColumns.Single(x => x.Id == retroFamily.RetroColumnId);
+
+            if (_hubContext != null)
+            {
+                try
+                {
+                    _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
+                }
+                catch (Exception e)
+                {
+                    _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+                }
+            }
+
             return retroFamily;
         }
 
@@ -58,6 +73,20 @@ namespace Retrospective_Back_End.Controllers
         public void Put([FromBody] RetroFamily retroFamily)
         {
             _repo.SaveRetroFamily(retroFamily);
+
+            RetroColumn retroColumn = _repo.RetroColumns.Single(x => x.Id == retroFamily.RetroColumnId);
+
+            if (_hubContext != null)
+            {
+                try
+                {
+                    _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
+                }
+                catch (Exception e)
+                {
+                    _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+                }
+            }
         }
 
         // DELETE: api/ApiWithActions/5
@@ -71,6 +100,20 @@ namespace Retrospective_Back_End.Controllers
 
             else
             {
+                RetroColumn retroColumn = _repo.RetroColumns.Single(x => x.Id == family.RetroColumnId);
+
+                if (_hubContext != null)
+                {
+                    try
+                    {
+                        _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
+                    }
+                    catch (Exception e)
+                    {
+                        _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
+                    }
+                }
+
                 _repo.RemoveRetroFamily(family);
                 return family;
             }

@@ -31,17 +31,26 @@ namespace Retrospective_Back_End.Controllers
         [HttpGet("{id}")]
         public ActionResult<Retrospective> GetRetrospective(int id)
         {
-            var retrospective = _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards).FirstOrDefault(r => r.Id == id);
+            var retrospective = _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards)
+                .Include(c => c.RetroColumns).ThenInclude(s => s.RetroFamilies).ThenInclude(c => c.RetroCards)
+                .FirstOrDefault(r => r.Id == id);
+
+            ICollection<RetroCard> removedRetroCards = new List<RetroCard>();
 
             foreach (RetroColumn r in retrospective.RetroColumns)
             {
                 foreach (RetroCard i in r.RetroCards)
                 {
                     RetroCard c = (RetroCard)i;
-                    if (c.RetroFamily == null)
+                    if (c.RetroFamily != null)
                     {
-                        r.RetroCards.Remove(i);
+                        removedRetroCards.Add(i);
                     }
+                }
+
+                foreach(RetroCard i in removedRetroCards)
+                {
+                    r.RetroCards.Remove(i);
                 }
             }
 
