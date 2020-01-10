@@ -149,13 +149,12 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
         {
             foreach (var rc in retrospective.RetroColumns)
             {
-                foreach (var rf in rc.RetroFamilies)
+	            foreach (var rf in rc.RetroFamilies.ToList())
                 {
                     RemoveRetroFamily(rf);
                 }
                 rc.RetroCards.Clear();
             }
-
             _context.SaveChanges();
         }
     }

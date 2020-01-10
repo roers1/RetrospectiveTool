@@ -126,7 +126,14 @@ namespace Retrospective_Back_End.Controllers
         [HttpDelete("{id}/RetroCards")]
         public ActionResult<Retrospective> CleanRetrospective(int id)
         {
-            var retrospective = _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards).FirstOrDefault(r => r.Id == id);
+            var retrospective = _context.Retrospectives
+	            .Include(c => c.RetroColumns)
+	            .ThenInclude(s => s.RetroCards)
+	            .Include(c => c.RetroColumns)
+	            .ThenInclude(s => s.RetroFamilies)
+	            .ThenInclude(x => x.RetroCards)
+	            .FirstOrDefault(r => r.Id == id);
+
             if (retrospective == null)
             {
                 return NotFound();
