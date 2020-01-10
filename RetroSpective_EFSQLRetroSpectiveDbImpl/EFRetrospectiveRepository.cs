@@ -45,20 +45,25 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
             _context.SaveChanges();
         }
 
-        public void SaveRetroCard(RetroCard baseItem)
+        public void SaveRetroCard(RetroCard retroCard)
         {
-            if (baseItem.Id == 0)
+            if (retroCard.Id == 0)
             {
-                _context.RetroCards.Add(baseItem);
+                _context.RetroCards.Add(retroCard);
             }
             else
             {
                 RetroCard dbEntry = _context.RetroCards
-                    .FirstOrDefault(c => c.Id == baseItem.Id);
+                    .FirstOrDefault(c => c.Id == retroCard.Id);
 
                 if (dbEntry != null)
                 {
-                    dbEntry = baseItem;
+                    dbEntry.Content = retroCard.Content;
+                    dbEntry.Position = retroCard.Position;
+                    dbEntry.RetroColumnId = retroCard.RetroColumnId;
+                    dbEntry.RetroFamilyId = retroCard.RetroFamilyId;
+                    dbEntry.DownVotes = retroCard.DownVotes;
+                    dbEntry.UpVotes = retroCard.UpVotes;
                 }
             }
 
@@ -80,6 +85,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
                 {
                     dbEntry.Id = retroColumn.Id;
                     dbEntry.RetroCards = retroColumn.RetroCards;
+                    dbEntry.RetroFamilies = retroColumn.RetroFamilies;
                     dbEntry.Title = retroColumn.Title;
                 }
             }
@@ -110,6 +116,13 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 
         public void RemoveRetroFamily(RetroFamily retroFamily)
         {
+            foreach(RetroCard r in retroFamily.RetroCards)
+            {
+                this.RemoveRetroCard(r);
+            }
+
+            retroFamily.RetroCards = null;
+
             _context.RetroFamilies.Remove(retroFamily);
             _context.SaveChanges();
         }

@@ -70,6 +70,8 @@ namespace Retrospective_Back_End.Controllers
 	            }
             }
 
+            RetroCard r = _context.RetroCards.FirstOrDefault(x => x.Id == retroCard.Id);
+
             return retroCard;
         }
 
