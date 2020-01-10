@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Retrospective_Core.Models;
@@ -116,12 +117,12 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 
         public void RemoveRetroFamily(RetroFamily retroFamily)
         {
-            foreach(RetroCard r in retroFamily.RetroCards)
+            IList<RetroCard> RetroCards = _context.RetroCards.Where(x => x.RetroFamilyId == retroFamily.Id).ToList();
+
+            foreach(RetroCard r in RetroCards)
             {
                 this.RemoveRetroCard(r);
             }
-
-            retroFamily.RetroCards = null;
 
             _context.RetroFamilies.Remove(retroFamily);
             _context.SaveChanges();
