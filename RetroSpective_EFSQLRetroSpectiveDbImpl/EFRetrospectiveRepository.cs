@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Retrospective_Core.Models;
@@ -127,6 +128,20 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
             }
 
             _context.Retrospectives.Add(retrospective);
+            _context.SaveChanges();
+        }
+
+        public void CleanRetrospective(Retrospective retrospective)
+        {
+            foreach (var rc in retrospective.RetroColumns)
+            {
+                foreach (var rf in rc.RetroFamilies)
+                {
+                    RemoveRetroFamily(rf);
+                }
+                rc.RetroCards.Clear();
+            }
+
             _context.SaveChanges();
         }
     }

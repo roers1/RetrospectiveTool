@@ -20,6 +20,8 @@ namespace Retrospective_Core.Services
 	    void RemoveRetroColumn(RetroColumn retroColumn);
 	    void SaveRetrospective(Retrospective retrospective);
 	    void RemoveRetrospective(Retrospective retrospective);
-	    IQueryable<Retrospective> getAll();
+		void CleanRetrospective(Retrospective retrospective);
+
+		IQueryable<Retrospective> getAll();
     }
 }
