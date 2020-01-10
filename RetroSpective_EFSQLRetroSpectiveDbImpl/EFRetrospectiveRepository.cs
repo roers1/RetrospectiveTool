@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Retrospective_Core.Models;
@@ -45,20 +47,25 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
             _context.SaveChanges();
         }
 
-        public void SaveRetroCard(RetroCard baseItem)
+        public void SaveRetroCard(RetroCard retroCard)
         {
-            if (baseItem.Id == 0)
+            if (retroCard.Id == 0)
             {
-                _context.RetroCards.Add(baseItem);
+                _context.RetroCards.Add(retroCard);
             }
             else
             {
                 RetroCard dbEntry = _context.RetroCards
-                    .FirstOrDefault(c => c.Id == baseItem.Id);
+                    .FirstOrDefault(c => c.Id == retroCard.Id);
 
                 if (dbEntry != null)
                 {
-                    dbEntry = baseItem;
+                    dbEntry.Content = retroCard.Content;
+                    dbEntry.Position = retroCard.Position;
+                    dbEntry.RetroColumnId = retroCard.RetroColumnId;
+                    dbEntry.RetroFamilyId = retroCard.RetroFamilyId;
+                    dbEntry.DownVotes = retroCard.DownVotes;
+                    dbEntry.UpVotes = retroCard.UpVotes;
                 }
             }
 
@@ -80,6 +87,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
                 {
                     dbEntry.Id = retroColumn.Id;
                     dbEntry.RetroCards = retroColumn.RetroCards;
+                    dbEntry.RetroFamilies = retroColumn.RetroFamilies;
                     dbEntry.Title = retroColumn.Title;
                 }
             }
@@ -110,6 +118,13 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 
         public void RemoveRetroFamily(RetroFamily retroFamily)
         {
+            IList<RetroCard> RetroCards = _context.RetroCards.Where(x => x.RetroFamilyId == retroFamily.Id).ToList();
+
+            foreach(RetroCard r in RetroCards)
+            {
+                this.RemoveRetroCard(r);
+            }
+
             _context.RetroFamilies.Remove(retroFamily);
             _context.SaveChanges();
         }
@@ -127,6 +142,19 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
             }
 
             _context.Retrospectives.Add(retrospective);
+            _context.SaveChanges();
+        }
+
+        public void CleanRetrospective(Retrospective retrospective)
+        {
+            foreach (var rc in retrospective.RetroColumns)
+            {
+	            foreach (var rf in rc.RetroFamilies.ToList())
+                {
+                    RemoveRetroFamily(rf);
+                }
+                rc.RetroCards.Clear();
+            }
             _context.SaveChanges();
         }
     }

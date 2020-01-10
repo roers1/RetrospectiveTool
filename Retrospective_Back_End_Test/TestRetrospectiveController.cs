@@ -104,5 +104,39 @@ namespace Retrospective_Back_End_Test
 	            Assert.Equal("Done", retroColumn.Title);
             }
         }
+
+        [Fact]
+        public void DeleteRetrospective_ShouldCleanBoard()
+        {
+            //Arrange
+            void Action(Retrospective _retrospective)
+            {
+                foreach (var retroCard in _retrospectives.FirstOrDefault().RetroColumns)
+                {
+                    retroCard.RetroCards.Clear();
+                    retroCard.RetroFamilies.Clear();
+                }
+            }
+
+            _mockRetrospectiveRepo.Setup(m => m.Retrospectives).Returns(_retrospectives.AsQueryable());
+            _mockRetrospectiveRepo.Setup(r => r.CleanRetrospective(It.IsAny<Retrospective>())).Callback((Action<Retrospective>) Action);
+            var controller = new RetrospectivesController(_mockRetrospectiveRepo.Object);
+
+
+            //Act
+            controller.CleanRetrospective(_retrospectives.FirstOrDefault().Id);
+
+            //Assert
+            int retroCardsSize = 0;
+            int retroFamiliesSize = 0;
+            foreach (var retroCard in _retrospectives.FirstOrDefault().RetroColumns)
+            {
+                retroCardsSize += retroCard.RetroCards.Count();
+                retroFamiliesSize += retroCard.RetroFamilies.Count();
+            }
+
+            Assert.Equal(0, retroCardsSize);
+            Assert.Equal(0, retroFamiliesSize);
+        }
     }
 }

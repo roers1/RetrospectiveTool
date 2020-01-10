@@ -14,7 +14,7 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl.Seeds
             using var context = new RetroSpectiveDbContext(
 
                 serviceProvider.GetRequiredService<DbContextOptions<RetroSpectiveDbContext>>());
-            if (context.Retrospectives.Any(x => x.Title == "Training"))
+            if (context.Retrospectives.Any(x => x.Title == "Training 1"))
             {
                 return;   // DB has been seeded
             }
