@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Retrospective_Core.Models;
@@ -7,7 +8,6 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 {
     public class EFRetrospectiveRepository : IRetroRespectiveRepository
     {
-
         private readonly RetroSpectiveDbContext _context;
 
         public EFRetrospectiveRepository(RetroSpectiveDbContext context)
@@ -15,34 +15,28 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
             this._context = context;
         }
 
-        public IQueryable<RetroFamily> RetroFamilies => _context.RetroFamilies;
-
         public IQueryable<Retrospective> Retrospectives => _context.Retrospectives;
 
         public IQueryable<RetroColumn> RetroColumns => _context.RetroColumns;
 
-		public IQueryable<RetroCard> RetroCards => _context.RetroCards;
-		public IQueryable<Retrospective> getAll()
-		{
-			return _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroItems);
+        public IQueryable<RetroCard> RetroCards => _context.RetroCards;
 
-		}
+        public IQueryable<RetroFamily> RetroFamilies => _context.RetroFamilies;
 
-        public void RemoveRetroCard(RetroCard retroCard)
+        public IQueryable<Retrospective> getAll()
         {
-            _context.RetroCards.Remove(retroCard);
+            return _context.Retrospectives.Include(c => c.RetroColumns).ThenInclude(s => s.RetroCards);
+        }
+
+        public void RemoveRetroCard(RetroCard baseItem)
+        {
+            _context.RetroCards.Remove(baseItem);
             _context.SaveChanges();
         }
 
         public void RemoveRetroColumn(RetroColumn retroColumn)
         {
             _context.RetroColumns.Remove(retroColumn);
-            _context.SaveChanges();
-        }
-
-        public void RemoveRetroFamily(RetroFamily retroFamily)
-        {
-            _context.RetroFamilies.Remove(retroFamily);
             _context.SaveChanges();
         }
 
@@ -65,15 +59,15 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 
                 if (dbEntry != null)
                 {
-                    dbEntry.RetroColumnId = retroCard.RetroColumnId;
-                    dbEntry.Id = retroCard.Id;
                     dbEntry.Content = retroCard.Content;
                     dbEntry.Position = retroCard.Position;
+                    dbEntry.RetroColumnId = retroCard.RetroColumnId;
+                    dbEntry.RetroFamilyId = retroCard.RetroFamilyId;
                     dbEntry.DownVotes = retroCard.DownVotes;
                     dbEntry.UpVotes = retroCard.UpVotes;
-                    dbEntry.FamilyId = retroCard.FamilyId;
                 }
             }
+
             _context.SaveChanges();
         }
 
@@ -90,29 +84,47 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 
                 if (dbEntry != null)
                 {
-	                dbEntry.Id = retroColumn.Id;
-                    dbEntry.RetroItems = retroColumn.RetroItems;
+                    dbEntry.Id = retroColumn.Id;
+                    dbEntry.RetroCards = retroColumn.RetroCards;
+                    dbEntry.RetroFamilies = retroColumn.RetroFamilies;
                     dbEntry.Title = retroColumn.Title;
                 }
             }
+
             _context.SaveChanges();
         }
 
-        public void SaveRetroFamily(RetroFamily retroFamily) {
-            if (retroFamily.Id == 0) {
+
+        public void SaveRetroFamily(RetroFamily retroFamily)
+        {
+            if (retroFamily.Id == 0)
+            {
                 _context.RetroFamilies.Add(retroFamily);
-            } else {
+            }
+            else
+            {
                 RetroFamily dbEntry = _context.RetroFamilies
                     .FirstOrDefault(c => c.Id == retroFamily.Id);
 
-                if (dbEntry != null) {
-                    dbEntry.Id = retroFamily.Id;
-                    dbEntry.RetroCards = retroFamily.RetroCards;
-                    dbEntry.Content = retroFamily.Content;
-                    dbEntry.Position = retroFamily.Position;
-                    dbEntry.RetroColumnId = retroFamily.RetroColumnId;
+                if (dbEntry != null)
+                {
+                    dbEntry = retroFamily;
                 }
             }
+
+            _context.SaveChanges();
+        }
+
+        public void RemoveRetroFamily(RetroFamily retroFamily)
+        {
+            IList<RetroCard> RetroCards = _context.RetroCards.Where(x => x.RetroFamilyId == retroFamily.Id).ToList();
+
+            foreach(RetroCard r in RetroCards)
+            {
+                this.RemoveRetroCard(r);
+            }
+
+            _context.RetroFamilies.Remove(retroFamily);
             _context.SaveChanges();
         }
 
@@ -120,10 +132,11 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
         {
             foreach (RetroColumn retroColumn in retrospective.RetroColumns)
             {
-                foreach (RetroCard retroCard in retroColumn.RetroItems)
+                foreach (RetroCard retroCard in retroColumn.RetroCards)
                 {
                     _context.RetroCards.Add(retroCard);
                 }
+
                 _context.RetroColumns.Add(retroColumn);
             }
 
