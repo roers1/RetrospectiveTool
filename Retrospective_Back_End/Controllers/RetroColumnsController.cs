@@ -69,8 +69,8 @@ namespace Retrospective_Back_End.Controllers
         [HttpPost]
         public ActionResult<RetroColumn> PostRetroColumn(RetroColumn retroColumn)
         {
-
             _context.SaveRetroColumn(retroColumn);
+
             if (_hubContext.Clients != null)
             {
 	            try

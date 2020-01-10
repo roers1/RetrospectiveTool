@@ -51,9 +51,9 @@ namespace Retrospective_Back_End.Controllers
         {
             _repo.SaveRetroFamily(retroFamily);
 
-            RetroColumn retroColumn = _repo.RetroColumns.Single(x => x.Id == retroFamily.RetroColumnId);
+            RetroColumn retroColumn = _repo.RetroColumns.FirstOrDefault(x => x.Id == retroFamily.RetroColumnId);
 
-            if (_hubContext != null)
+            if (_hubContext.Clients != null)
             {
                 try
                 {
@@ -74,9 +74,9 @@ namespace Retrospective_Back_End.Controllers
         {
             _repo.SaveRetroFamily(retroFamily);
 
-            RetroColumn retroColumn = _repo.RetroColumns.Single(x => x.Id == retroFamily.RetroColumnId);
+            RetroColumn retroColumn = _repo.RetroColumns.FirstOrDefault(x => x.Id == retroFamily.RetroColumnId);
 
-            if (_hubContext != null)
+            if (_hubContext.Clients != null)
             {
                 try
                 {
@@ -100,9 +100,9 @@ namespace Retrospective_Back_End.Controllers
 
             else
             {
-                RetroColumn retroColumn = _repo.RetroColumns.Single(x => x.Id == family.RetroColumnId);
+                RetroColumn retroColumn = _repo.RetroColumns.FirstOrDefault(x => x.Id == family.RetroColumnId);
 
-                if (_hubContext != null)
+                if (_hubContext.Clients != null)
                 {
                     try
                     {
