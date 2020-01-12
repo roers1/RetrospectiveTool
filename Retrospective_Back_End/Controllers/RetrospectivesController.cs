@@ -37,20 +37,23 @@ namespace Retrospective_Back_End.Controllers
 
             ICollection<RetroCard> removedRetroCards = new List<RetroCard>();
 
-            foreach (RetroColumn r in retrospective.RetroColumns)
+            if (retrospective != null)
             {
-                foreach (RetroCard i in r.RetroCards)
+                foreach (RetroColumn r in retrospective.RetroColumns)
                 {
-                    RetroCard c = (RetroCard)i;
-                    if (c.RetroFamily != null)
+                    foreach (RetroCard i in r.RetroCards)
                     {
-                        removedRetroCards.Add(i);
+                        RetroCard c = (RetroCard)i;
+                        if (c.RetroFamily != null)
+                        {
+                            removedRetroCards.Add(i);
+                        }
                     }
-                }
 
-                foreach(RetroCard i in removedRetroCards)
-                {
-                    r.RetroCards.Remove(i);
+                    foreach (RetroCard i in removedRetroCards)
+                    {
+                        r.RetroCards.Remove(i);
+                    }
                 }
             }
 
