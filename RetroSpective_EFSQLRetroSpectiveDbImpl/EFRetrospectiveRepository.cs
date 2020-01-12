@@ -85,10 +85,14 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 
                 if (dbEntry != null)
                 {
-                    dbEntry.Id = retroColumn.Id;
                     dbEntry.RetroCards = retroColumn.RetroCards;
-                    dbEntry.RetroFamilies = retroColumn.RetroFamilies;
                     dbEntry.Title = retroColumn.Title;
+                    dbEntry.RetrospectiveId = retroColumn.RetrospectiveId;
+
+                    foreach(RetroFamily f in retroColumn.RetroFamilies)
+                    {
+                        this.SaveRetroFamily(f);
+                    }
                 }
             }
 
@@ -109,7 +113,14 @@ namespace Retrospective_EFSQLRetrospectiveDbImpl
 
                 if (dbEntry != null)
                 {
-                    dbEntry = retroFamily;
+                    dbEntry.Position = retroFamily.Position;
+                    dbEntry.RetroColumnId = retroFamily.RetroColumnId;
+                    dbEntry.Content = retroFamily.Content;
+
+                    foreach(RetroCard r in retroFamily.RetroCards)
+                    {
+                        this.SaveRetroCard(r);
+                    }
                 }
             }
 
