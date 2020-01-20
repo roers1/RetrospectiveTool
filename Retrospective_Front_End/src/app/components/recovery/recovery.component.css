@@ -1,0 +1,53 @@
+body {
+    background-image: url('../../../assets/images/achtergrond-lobby.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    /* -60px for header */
+    background-attachment: fixed;
+    background-size: cover;
+    height: calc(100vh - 60px);
+}
+
+h1 {
+    color: white;
+    font-family: "din";
+    text-shadow: 1px 8px 3px rgba(0, 0, 0, 0.2);
+    padding-top: 20px;
+    font-size: 8vh;
+}
+
+.mat-form-field {
+    width: 40vh;
+}
+
+.form-holder {
+    margin-top: 4vh !important;
+    width: fit-content;
+    margin: auto;
+    text-align: center;
+    background-color: rgba(230, 243, 232, 0.6);
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.button-holder {
+    height: 45px;
+}
+
+.btn-confirm {
+    float: left;
+    width: 40%;
+}
+
+.btn-back {
+    float: right;
+    width: 30%;
+}
+
+.eye-icon {
+    -webkit-user-drag: none;
+}
+
+.eye-icon:hover {
+    cursor: pointer;
+}

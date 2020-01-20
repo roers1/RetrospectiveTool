@@ -1,0 +1,30 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="boardForm">
+    <div class="font" mat-dialog-content>
+        <div class="title-holder">
+            <h2>{{dict.CREATE_BOARD_TITLE}}</h2>
+        </div>
+
+        <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+        <mat-form-field class="full-width">
+            <input matInput placeholder="{{dict.FILL_IN_NAME_FORM}}" [(ngModel)]="data.name" formControlName="name"
+                [errorStateMatcher]="matcher">
+                <mat-error *ngIf="boardForm.controls['name'].errors?.required;" [innerHTML]="dict.REQUIRES_NAME_ERROR"></mat-error>
+            <mat-error *ngIf="boardForm.controls['name'].errors?.maxlength;" [innerHTML]="dict.TEXT_TOO_LONG_40"></mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <textarea matInput placeholder="{{dict.FILL_IN_DESC_FORM}}" [(ngModel)]="data.description"
+                formControlName="description"></textarea>
+                <mat-error [innerHTML]="dict.TEXT_TOO_LONG_250"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="font btn-holder" mat-dialog-action>
+        <button (click)="onSubmit()" [class.mat-elevation-z2]="true" [disabled]="!boardForm.valid"
+                [mat-dialog-close]="data"
+                class="TLbtn btn-small btn-color-primary mat-button mat-button-base btn-confirm" mat-raised-button>{{dict.CREATE_BTN}}</button>
+        <button (click)="onNoClick()" [class.mat-elevation-z2]="true" class="TLbtn btn-small btn-color-secondary mat-button mat-button-base btn-back" mat-button
+                type="button">{{dict.CANCEL_BTN}}</button>
+    </div>
+</form>

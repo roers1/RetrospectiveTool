@@ -1,0 +1,130 @@
+.holder {
+    padding: 20px 10px;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #ccc;
+    height: fit-content;
+    word-wrap: break-word;
+    white-space: initial;
+    border-radius: 5px;
+    position: relative;
+    background-color: #fffaf4;
+    margin: 10px;
+    cursor: grab;
+}
+
+.holder:hover > div > img {
+    opacity: 100;
+}
+
+.holder:hover #expandable {
+    height: 16px;
+}
+
+.content-holder {
+    width: -webkit-fill-available;
+    font-size: 14px;
+    font-family: din;
+    display: block;
+}
+
+.editcontent-holder {
+    width: -webkit-fill-available;
+    z-index: 20;
+}
+
+.btn-back {
+    float: right
+}
+
+.icon {
+    height: 28px;
+    opacity: 0;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    background-position: center;
+    transition: background 0.8s, opacity 0.2s;
+    border-radius: 15px;
+}
+
+.icon:hover {
+    cursor: pointer;
+    background-color: rgba(66, 66, 66, 0.185);
+    border-radius: 15px;
+    transition: background 0.2s;
+}
+
+.icon:active {
+    background-color: rgba(92, 92, 92, 0.6);
+    background-size: 100%;
+    border-radius: 15px;
+    transition: background 0.4s, opacity 0.2s;
+}
+
+.icons-holder {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 5px;
+}
+
+.icons-smiley-holder {
+    height: 0px;
+    margin-top: 4px;
+    transition-duration: 0.2s;
+    transition-property: height opacity;
+}
+
+.icon-holder {
+    height: 24px;
+    transition-duration: 0.1s;
+    opacity: 0;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+
+#icon_menu {
+    opacity: 100;
+}
+
+#icon_edit {
+    height: 30px;
+}
+
+#icon_delete {
+    height: 30px;
+}
+
+#icon_wipe {
+    opacity: 100;
+    height: 50px;
+    margin-left: 20px;
+}
+
+.vote-holder {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+}
+
+.vote-text {
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.vote-up {
+    color: #83e278;
+}
+
+.vote-down {
+    color: #ff8080;
+}
+
+.TLbtn {
+    padding-left: 10px;
+    padding-right: 10px;
+}

@@ -1,0 +1,21 @@
+<div class="title-holder">
+    <h2>{{data.title}}</h2>
+</div>
+
+<div class="font" mat-dialog-content>
+    <mat-form-field class="full-width">
+        <input matInput placeholder="{{data.message}}" [(ngModel)]="data.input" [formControl]="TextFormControl"
+            [errorStateMatcher]="matcher">
+        <mat-error *ngIf="TextFormControl.errors?.required" [innerHTML]="dict.REQUIRES_NAME_ERROR"></mat-error>
+        <mat-error *ngIf="TextFormControl.errors?.maxlength" [innerHTML]="dict.TEXT_TOO_LONG_40"></mat-error>
+        
+    </mat-form-field>
+</div>
+
+<div class="font" mat-dialog-action>
+    <button [class.mat-elevation-z2]="true" [disabled]="!TextFormControl.valid" [mat-dialog-close]="data"
+            class="TLbtn btn-small btn-color-primary mat-button mat-button-base btn-confirm" id=""
+            mat-raised-button>{{dict.APPLY_BTN}}</button>
+    <button (click)="onNoClick()" [class.mat-elevation-z2]="true" class="TLbtn btn-small btn-color-secondary mat-button mat-button-base btn-back"
+            mat-button>{{dict.CANCEL_BTN}}</button>
+</div>

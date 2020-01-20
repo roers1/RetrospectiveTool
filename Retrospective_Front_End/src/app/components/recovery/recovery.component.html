@@ -1,0 +1,51 @@
+<body>
+
+<div class="center-content">
+    <h1>{{dict.RECOVERY_TITLE}}</h1>
+</div>
+
+<div class="form-holder">
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+    <form (ngSubmit)="onSubmit()" [formGroup]="updateForm" class="font">
+
+        <div>
+            <mat-form-field class="full-width">
+                <input [errorStateMatcher]="matcher" [type]="hide ? 'password' : 'text'" formControlName="password" matInput
+                       placeholder="{{dict.PLACEHOLDER_PASSWORD}}" required>
+                <mat-icon (click)="hide = !hide" class="eye-icon" matSuffix>
+                    {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-error *ngIf="updateForm.controls['password'].errors?.required"
+                           [innerHTML]="dict.REQUIRES_PASSWORD_ERROR">
+                </mat-error>
+                <mat-error *ngIf="updateForm.controls['password'].errors?.pattern"
+                [innerHTML]="dict.FAULTY_PASSWORD_ERROR">
+     </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field class="full-width">
+                <input [errorStateMatcher]="matcher" [type]="hide ? 'password' : 'text'" formControlName="passwordRepeat"
+                       matInput placeholder="{{dict.PLACEHOLDER_PASSWORD_REPEAT}}" required>
+                <mat-icon (click)="hide = !hide" class="eye-icon" matSuffix>
+                    {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-error *ngIf="updateForm.controls['passwordRepeat'].errors?.required"
+                    [innerHTML]="dict.REQUIRES_PASSWORD_ERROR">
+         </mat-error>
+         <mat-error *ngIf="updateForm.controls['passwordRepeat'].errors?.pattern"
+         [innerHTML]="dict.FAULTY_PASSWORD_ERROR">
+</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="button-holder">
+            <button [class.mat-elevation-z2]="true" [disabled]="!updateForm.valid"
+                    class="TLbtn btn-small btn-color-primary mat-button mat-button-base btn-confirm"
+                    mat-raised-button type="submit">{{dict.APPLY_BTN}}</button>
+            <button [class.mat-elevation-z2]="true" class="TLbtn btn-small btn-color-secondary mat-button mat-button-base btn-back" mat-button
+                    routerLink="/">{{dict.CANCEL_BTN}}</button>
+        </div>
+    </form>
+</div>
+
+</body>

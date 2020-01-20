@@ -1,0 +1,28 @@
+<div *ngIf="retrospective && !isDestroyed" class="retro-body font" [class.mat-elevation-z2]="true">
+    <div class="row title-background">
+        <div class="col-9 overhaul">
+            <h4 class="title">{{retrospective.title}}</h4>
+        </div>
+        <div class="col-3">
+            <div class="icon-holder">
+                <img class="icon" id="icon_edit" src="../../../assets/images/icon_edit.png"
+                     (click)="editRetrospectiveTitle()"
+                     alt=""/>
+                <img class="icon" id="icon_delete" src="../../../assets/images/icon_delete.png"
+                     (click)="removeRetrospective()"
+                     alt=""/>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid" routerLink="/board/{{retrospective.id}}">
+        <div>
+            <p class="description">{{retrospective.description}}</p>
+        </div>
+        <div class="numbers">
+            <p>{{dict.STATS_COLUMNS}} {{columnCount}}</p>
+            <p>{{dict.STATS_CARTS}} {{cartCount}}</p>
+            <p>{{dict.STATS_FAMILIES}} {{familyCount}}</p>
+        </div>
+    </div>
+</div>

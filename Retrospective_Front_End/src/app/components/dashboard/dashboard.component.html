@@ -1,0 +1,9 @@
+<body *ngIf="retrospectives">
+    <div class="row" *ngFor="let j of getLength(); let i = index" style="margin-top: 40px;">
+        <div class="col-2"></div>
+        <div class="col-4" *ngFor="let retrospective of getRetrospectives(i)">
+            <app-retro-item [retrospective]="retrospective" (output)="removeBoard($event)"></app-retro-item>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</body>

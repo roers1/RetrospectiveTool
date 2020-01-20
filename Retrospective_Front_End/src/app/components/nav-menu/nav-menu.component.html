@@ -1,0 +1,19 @@
+<header class="header">
+    <nav class="navbar" id="navbar">
+        <img class="d-inline-block align-middle mr-2" id="logo" routerLink="/"
+             src="../../../assets/images/TrueLimeLogoTransparent.png">
+
+        <div (click)="login()" *ngIf="!authService.isLoggedIn()" class="logText row">
+            <h3 class="align-middle">{{dict.LOGIN_BTN}}</h3>
+            <img class="signin-icon" src="../../../assets/images//signin-icon.png">
+        </div>
+        <div *ngIf="authService.isLoggedIn()" class="dashboard-holder">
+            <h3 class="dashboard-text" routerLink="/dashboard">{{dict.DASHBOARD_TITLE}}</h3>
+        </div>
+        <div (click)="logout()" *ngIf="authService.isLoggedIn()" class="logText row">
+            <h3 class="align-middle">{{dict.LOGOUT_BTN}}</h3>
+            <img class="signin-icon" src="../../../assets/images//signout-icon.png">
+        </div>
+
+    </nav>
+</header>

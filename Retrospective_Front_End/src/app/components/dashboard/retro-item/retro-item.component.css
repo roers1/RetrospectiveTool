@@ -1,0 +1,96 @@
+.retro-body {
+    background-color: white;
+    border-radius: 5px;
+    opacity: 0.8;
+    margin: 10px !important;
+    height: fit-content;
+    text-align: left;
+    transition-duration: 0.25s;
+    transition-property: opacity;
+}
+
+.retro-body:focus {
+    outline: 0;
+}
+
+.retro-body:hover {
+    opacity: 1.0;
+}
+
+.title {
+    font-size: 25px !important;
+    display: inline;
+}
+
+
+.title-background {
+    background: rgba(185, 185, 185, 0.897);
+    border-radius: 5px 5px 0px 0px;
+    padding: 5px;
+    width: 100%;
+    margin-left: 0px;
+}
+
+.overhaul {
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.description {
+    max-width: 300px;
+    word-wrap: break-word
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.grid:focus {
+    outline: 0;
+}
+
+.title {
+    font-size: 20px;
+}
+
+.icon-holder {
+    height: 36px;
+    float: right;
+}
+
+.icon {
+    height: 30px;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    background-position: center;
+    transition: background 0.8s, opacity 0.2s;
+    border-radius: 15px;
+}
+
+.icon:hover {
+    cursor: pointer;
+    background-color: rgba(66, 66, 66, 0.185);
+    border-radius: 15px;
+    transition: background 0.2s;
+}
+
+.icon:active {
+    background-color: rgba(92, 92, 92, 0.6);
+    background-size: 100%;
+    border-radius: 15px;
+    transition: background 0.4s, opacity 0.2s;
+}
+
+.numbers {
+    padding-left: 10px;
+}

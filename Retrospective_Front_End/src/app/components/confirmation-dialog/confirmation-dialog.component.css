@@ -1,0 +1,27 @@
+.text {
+    font-family: din;
+}
+
+.btn-back {
+    float: right;
+    width: 100px;
+}
+
+.btn-confirm {
+    width: 100px;
+}
+
+.btn-holder {
+    margin-top: 10px;
+    margin-bottom: -5px;
+    display: block;
+}
+
+.title-holder {
+    text-align: center;
+}
+
+h2 {
+    font-family: din;
+    color: rgb(71, 71, 71);
+}

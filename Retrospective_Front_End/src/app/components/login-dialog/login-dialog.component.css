@@ -1,0 +1,33 @@
+.btn-back {
+    float: right;
+}
+
+.btn-confirm {
+    left: 0px;
+}
+
+.title-holder {
+    text-align: center;
+}
+
+h2 {
+    font-family: din;
+    color: rgb(116, 116, 116);
+}
+
+.error-text{
+    color: red;
+    text-align: center;
+    font-family: din;
+    font-weight: bolder;
+}
+.pass-recover {
+    color: royalblue;
+    margin-bottom: 10px;
+    width: fit-content;
+}
+
+.pass-recover:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

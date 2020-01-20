@@ -1,0 +1,28 @@
+<body>
+<div class="foreground">
+
+    <div class="center-content title">
+        <h1>{{dict.WELCOME_TITLE}}</h1>
+    </div>
+
+    <div class="buttonholder center-content">
+        <div class="center-content">
+            <button *ngIf="!authService.isLoggedIn()" [class.mat-elevation-z5]="true" class="TLbtn btn-medium background-color-accent btn-register" mat-button
+                    routerLink="/register">{{dict.REGISTER_BTN}}</button>
+        </div>
+        <div class="center-content">
+            <button (click)="openDialog()" *ngIf="authService.isLoggedIn()" [class.mat-elevation-z5]="true"
+                    class="TLbtn btn-large btn-color-primary"
+                    mat-button>{{dict.CREATE_NEW_BOARD_BTN}}</button>
+            <button *ngIf="!authService.isLoggedIn()" [class.mat-elevation-z5]="true" [disabled]="true" class="btn-register-off"
+                    class="TLbtn btn-large btn-color-secondary"
+                    mat-button>{{dict.CREATE_NEW_BOARD_BTN}}</button>
+            <div>
+                <br>
+                <mat-error *ngIf="!authService.isLoggedIn()" [innerHTML]="dict.HOME_MUST_REGISTER"></mat-error>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>

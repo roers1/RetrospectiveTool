@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Retrospective_Back_End.Realtime;
 using Retrospective_Core.Models;
 using Retrospective_Core.Services;
@@ -17,7 +15,7 @@ namespace Retrospective_Back_End.Controllers
     public class RetroCardsController : ControllerBase
     {
         private readonly IRetroRespectiveRepository _context;
-		private IHubContext<NotifyHub, ITypedHubClient> _hubContext;
+		private readonly IHubContext<NotifyHub, ITypedHubClient> _hubContext;
 
 		public RetroCardsController(IRetroRespectiveRepository context, IHubContext<NotifyHub, ITypedHubClient> hubContext)
         {
@@ -25,6 +23,9 @@ namespace Retrospective_Back_End.Controllers
 			_hubContext = hubContext;
 		}
 
+        /// <summary>
+        /// Get all RetroCard
+        /// </summary>
         // GET: api/RetroCards
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RetroCard>>> GetRetroCards()
@@ -32,6 +33,9 @@ namespace Retrospective_Back_End.Controllers
             return await _context.RetroCards.ToListAsync();
         }
 
+        /// <summary>
+        /// Get single RetroCard by id
+        /// </summary>
         // GET: api/RetroCards/5
         [HttpGet("{id}")]
         public ActionResult<RetroCard> GetRetroCard(int id)
@@ -46,10 +50,10 @@ namespace Retrospective_Back_End.Controllers
             return retroCard;
         }
 
-        // PUT: api/RetroCards/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
 
+        /// <summary>
+        /// Update a RetroCard
+        /// </summary>
         // PUT: api/RetroCards
         [HttpPut]
         public ActionResult<RetroCard> UpdateRetroCard(RetroCard retroCard)
@@ -64,7 +68,7 @@ namespace Retrospective_Back_End.Controllers
 	            {
 		            _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
 	            }
-	            catch (Exception e)
+	            catch
 	            {
 		            _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
 	            }
@@ -73,8 +77,11 @@ namespace Retrospective_Back_End.Controllers
             return retroCard;
         }
 
-		// POST: api/RetroCards
-		[HttpPost]
+        /// <summary>
+        /// Create a new RetroCard
+        /// </summary>
+        // POST: api/RetroCards
+        [HttpPost]
 		public ActionResult<RetroCard> PostRetroCard(RetroCard retroCard)
 		{
 			_context.SaveRetroCard(retroCard);
@@ -87,7 +94,7 @@ namespace Retrospective_Back_End.Controllers
 	            {
 		            _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
 	            }
-	            catch (Exception e)
+	            catch
 	            {
 		            _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
 	            }
@@ -96,6 +103,9 @@ namespace Retrospective_Back_End.Controllers
             return CreatedAtAction("GetRetroCard", new { id = retroCard.Id }, retroCard);
 		}
 
+        /// <summary>
+        /// Delete a RetroCard by id
+        /// </summary>
         // DELETE: api/RetroCards/5
         [HttpDelete("{id}")]
         public ActionResult<RetroCard> DeleteRetroCard(int id)
@@ -116,18 +126,13 @@ namespace Retrospective_Back_End.Controllers
 	            {
 		            _hubContext.Clients.All.BroadcastMessage(true, retroColumn.RetrospectiveId);
 	            }
-	            catch (Exception e)
+	            catch
 	            {
 		            _hubContext.Clients.All.BroadcastMessage(false, retroColumn.RetrospectiveId);
 	            }
             }
 
             return retroCard;
-        }
-
-        private bool RetroCardExists(int id)
-        {
-            return _context.RetroCards.Any(e => e.Id == id);
         }
     }
 }

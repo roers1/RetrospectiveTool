@@ -1,0 +1,38 @@
+<div *ngIf="!isDestroyed" [class.mat-elevation-z1]="true" class="holder">
+    <div *ngIf="!contentEditMode" class="content-holder">
+        {{card.content}}
+    </div>
+    <div *ngIf="contentEditMode" class="content-holder">
+        <mat-form-field class="editcontent-holder">
+            <textarea #content [errorStateMatcher]="matcher" [formControl]="TextFormControl" cdkTextareaAutosize
+                      matInput placeholder="nieuwe text:" value="{{card.content}}"></textarea>
+                      <mat-error *ngIf="TextFormControl.errors?.required;"
+                      [innerHTML]="dict.REQUIRES"></mat-error>
+                      <mat-error *ngIf="TextFormControl.errors?.maxlength;"
+                      [innerHTML]="dict.TEXT_TOO_LONG_250"></mat-error>
+        </mat-form-field>
+        <button (click)="updateContent(content.value)"
+                (keyup.enter)="updateContent(content.value)" [class.mat-elevation-z2]="true"
+                [disabled]="!TextFormControl.valid"
+                class="TLbtn btn-small btn-color-primary mat-button mat-button-base btn-confirm">{{dict.EDIT_BTN}}</button>
+        <button (click)="enableContentEditing(false)" [class.mat-elevation-z2]="true" class="TLbtn btn-small btn-color-secondary btn-margin-left mat-button mat-button-base btn-back"
+                mat-button>{{dict.CANCEL_BTN}}</button>
+    </div>
+
+    <div *ngIf="!contentEditMode" class="icons-holder">
+        <img (click)="enableContentEditing(true)" alt="" class="icon" id="icon_edit"
+             src="../../../assets/images/icon_edit.png"/>
+        <img (click)="deleteCardDialog()" alt="" class="icon" id="icon_delete"
+             src="../../../assets/images/icon_delete.png"/>
+    </div>
+    <div *ngIf="!contentEditMode" class="vote-holder row">
+        <div class="vote-up vote-text">+{{card.upVotes}}</div>
+        <div class="vote-text">&nbsp;</div>
+        <div class="vote-down vote-text">-{{card.downVotes}}</div>
+    </div>
+    <div *ngIf="!contentEditMode" class="icons-smiley-holder" id="expandable">
+        <img (click)="voteUp()" alt="" class="icon" src="../../../assets/images/smiley_happy.png"/>
+        <!-- <img class="icon" src="../../../assets/images/smiley_neutral.png" alt="" /> -->
+        <img (click)="voteDown()" alt="" class="icon" src="../../../assets/images/smiley_down.png"/>
+    </div>
+</div>

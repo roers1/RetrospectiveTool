@@ -1,0 +1,51 @@
+<body>
+
+<div class="center-content">
+    <h1>{{dict.REGISTER_TITLE}}</h1>
+</div>
+
+
+
+    <div class="form-holder">
+        <h5 class="error-text" [hidden]="errorBool" >Email is al geregistreerd!</h5>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="font">
+
+            <div>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="{{dict.PLACEHOLDER_EMAIL}}" type="email" required
+                        formControlName="email" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="registerForm.controls['email'].errors?.required;"
+                        [innerHTML]="dict.REQUIRES_EMAIL_ERROR">
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.controls['email'].errors?.pattern;"
+                    [innerHTML]="dict.FAULTY_EMAIL_ERROR">
+                </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="{{dict.PLACEHOLDER_PASSWORD}}" [type]="hide ? 'password' : 'text'"
+                        required formControlName="password" [errorStateMatcher]="matcher">
+                    <mat-icon matSuffix class="eye-icon" (click)="hide = !hide">
+                        {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-error *ngIf="registerForm.controls['password'].errors?.required;"
+                        [innerHTML]="dict.REQUIRES_PASSWORD_ERROR">
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.controls['password'].errors?.pattern;"
+                    [innerHTML]="dict.FAULTY_PASSWORD_ERROR">
+                </mat-error>
+                </mat-form-field>
+            </div>
+
+        <div class="button-holder">
+            <button [class.mat-elevation-z2]="true" [disabled]="!registerForm.valid"
+                    class="TLbtn btn-small btn-color-primary mat-button mat-button-base btn-confirm"
+                    mat-raised-button type="submit">{{dict.REGISTER_BTN}}</button>
+            <button [class.mat-elevation-z2]="true" class="TLbtn btn-small btn-color-secondary mat-button mat-button-base btn-back" mat-button
+                    routerLink="/">{{dict.CANCEL_BTN}}</button>
+        </div>
+    </form>
+</div>
+
+</body>

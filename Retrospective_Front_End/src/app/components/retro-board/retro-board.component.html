@@ -1,0 +1,154 @@
+<body *ngIf="retrospective">
+<div class="foreground">
+
+    <div class="scrollable">
+        <div class="locked">
+            <br>
+            <div [class.mat-elevation-z2]="true" class="title-background-left">
+                <h1 matTooltip="{{retrospective.description}}">{{retrospective.title}}</h1>
+            </div>
+            <div *ngIf="isOwner" [class.mat-elevation-z2]="true" class="title-background-right">
+                <img (click)="cleanRetroBoardDialog()" class="icon" id="icon_wipe"
+                     src="../../../assets/images/broom.png"/>
+            </div>
+        </div>
+        <br>
+
+        <div class="board_area">
+            <div *ngFor="let column of retrospective.retroColumns; trackBy: trackByColumn" [class.mat-elevation-z6]="true"
+                 class="example-container">
+                <div class="row column-title-holder">
+
+                    <div class="column-title">
+                        <h2 matTooltip="{{column.title}}">{{column.title}}</h2>
+                    </div>
+
+                    <div class="icon_menu">
+                        <img [matMenuTriggerFor]="menu" alt="" class="icon" id="icon_menu"
+                             src="../../../assets/images/icon_dot_menu.png">
+                        <mat-menu #menu="matMenu">
+                            <button (click)="addFamilyDialog(column)" class="dropdownitem"
+                                    mat-menu-item>{{dict.CREATE_NEW_FAMILY_BTN}}</button>
+                            <button (click)="editColumnTitleDialog(column)" *ngIf="isOwner" class="dropdownitem"
+                                    mat-menu-item>
+                                {{dict.EDIT_COLUMN_BTN}}
+                            </button>
+                            <button (click)="emptyColumn(column)" *ngIf="isOwner" class="dropdownitem" mat-menu-item>
+                                {{dict.EMPTY_COLUMN_BTN}}
+                            </button>
+                            <button (click)="deleteColumnDialog(column)" *ngIf="isOwner" class="dropdownitem"
+                                    mat-menu-item>
+                                {{dict.DELETE_COLUMN_BTN}}
+                            </button>
+                        </mat-menu>
+                    </div>
+                </div>
+
+                <div #element="cdkDropList" (cdkDropListDropped)="drop($event, column, null)" [attr.id]="column.title" [cdkDropListConnectedTo]="getColumnNames(element)"
+                     [cdkDropListData]="column.retroItems" cdkDropList
+                     class="example-list">
+                    <div *ngFor="let item of column.retroItems; trackBy: trackByBaseItem">
+
+                        <div *ngIf="isRetroCard(item)" cdkDrag>
+                            <app-card-item [card]="castRetroCard(item)"></app-card-item>
+                        </div>
+
+                        <div *ngIf="isFamily(item)" cdkDrag class="family">
+                            <mat-expansion-panel #element="cdkDropList" (cdkDropListDropped)="drop($event, column, castFamily(item))" [attr.id]="item.id"
+                                                 [cdkDropListConnectedTo]="getColumnNames(element)"
+                                                 [cdkDropListData]="castFamily(item).retroCards"
+                                                 cdkDropList>
+                                <mat-expansion-panel-header>
+                                    {{item.content}}
+                                </mat-expansion-panel-header>
+                                <div class="family-icon-holder">
+                                    <img (click)="updateFamilyTitleDialog(castFamily(item))" alt=""
+                                         class="icon icon-family-delete" src="../../../assets/images/icon_edit.png"/>
+                                    <img (click)="deleteFamilyDialog(castFamily(item), column)" alt=""
+                                         class="icon icon-family-delete" src="../../../assets/images/icon_delete.png"/>
+                                </div>
+                                <div *ngIf="castFamily(item).retroCards.length === 0" class="placeholder">
+                                    <div class="placeholder-text">{{dict.PLACEHOLDER_DRAG}}</div>
+                                </div>
+                                <div *ngFor="let item of castFamily(item).retroCards; trackBy: trackByBaseItem;"
+                                     cdkDrag>
+                                    <div style="margin-left: -24px; margin-right: -24px;">
+                                        <app-card-item [card]="item"></app-card-item>
+                                    </div>
+
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                    </div>
+                </div>
+                <div [class.mat-elevation-z1]="true" class="example-container-toaddcard">
+                    <h6 (click)="enableEditing(true, column)" *ngIf="!hasEnabledEditing(column)">
+                        + {{dict.CREATE_NEW_CARD_BTN}}
+                    </h6>
+                    <div *ngIf="hasEnabledEditing(column)" class="animated-item">
+                        <form [formGroup]="cardGroup">
+                            <div>
+                                <mat-form-field [formGroup]="cardGroup" class="inputfield">
+                                    <label class="inputfield">
+                      <textarea #card class="inputfield" formControlName="content" matInput
+                                placeholder="{{dict.FILL_IN_DESC_FORM}}" value=""></textarea>
+                                    </label>
+                                    <mat-error *ngIf="cardGroup.controls['content'].errors?.required;"
+                                    [innerHTML]="dict.REQUIRES"></mat-error>
+                                    <mat-error *ngIf="cardGroup.controls['content'].errors?.maxlength;"
+                                    [innerHTML]="dict.TEXT_TOO_LONG_250"></mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <button (click)="enableEditing(false, column); addCard(column); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')" (keyup.enter)="enableEditing(false, column); addCard(column); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')" [class.mat-elevation-z2]="true"
+                                        [disabled]="!cardGroup.valid"
+                                        class="TLbtn btn-small btn-color-primary"
+                                        mat-button>
+                                    {{dict.ADD_BTN}}
+                                </button>
+                                <button (click)="enableEditing(false, column);" [class.mat-elevation-z2]="true"
+                                        class="TLbtn btn-small btn-color-secondary btn-margin-left"
+                                        mat-button>
+                                    {{dict.CANCEL_BTN}}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="isOwner" [class.mat-elevation-z6]="true" class="example-container-toadd">
+                <h4 (click)="enable=true" class="clickable_element">+ {{dict.CREATE_NEW_COLUMN_BTN}}</h4>
+                <div *ngIf="enable" class="animated-item">
+                    <form [formGroup]="listGroup">
+                        <div>
+                            <mat-form-field [formGroup]="listGroup" class="inputfield">
+                                <label class="inputfield">
+                                    <input #column class="inputfield" formControlName="title" matInput
+                                           placeholder="{{dict.FILL_IN_TITLE_FORM}}" value="">
+                                           <mat-error *ngIf="listGroup.controls['title'].errors?.required;"
+                                           [innerHTML]="dict.REQUIRES"></mat-error>
+                                           <mat-error *ngIf="listGroup.controls['title'].errors?.maxlength;"
+                                           [innerHTML]="dict.TEXT_TOO_LONG_40"></mat-error>
+                                </label>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <button (click)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')" (keyup.enter)="enable=false; addColumn(column.value); openSnackBar(dict.SNACKBAR_SUCCESS_ADD, 'Ok')" [class.mat-elevation-z2]="true"
+                                    [disabled]="!listGroup.valid"
+                                    class="TLbtn btn-small btn-color-primary click_should_disable"
+                                    mat-button>
+                                {{dict.ADD_BTN}}
+                            </button>
+                            <button (click)="enable=false" [class.mat-elevation-z2]="true" class="TLbtn btn-small btn-color-secondary clickable_element_closed btn-margin-left"
+                                    mat-button>
+                                {{dict.CANCEL_BTN}}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

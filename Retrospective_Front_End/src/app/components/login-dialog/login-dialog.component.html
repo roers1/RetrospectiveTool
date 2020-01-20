@@ -1,0 +1,45 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <div class="title-holder">
+        <h2>{{dict.LOGIN_TITLE}}</h2>
+    </div>
+
+   <h5 class="error-text" [hidden]="errorBool" >Wachtwoord en gebruikersnaam klopt niet!</h5> 
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+    <div class="font" mat-dialog-content>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="{{dict.PLACEHOLDER_EMAIL}}" type="email" formControlName="email"
+                [errorStateMatcher]="matcher">
+                <mat-error *ngIf="loginForm.controls['email'].errors?.required;"
+                [innerHTML]="dict.REQUIRES_EMAIL_ERROR">
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls['email'].errors?.pattern;"
+            [innerHTML]="dict.FAULTY_EMAIL_ERROR">
+        </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="font" mat-dialog-content>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="{{dict.PLACEHOLDER_PASSWORD}}" [(ngModel)]="data.password" type="password"
+                formControlName="password" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="loginForm.controls['password'].errors?.required;"
+                [innerHTML]="dict.REQUIRES_PASSWORD_ERROR"></mat-error>
+                <mat-error *ngIf="loginForm.controls['password'].errors?.pattern;"
+                [innerHTML]="dict.FAULTY_PASSWORD_ERROR"></mat-error>
+                
+        </mat-form-field>
+
+    </div>
+
+    <div (click)="onRecoverPassword()" class="pass-recover">Wachtwoord vergeten?</div>
+
+    <div class="font" mat-dialog-action>
+        <button [class.mat-elevation-z2]="true" [disabled]="!loginForm.valid"
+                class="TLbtn btn-small btn-color-primary mat-button mat-button-base btn-confirm"
+                mat-raised-button type="submit">{{dict.LOGIN_BTN}}</button>
+        <button (click)="onNoClick()" [class.mat-elevation-z2]="true" class="TLbtn btn-small btn-color-secondary mat-button mat-button-base btn-back"
+                mat-button type="button">{{dict.CANCEL_BTN}}</button>
+    </div>
+</form>
